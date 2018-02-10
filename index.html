@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Material Design Lite</title>
+    <title>Scheduling & Predictions</title>
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -78,19 +78,19 @@
               <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="psjf">
                 <input checked class="mdl-radio__button" id="psjf" name="algorithm" type="radio"
                  value="on">
-                <span class="mdl-radio__label">SJF préemptif </span>
+                <span class="mdl-radio__label">SJF préemptif</span>
               </label>
               <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="npsjf">
                 <input class="mdl-radio__button" id="npsjf" name="algorithm" type="radio" value="auto">
-                <span class="mdl-radio__label">SJF non-préemptif </span>
+                <span class="mdl-radio__label">SJF non-préemptif</span>
               </label>
               <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="fifo">
                 <input class="mdl-radio__button" id="fifo" name="algorithm" type="radio" value="auto">
-                <span class="mdl-radio__label">FIFO </span>
+                <span class="mdl-radio__label">FIFO</span>
               </label>
               <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rr">
                 <input class="mdl-radio__button" id="rr" name="algorithm" type="radio" value="auto">
-                <span class="mdl-radio__label">Round Robin </span>
+                <span class="mdl-radio__label">Round Robin</span>
               </label>
               <div style="display:none;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label roundrobinnumber">
                 <input class="mdl-textfield__input" type="text" pattern="[0-9]*" id="rr_number">
@@ -99,7 +99,7 @@
               </div>
               <br/>
               <br/>
-              <table style="width: 100%;" class="mdl-data-table mdl-shadow--2dp">
+              <table id="table_scheduling_entries" style="width: 100%;" class="mdl-data-table mdl-shadow--2dp">
           			<thead>
                   <tr class="mdl-js-button mdl-button--raised mdl-button--accent">
 					         <th style="color:white;text-align: center;" colspan="100%">Entrées de la distribution temporelle</th>
@@ -112,15 +112,15 @@
           				</tr>
           			</thead>
           			<tbody>
-          				<tr>
-          					<td><div contentEditable style="width: 100%; height: 100%;">...</div></td>
+                  <!-- This is our clonable table line -->
+          				<tr class="hide" style="display:none;">
+                    <td><div contentEditable style="width: 100%; height: 100%;">...</div></td>
           					<td><div contentEditable style="width: 100%; height: 100%;">...</div></td>
                     <td><div contentEditable style="width: 100%; height: 100%;">...</div></td>
           					<td><i style="vertical-align: bottom;" class="table-remove material-icons md-24">&#xe15d;</i></td>
           				</tr>
-          				<!-- This is our clonable table line -->
-          				<tr class="hide" style="display:none;">
-                    <td><div contentEditable style="width: 100%; height: 100%;">...</div></td>
+          				<tr>
+          					<td><div contentEditable style="width: 100%; height: 100%;">...</div></td>
           					<td><div contentEditable style="width: 100%; height: 100%;">...</div></td>
                     <td><div contentEditable style="width: 100%; height: 100%;">...</div></td>
           					<td><i style="vertical-align: bottom;" class="table-remove material-icons md-24">&#xe15d;</i></td>

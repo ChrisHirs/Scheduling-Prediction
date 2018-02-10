@@ -11,8 +11,15 @@ $(function(){
 
   //Buttons
   $('#reset_scheduling').click(function() {
-    var rowCount = $(this).closest('table').length;
-    alert(rowCount);
+    var rowCount = $('#table_scheduling_entries tbody tr').length;
+    var i = 1;
+    // Delete all lines
+    while (i < rowCount) {
+      $('#table_scheduling_entries tbody tr:last').detach();
+      i++;
+    }
+    // Fresh new line
+    $('.table-add').trigger('click');
   });
 
   $('#empty_scheduling').click(function() {
