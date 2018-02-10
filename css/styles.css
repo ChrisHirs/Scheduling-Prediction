@@ -238,11 +238,34 @@ html, body {
 }
 
 /* Table CSS */
-.table-remove:hover {
+.table-remove:hover,
+.table-remove-row:hover,
+.table-remove-col:hover {
   color: #f00;
   cursor: pointer;
 }
-.table-add:hover {
+.table-add:hover,
+#add_row:hover,
+.table-add-col:hover {
   cursor: pointer;
   color: #0b0;
+}
+
+/* PREDICTION */
+
+.table-row-hover{
+  background-color: #eee;
+}
+
+#table_predictions div, #table_predictions td {
+  text-align: center;
+}
+
+#table_predictions tr td:first-child{
+  font-weight: bold;
+}
+
+.editable{
+  width: 100%;
+  height: 100%;
 }
