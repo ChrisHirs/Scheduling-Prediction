@@ -251,6 +251,22 @@ html, body {
   color: #0b0;
 }
 
+/* SCHEDULING */
+
+/* Buttons left-right */
+.toolbar-left {
+  float: left;
+  margin-right: 5px;
+  margin-top: 20px;
+}
+
+.toolbar-right {
+  float: right;
+  margin-left: 5px;
+  margin-top: 20px;
+
+}
+
 /* PREDICTION */
 
 .table-row-hover{
