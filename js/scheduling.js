@@ -1,3 +1,6 @@
+var nbRows;
+var processArray;
+
 $(function(){
 
   // Toggle Round Robin number
@@ -20,6 +23,51 @@ $(function(){
   });
 
   $('#resolve_scheduling').click(function() {
-    //pass
+    rows = $('tr', '#table_scheduling_entries');
+    console.log(rows);
+    countTableRows();
+
+    if( $('#psjf').is(':checked') ) {
+      doPSFJ();
+    }
+    else if ( $('#npsjf').is(':checked')) {
+      doNPSFJ();
+    }
+    else if ( $('#fifo').is(':checked')) {
+      doFIFO();
+    }
+    else if ( $('#rr').is(':checked')) {
+      doRR();
+    }
   });
 });
+
+function rowsToArray(){
+
+
+  $('#table_scheduling_entries tbody tr').each(function(i, row) {
+            var inputEl = $(el).children().get(0);
+            $(el).before('<td>Added ' + $(inputEl).attr('type') + '</td>');
+        })
+}
+
+function countTableRows(){
+
+}
+
+function doPSFJ (){
+  alert("psjf");
+}
+
+function doNPSFJ (){
+  alert("npsjf");
+}
+
+function doFIFO (){
+
+  alert("fifo");
+}
+
+function doRR (){
+  alert("rr");
+}
