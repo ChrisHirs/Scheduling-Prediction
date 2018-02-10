@@ -62,10 +62,69 @@
         </div>
       </header>
       <main class="mdl-layout__content">
-        <div class="mdl-layout__tab-panel is-active" id="home" data-include="home"></div>
-        <div class="mdl-layout__tab-panel" id="scheduling" data-include="scheduling"></div>
-        <div class="mdl-layout__tab-panel" id="predictions" data-include="predictions"></div>
-        <div class="mdl-layout__tab-panel" id="faq" data-include="faq"></div>
+        <div class="mdl-layout__tab-panel is-active" id="home">
+          <section class="section--center mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+              <h4>Accueil</h4>
+              Minim duis incididunt est cillum est ex occaecat consectetur. Qui sint ut et qui nisi cupidatat. Reprehenderit nostrud proident officia exercitation anim et pariatur ex.
+            </div>
+          </section>
+        </div>
+        <div class="mdl-layout__tab-panel" id="scheduling">
+          <section class="section--center mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+              <h4>Scheduling</h4>
+              <table class="mdl-data-table  mdl-shadow--2dp">
+          			<thead>
+          				<tr class="mdl-js-button mdl-button--raised mdl-button--accent">
+          					<th style="color:white;text-align: center;" colspan="100%">Table description</th>
+          				</tr>
+          				<tr class="mdl-js-button mdl-button--raised mdl-button--colored">
+          					<th style="color:white;text-align: center;">Column 1</th>
+          					<th style="color:white;text-align: center;">Column 2</th>
+          					<th style="color:white;text-align: center;"><i style="vertical-align: bottom;" class="table-add material-icons md-24"> &#xe03b;</i></th>
+          				</tr>
+          			</thead>
+          			<tbody>
+          				<tr>
+          					<td><div contentEditable style="width: 100%; height: 100%;">Cell 1</div></td>
+          					<td><div contentEditable style="width: 100%; height: 100%;">Cell 2</div></td>
+          					<td><i style="vertical-align: bottom;" class="table-remove material-icons md-24">&#xe15d;</i></td>
+          				</tr>
+          				<!-- This is our clonable table line -->
+          				<tr class="hide" style="display:none;">
+          					<td><div contentEditable style="width: 100%; height: 100%;">Cell 1</div></td>
+          					<td><div contentEditable style="width: 100%; height: 100%;">Cell 2</div></td>
+          					<td><i style="vertical-align: bottom;" class="table-remove material-icons md-24">&#xe15d;</i></td>
+          				</tr>
+          			</tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+        <div class="mdl-layout__tab-panel" id="predictions">
+          <section class="section--center mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+              <h4>Predictions</h4>
+              <ul class="toc">
+                <h4>Contents</h4>
+                <a href="#lorem1">Lorem ipsum</a>
+                <a href="#lorem2">Lorem ipsum</a>
+                <a href="#lorem3">Lorem ipsum</a>
+                <a href="#lorem4">Lorem ipsum</a>
+                <a href="#lorem5">Lorem ipsum</a>
+              </ul>
+            </div>
+          </section>
+        </div>
+        <div class="mdl-layout__tab-panel" id="faq">
+          <section class="section--center mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+              <h4>F.A.Q.</h4>
+              Minim duis incididunt est cillum est ex occaecat consectetur. Qui sint ut et qui nisi cupidatat. Reprehenderit nostrud proident officia exercitation anim et pariatur ex.
+            </div>
+          </section>
+        </div>
         <footer class="mdl-mini-footer">
           <div class="mdl-mini-footer__left-section">
             <div class="mdl-logo">Scheduling &amp; Predictions</div>
@@ -79,7 +138,6 @@
         </footer>
       </main>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script src="./mdl/material.min.js"></script>
