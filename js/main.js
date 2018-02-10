@@ -1,5 +1,5 @@
 $(function(){
-  
+
   // Upgrade DOM MDL
   // $('.mdl-layout__tab').click(function(){
   //   componentHandler.upgradeDom();
@@ -15,4 +15,5 @@ $(function(){
   $('.table-remove').click(function () {
     $(this).parents('tr').detach();
   });
+
 });
