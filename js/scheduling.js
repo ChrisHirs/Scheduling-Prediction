@@ -1,5 +1,5 @@
 var nbRows;
-var processArray;
+var processArray = {};
 
 $(function(){
 
@@ -14,8 +14,15 @@ $(function(){
 
   //Buttons
   $('#reset_scheduling').click(function() {
-    var rowCount = $(this).closest('table').length;
-    alert(rowCount);
+    var rowCount = $('#table_scheduling_entries tbody tr').length;
+    var i = 1;
+    // Delete all lines
+    while (i < rowCount) {
+      $('#table_scheduling_entries tbody tr:last').detach();
+      i++;
+    }
+    // Fresh new line
+    $('.table-add').trigger('click');
   });
 
   $('#empty_scheduling').click(function() {
@@ -23,8 +30,7 @@ $(function(){
   });
 
   $('#resolve_scheduling').click(function() {
-    rows = $('tr', '#table_scheduling_entries');
-    console.log(rows);
+    rowsToArray();
     countTableRows();
 
     if( $('#psjf').is(':checked') ) {
@@ -43,12 +49,16 @@ $(function(){
 });
 
 function rowsToArray(){
-
-
   $('#table_scheduling_entries tbody tr').each(function(i, row) {
-            var inputEl = $(el).children().get(0);
-            $(el).before('<td>Added ' + $(inputEl).attr('type') + '</td>');
-        })
+
+    if(i!=0){
+      console.log($(row).find('td div').eq(0).textContent);
+      processArray[$(row).find('td div').eq(0).textContent] = 0;
+
+    }
+
+  });
+  console.log(processArray);
 }
 
 function countTableRows(){
