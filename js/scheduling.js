@@ -60,16 +60,17 @@ $(function(){
 });
 
 function rowsToArray(){
-  processArray = {};
+  processArray = [];
   var index = 0;
   $('#table_scheduling_entries tbody tr').each(function(i, row) {
-    if(i!=0){
-      processArray[i-1] = [$(row).find('td div').eq(0).text(), $(row).find('td div').eq(1).text(), $(row).find('td div').eq(2).text()];
+    if (i!=0) {
+      var currentRow = [$(row).find('td div').eq(0).text(), $(row).find('td div').eq(1).text(), $(row).find('td div').eq(2).text()];
+      console.log(currentRow);
+      processArray.push(currentRow);
     }
-    index = i - 1;
   });
   // Delete last entry in array
-  delete processArray[index];
+  processArray.splice(-1,1)
   console.log(processArray);
 }
 
@@ -79,15 +80,15 @@ function emptySchedulingSolTab() {
 
 function getSchedulingSolTabRows() {
   var rowsNumber = 0;
-  if (Object.keys(processArray).length > 0) {
-    console.log(Object.keys(processArray).length);
-    //Duration calcul
-    // maxDuration = 0;
-    // alert('Coucou');
-    // $(processArray).each(function(i, el){
-    //   console.log(processArray[i][0])
-    // });
-  }
+  // if (Object.keys(processArray).length > 0) {
+  //   //Max duration calcul
+  //   maxDuration = 0;
+  //   for (i = 0; i < Object.keys(processArray).length; i++) {
+  //     maxDuration += processArray[i][2];
+  //   }
+  //   //Max arrival + duration
+  //
+  // }
   return rowsNumber;
 }
 
