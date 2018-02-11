@@ -1,5 +1,5 @@
 var nbRows;
-var processArray = {};
+var processArray = [];
 
 $(function(){
 
@@ -52,13 +52,21 @@ function rowsToArray(){
   processArray = {};
   $('#table_scheduling_entries tbody tr').each(function(i, row) {
     if(i!=0){
-      processArray[$(row).find('td div').eq(0).text()] = [$(row).find('td div').eq(1).text(), $(row).find('td div').eq(2).text()];
+      processArray[i-1] = [$(row).find('td div').eq(0).text(), $(row).find('td div').eq(1).text(), $(row).find('td div').eq(2).text()];
     }
   });
+  console.log(processArray);
 }
 
 function countTableRows(){
 
+}
+
+function newArrivedProcess(currentLine){
+  $(processArray).each(function(i, process){
+    //if(process[0])
+    console.log(process);
+  });
 }
 
 function doPSFJ (){
@@ -70,7 +78,9 @@ function doNPSFJ (){
 }
 
 function doFIFO (){
-
+  for(i=0; i<=38 ; i++){
+    newArrivedProcess(i);
+  }
 }
 
 function doRR (){
