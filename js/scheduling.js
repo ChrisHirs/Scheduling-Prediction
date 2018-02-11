@@ -1,4 +1,3 @@
-var nbRows;
 var processArray = {};
 
 $(function(){
@@ -38,12 +37,12 @@ $(function(){
   });
 
   $('#empty_scheduling').click(function() {
-    //pass
+    rowsToArray();
+    emptySchedulingSolTab();
   });
 
   $('#resolve_scheduling').click(function() {
     rowsToArray();
-    countTableRows();
 
     if( $('#psjf').is(':checked') ) {
       doPSFJ();
@@ -64,27 +63,44 @@ function rowsToArray(){
   processArray = {};
   $('#table_scheduling_entries tbody tr').each(function(i, row) {
     if(i!=0){
+      //TODO: check types
       processArray[$(row).find('td div').eq(0).text()] = [$(row).find('td div').eq(1).text(), $(row).find('td div').eq(2).text()];
     }
   });
+  //Delete '+' line
+  delete processArray[""];
+  console.log(processArray);
 }
 
-function countTableRows(){
+function emptySchedulingSolTab() {
+  console.log(getSchedulingSolTabRows());
+}
+
+function getSchedulingSolTabRows() {
+  var rowsNumber = 0;
+  if (Object.keys(processArray).length > 0) {
+    //Duration calcul
+    maxDuration = 0;
+    alert('Coucou');
+    $(processArray).each(function(i, el){
+      console.log(processArray[i][0])
+    });
+  }
+  return rowsNumber;
+}
+
+function doPSFJ() {
 
 }
 
-function doPSFJ (){
+function doNPSFJ() {
 
 }
 
-function doNPSFJ (){
+function doFIFO() {
 
 }
 
-function doFIFO (){
-
-}
-
-function doRR (){
+function doRR() {
 
 }
