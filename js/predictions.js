@@ -39,7 +39,7 @@ $(function(){
 
       var newCell = $('<td></td>');
       var colCount = countColTablePredict();
-      $(newCell).append($('<div contentEditable style="width: 100%; height: 100%;">Cell ' + colCount + '</div>'));
+      $(newCell).append($('<div contentEditable class="editable data">Cell ' + colCount + '</div>'));
 
       if(i == 0){
         newCell = $('<th style="color:white;text-align: center;"></th>');
@@ -103,16 +103,21 @@ $(function(){
       var selector = $(rowSelect)
     }
 
+    var isThereAnyChar = false;
+
     selector.each(function(i, cell) {
       var value = parseFloat($(cell).text());
 
       if(isNaN(value)){
-        alert('Only number are accepted, check your base data.');
-        return false;
+        isThereAnyChar = true;
       }
 
       arrayBaseData.push(value);
     })
+
+    if(isThereAnyChar){
+      alert('Only number are accepted, check your datas.');
+    }
 
     return arrayBaseData;
   }
@@ -141,15 +146,19 @@ $(function(){
 
   function compareAndCorrect(arrayDataToCheck, arraySolution, deltaPrecision, pointer){
 
+    if(!arrayDataToCheck){
+      return false;
+    }
+
     $(arraySolution).each(function(i, solVal) {
       console.log(solVal + " compared to " + arrayDataToCheck[i]);
-      if(arrayDataToCheck[i] > solVal + deltaPrecision || arrayDataToCheck[i] < solVal - deltaPrecision){
-        var className = 'wrong-answer';
-        console.log('wrong');
-      }
-      else{
+      if(arrayDataToCheck[i] < solVal + deltaPrecision && arrayDataToCheck[i] > solVal - deltaPrecision){
         var className = 'correct-answer';
         console.log('correct');
+      }
+      else{
+        var className = 'wrong-answer';
+        console.log('wrong');
       }
 
       $(pointer).parents('tr').find('td').eq(3+i).removeClass('wrong-answer correct-answer').addClass(className);
@@ -179,7 +188,7 @@ $(function(){
     console.log(arrayBaseData);
     console.log(arrayDataToCheck);
 
-    var MORE_OR_LESS = 0.1;
+    var MORE_OR_LESS = 0.2;
 
     compareAndCorrect(arrayDataToCheck, arraySolutionError, MORE_OR_LESS, this);
 
