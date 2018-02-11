@@ -64,8 +64,6 @@ $(function(){
 
     console.log('check burst');
 
-    var self = this;
-
     arrayBaseData = getDataFromRow('#base_data div.data', null);
     var arrayDataToCheck = getDataFromRow('div.data', $(this).parents('tr'));
 
@@ -75,35 +73,19 @@ $(function(){
     console.log(arrayDataToCheck);
     console.log("alpha="+alpha);
 
-    var lastPred = arrayDataToCheck.splice(0, 1);;
+    var lastPred = arrayDataToCheck.splice(0, 1);
 
     console.log("inital pred="+lastPred);
 
-    var arraySolutionData = [];
+    var arraySolutionBurst = getSolutionBurst(lastPred, arrayBaseData, alpha)
 
-    $(arrayBaseData).each(function(i, val) {
-      lastPred = calcNextBurst(lastPred, arrayBaseData[i], alpha)
-      arraySolutionData.push(lastPred);
-    })
-
-    console.log(arraySolutionData);
+    console.log(arraySolutionBurst);
 
     var MORE_OR_LESS = 0.2;
 
-    $(arraySolutionData).each(function(i, solVal) {
-      console.log(solVal + " compared to " + arrayDataToCheck[i]);
-      if(arrayDataToCheck[i] > solVal + MORE_OR_LESS || arrayDataToCheck[i] < solVal - MORE_OR_LESS){
-        var className = 'wrong-answer';
-        console.log('wrong');
-      }
-      else{
-        var className = 'correct-answer';
-        console.log('correct');
-      }
+    compareAndCorrect(arrayDataToCheck, arraySolutionBurst, MORE_OR_LESS, this);
 
-      $(self).parents('tr').find('td').eq(3+i).removeClass('wrong-answer correct-answer').addClass(className);
 
-    })
   });
 
   function calcNextBurst(prediction, burst, alpha){
@@ -135,9 +117,110 @@ $(function(){
     return arrayBaseData;
   }
 
+  function getSolutionBurst(firstPred, arrayBaseData, alpha){
+    var lastPred = firstPred;
+    var arraySolutionBurst = [];
+    $(arrayBaseData).each(function(i, val) {
+      lastPred = calcNextBurst(lastPred, arrayBaseData[i], alpha)
+      arraySolutionBurst.push(lastPred);
+    })
+    return arraySolutionBurst;
+  }
+
+  function getSolutionError(firstPred, arrayBaseData, arraySolutionBurst){
+    var lastPred = firstPred;
+    var arraySolutionError = [];
+
+    $(arraySolutionBurst).each(function(i, solVal) {
+      arraySolutionError.push(Math.abs(lastPred - arrayBaseData[i]));
+      lastPred = arraySolutionBurst[i];
+    })
+
+    return arraySolutionError;
+  }
+
+  function compareAndCorrect(arrayDataToCheck, arraySolution, deltaPrecision, pointer){
+
+    $(arraySolution).each(function(i, solVal) {
+      console.log(solVal + " compared to " + arrayDataToCheck[i]);
+      if(arrayDataToCheck[i] > solVal + deltaPrecision || arrayDataToCheck[i] < solVal - deltaPrecision){
+        var className = 'wrong-answer';
+        console.log('wrong');
+      }
+      else{
+        var className = 'correct-answer';
+        console.log('correct');
+      }
+
+      $(pointer).parents('tr').find('td').eq(3+i).removeClass('wrong-answer correct-answer').addClass(className);
+    })
+
+  }
+
+
   // Table utilisation - check error row
   $('.table-check-error').click(function () {
-    alert('lol');
+
+    arrayBaseData = getDataFromRow('#base_data div.data', null);
+    var arrayDataToCheck = getDataFromRow('div.data', $(this).parents('tr'));
+
+    var alpha = arrayDataToCheck.splice(0, 1);
+    var lastPred = arrayDataToCheck.splice(0, 1);
+
+    var arraySolutionBurst = getSolutionBurst(lastPred, arrayBaseData, alpha)
+    var arraySolutionError = getSolutionError(lastPred, arrayBaseData, arraySolutionBurst);
+
+    console.log("alpha="+alpha);
+    console.log("inital pred="+lastPred);
+
+    console.log(arraySolutionBurst);
+    console.log(arraySolutionError);
+
+    console.log(arrayBaseData);
+    console.log(arrayDataToCheck);
+
+    var MORE_OR_LESS = 0.1;
+
+    compareAndCorrect(arrayDataToCheck, arraySolutionError, MORE_OR_LESS, this);
+
+  });
+
+  // Table utilisation - show burst row
+  $('.table-show-burst').click(function () {
+    console.log('check burst');
+
+    var self = this;
+
+    arrayBaseData = getDataFromRow('#base_data div.data', null);
+    var arrayDataToCheck = getDataFromRow('div.data', $(this).parents('tr'));
+
+    var alpha = arrayDataToCheck.splice(0, 1);
+    var lastPred = arrayDataToCheck.splice(0, 1);
+
+    var arraySolutionBurst = getSolutionBurst(lastPred, arrayBaseData, alpha)
+
+    $(arraySolutionBurst).each(function(i, solVal) {
+      $(self).parents('tr').find('td').eq(3+i).removeClass('wrong-answer').addClass('correct-answer').find('div').text(solVal.toFixed(2));
+    })
+  });
+
+  // Table utilisation - show error row
+  $('.table-show-error').click(function () {
+    var self = this;
+
+    arrayBaseData = getDataFromRow('#base_data div.data', null);
+    var arrayDataToCheck = getDataFromRow('div.data', $(this).parents('tr'));
+
+    var alpha = arrayDataToCheck.splice(0, 1);
+    var lastPred = arrayDataToCheck.splice(0, 1);
+
+    var arraySolutionBurst = getSolutionBurst(lastPred, arrayBaseData, alpha)
+    var arraySolutionError = getSolutionError(lastPred, arrayBaseData, arraySolutionBurst);
+
+    $(arraySolutionError).each(function(i, solVal) {
+      $(self).parents('tr').find('td').eq(3+i).removeClass('wrong-answer').addClass('correct-answer').find('div').text(solVal.toFixed(2));
+    })
+
   });
 
   // Higlighting rows
