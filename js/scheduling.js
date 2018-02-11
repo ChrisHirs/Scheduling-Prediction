@@ -1,4 +1,4 @@
-var processArray = {};
+var processArray = [];
 
 $(function(){
 
@@ -61,14 +61,15 @@ $(function(){
 
 function rowsToArray(){
   processArray = {};
+  var index = 0;
   $('#table_scheduling_entries tbody tr').each(function(i, row) {
     if(i!=0){
-      //TODO: check types
-      processArray[$(row).find('td div').eq(0).text()] = [$(row).find('td div').eq(1).text(), $(row).find('td div').eq(2).text()];
+      processArray[i-1] = [$(row).find('td div').eq(0).text(), $(row).find('td div').eq(1).text(), $(row).find('td div').eq(2).text()];
     }
+    index = i - 1;
   });
-  //Delete '+' line
-  delete processArray[""];
+  // Delete last entry in array
+  delete processArray[index];
   console.log(processArray);
 }
 
@@ -79,17 +80,25 @@ function emptySchedulingSolTab() {
 function getSchedulingSolTabRows() {
   var rowsNumber = 0;
   if (Object.keys(processArray).length > 0) {
+    console.log(Object.keys(processArray).length);
     //Duration calcul
-    maxDuration = 0;
-    alert('Coucou');
-    $(processArray).each(function(i, el){
-      console.log(processArray[i][0])
-    });
+    // maxDuration = 0;
+    // alert('Coucou');
+    // $(processArray).each(function(i, el){
+    //   console.log(processArray[i][0])
+    // });
   }
   return rowsNumber;
 }
 
-function doPSFJ() {
+function newArrivedProcess(currentLine){
+  $(processArray).each(function(i, process){
+    //if(process[0])
+    console.log(process);
+  });
+}
+
+function doPSFJ (){
 
 }
 
@@ -97,8 +106,10 @@ function doNPSFJ() {
 
 }
 
-function doFIFO() {
-
+function doFIFO (){
+  for(i=0; i<=38 ; i++){
+    newArrivedProcess(i);
+  }
 }
 
 function doRR() {
