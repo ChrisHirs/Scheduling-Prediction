@@ -1,4 +1,5 @@
 var processArray = [];
+var currentNewArrivedProcessIndex;
 
 $(function(){
 
@@ -65,13 +66,13 @@ function rowsToArray(){
   $('#table_scheduling_entries tbody tr').each(function(i, row) {
     if (i!=0) {
       var currentRow = [$(row).find('td div').eq(0).text(), $(row).find('td div').eq(1).text(), $(row).find('td div').eq(2).text()];
-      console.log(currentRow);
+      //console.log(currentRow);
       processArray.push(currentRow);
     }
   });
   // Delete last entry in array
   processArray.splice(-1,1)
-  console.log(processArray);
+  //console.log(processArray);
 }
 
 function emptySchedulingSolTab() {
@@ -92,11 +93,19 @@ function getSchedulingSolTabRows() {
   return rowsNumber;
 }
 
-function newArrivedProcess(currentLine){
-  $(processArray).each(function(i, process){
-    //if(process[0])
-    console.log(process);
-  });
+function isNewProcessArrived(currentLine){
+
+  for(j=0; j<=processArray.length; j++){
+    if(processArray[j][1] == currentLine){
+      console.log("IS ARRIVED process arr: "+processArray[j][1]+" current: "+currentLine+" i: "+j);
+      currentNewArrivedProcessIndex = j;
+      return true;
+    }
+    else {
+      console.log("IS NOT ARRIVED process arr: "+processArray[j][1]+" current: "+currentLine+" i: "+j);
+      return false;
+    }
+  }
 }
 
 function doPSFJ (){
@@ -108,9 +117,22 @@ function doNPSFJ() {
 }
 
 function doFIFO (){
-  for(i=0; i<=38 ; i++){
-    newArrivedProcess(i);
+  var queue = [];
+  console.log("in FIFO");
+  console.log(processArray);
+  for(i=0; i<=5; i++){
+    console.log("fifo arr i: "+i);
+    if(isNewProcessArrived(i)){
+      queue.push(processArray[currentNewArrivedProcessIndex]);
+      //$('#table_scheduling_entries tbody').rows[i].cells[currentNewArrivedProcessIndex+1].text(processArray[currentNewArrivedProcessIndex][2]);
+      console.log("row: "+i+" column: "+currentNewArrivedProcessIndex+" value: "+processArray[currentNewArrivedProcessIndex][2]);
+    }
+
+
+    //while()
   }
+  console.log(queue);
+  console.log(processArray);
 }
 
 function doRR() {
