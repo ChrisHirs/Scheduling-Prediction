@@ -246,6 +246,7 @@ html, body {
 }
 .table-add:hover,
 #add_row:hover,
+#add_row_scheduling:hover,
 .table-add-col:hover {
   cursor: pointer;
   color: #0b0;
@@ -258,12 +259,14 @@ html, body {
   float: left;
   margin-right: 5px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .toolbar-right {
   float: right;
   margin-left: 5px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .wide{
@@ -276,7 +279,10 @@ html, body {
   background-color: #eee;
 }
 
-#table_predictions div, #table_predictions td {
+#table_predictions div, #table_predictions td,
+#table_scheduling_responses div, #table_scheduling_responses td,
+#table_scheduling_entries div, #table_scheduling_entries td
+ {
   text-align: center;
 }
 

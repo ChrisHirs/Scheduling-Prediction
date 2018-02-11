@@ -12,9 +12,8 @@ $(function(){
   });
 
   // Table utilisation - add
-  $('.table-add').click(function () {
+  $('#add_row_scheduling').click(function () {
     var clone = $(this).closest('table').find('tr.hide').clone(true).removeClass('hide').toggle();
-    // $(this).closest('table').append(clone);
     $(clone).insertBefore('#add_row_scheduling');
   });
 
@@ -32,17 +31,17 @@ $(function(){
       $('#table_scheduling_entries tbody tr:last').prev('tr').detach();
       i++;
     }
-    // Fresh new line
-    $('.table-add').trigger('click');
   });
 
   $('#empty_scheduling').click(function() {
     rowsToArray();
     emptySchedulingSolTab();
+    showCorrectionButton();
   });
 
   $('#resolve_scheduling').click(function() {
     rowsToArray();
+    emptySchedulingSolTab();
 
     if( $('#psjf').is(':checked') ) {
       doPSFJ();
@@ -64,32 +63,75 @@ function rowsToArray(){
   var index = 0;
   $('#table_scheduling_entries tbody tr').each(function(i, row) {
     if (i!=0) {
-      var currentRow = [$(row).find('td div').eq(0).text(), $(row).find('td div').eq(1).text(), $(row).find('td div').eq(2).text()];
-      console.log(currentRow);
+      var arrival = parseInt($(row).find('td div').eq(1).text());
+      var duration = parseInt($(row).find('td div').eq(2).text());
+      var currentRow = [$(row).find('td div').eq(0).text(), arrival, duration];
       processArray.push(currentRow);
     }
   });
   // Delete last entry in array
   processArray.splice(-1,1)
+  //Tests INT
+  processArray.forEach(function(process) {
+    if (isNaN(process[1]) || isNaN(process[2])) {
+      alert("Une ou plusieurs entrées sont incorrectes. Vérifiez le tableau à nouveau.");
+    }
+  });
   console.log(processArray);
+  console.log(processArray.length)
 }
 
 function emptySchedulingSolTab() {
-  console.log(getSchedulingSolTabRows());
+  //Initialization
+  $('#correct_scheduling').addClass('hide').hide();
+  $('#table_scheduling_responses').remove();
+  var clone = $('#table_scheduling_copy').clone(true).removeClass('hide').attr('id','table_scheduling_responses').toggle();
+  $(clone).insertBefore('#table_scheduling_copy');
+  var rowsNumber = getSchedulingSolTabRows();
+  //Columns construction
+  processArray.forEach(function(process) {
+    var node = $('<th style="color:white;text-align: center;">'+ process[0] +'</th>');
+    $('#table_scheduling_responses thead tr').eq(1).append(node);
+  });
+  //Rows construction
+  for (i = 0; i < rowsNumber; i++) {
+    var node = $('<tr></tr>');
+    $(node).append($('<td><div>'+ i +'</div></td>'));
+    processArray.forEach(function(process) {
+      $(node).append($('<td><div contentEditable class="editable">...</div></td>'));
+    });
+    $('#table_scheduling_responses tbody').append(node);
+    $('.editable').on('click', function () { document.execCommand('selectAll', false, null); });
+  }
 }
 
 function getSchedulingSolTabRows() {
   var rowsNumber = 0;
-  // if (Object.keys(processArray).length > 0) {
-  //   //Max duration calcul
-  //   maxDuration = 0;
-  //   for (i = 0; i < Object.keys(processArray).length; i++) {
-  //     maxDuration += processArray[i][2];
-  //   }
-  //   //Max arrival + duration
-  //
-  // }
+  var maxDuration = 0;
+  var maxArrival = 0;
+  var minArrival = 999;
+  if (processArray.length > 0) {
+    //Max duration calcul and max duration + arrival
+    processArray.forEach(function(process) {
+      maxDuration += process[2];
+      currentArrival = process[1];
+      currentArrivalDuration = process[1] + process[2];
+      if (currentArrivalDuration > maxArrival) {
+        maxArrival = currentArrivalDuration;
+      }
+      if (currentArrival < minArrival) {
+        minArrival = currentArrival;
+      }
+    });
+  }
+  console.log("Durée totale : " + maxDuration);
+  console.log("Arrivée + Durée max. : " + maxArrival);
+  rowsNumber = Math.max(maxDuration, maxArrival) + minArrival + 1;
   return rowsNumber;
+}
+
+function showCorrectionButton() {
+  $('#correct_scheduling').removeClass('hide').show();
 }
 
 function newArrivedProcess(currentLine){

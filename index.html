@@ -74,7 +74,7 @@
           <section class="section--center mdl-grid mdl-grid--no-spacing">
             <div class="mdl-cell mdl-cell--12-col">
               <h4>Scheduling</h4>
-              Sélection de l'algorithme :
+              <div  style="padding: 20px 0;">
               <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="psjf">
                 <input checked class="mdl-radio__button" id="psjf" name="algorithm" type="radio" value="on">
                 <span class="mdl-radio__label">SJF préemptif </span>
@@ -91,13 +91,12 @@
                 <input class="mdl-radio__button" id="rr" name="algorithm" type="radio" value="auto">
                 <span class="mdl-radio__label">Round Robin</span>
               </label>
+            </div>
               <div style="display:none;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label roundrobinnumber">
                 <input class="mdl-textfield__input" type="text" pattern="[0-9]*" id="rr_number">
                 <label class="mdl-textfield__label" for="rr_number">Quantum pour le Round Robin...</label>
                 <span class="mdl-textfield__error">Ce n'est pas un nombre !</span>
               </div>
-              <br/>
-              <br/>
               <table id="table_scheduling_entries" class="mdl-data-table mdl-shadow--2dp wide">
           			<thead>
                   <tr class="mdl-js-button mdl-button--raised mdl-button--accent">
@@ -126,22 +125,42 @@
           				</tr>
                   <tr id="add_row_scheduling">
                     <td class="table-header mdl-button--colored mdl-button--accent mdl-js-button" style="text-align: center;" colspan="100%">
-                      <i style="vertical-align: bottom;" class="table-add material-icons md-24">add</i>
+                      <i id="btn_table_add_row_sch" style="vertical-align: bottom;" class="table-add material-icons md-24">add</i>
+                      <div class="mdl-tooltip" data-mdl-for="btn_table_add_row_sch">
+                        Ajouter une nouvelle ligne
+                      </div>
                     </td>
                   </tr>
           			</tbody>
               </table>
               <div>
-                <button id="reset_scheduling" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+                <button id="reset_scheduling" class="toolbar-right mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
                   Reset
                 </button>
-                <button id="empty_scheduling" class="toolbar-right mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                <button id="empty_scheduling" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                   Grille vide à remplir
                 </button>
-                <button id="resolve_scheduling" class="toolbar-right mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                <button id="resolve_scheduling" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                   Grille avec solutions
                 </button>
-                <p class="toolbar-right">Générer :</p>
+              </div>
+              <div id="div_responses" style="clear: both;">
+                <!-- Table to copy -->
+                <table id="table_scheduling_copy" style="display:none;" class="hide mdl-data-table mdl-shadow--2dp wide">
+            			<thead>
+                    <tr class="mdl-js-button mdl-button--raised mdl-button--accent">
+  					         <th style="color:white;text-align: center;" colspan="100%">Diagramme de Gantt pour l'algorithme choisi</th>
+                    </tr>
+            				<tr class="mdl-js-button mdl-button--raised mdl-button--colored">
+            					<th style="color:white;text-align: center;">Cycle</th>
+            				</tr>
+            			</thead>
+            			<tbody>
+            			</tbody>
+                </table>
+                <button id="correct_scheduling" style="display:none;" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                  Corriger
+                </button>
               </div>
             </div>
           </section>
