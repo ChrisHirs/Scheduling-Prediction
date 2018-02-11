@@ -16,4 +16,5 @@ $(function(){
     $(this).parents('tr').detach();
   });
 
+  $('.editable').on('click', function () { document.execCommand('selectAll', false, null); });
 });
