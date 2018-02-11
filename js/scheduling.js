@@ -12,13 +12,25 @@ $(function(){
     }
   });
 
+  // Table utilisation - add
+  $('.table-add').click(function () {
+    var clone = $(this).closest('table').find('tr.hide').clone(true).removeClass('hide').toggle();
+    // $(this).closest('table').append(clone);
+    $(clone).insertBefore('#add_row_scheduling');
+  });
+
+  // Table utilisation - delete
+  $('.table-remove').click(function () {
+    $(this).parents('tr').detach();
+  });
+
   //Buttons
   $('#reset_scheduling').click(function() {
     var rowCount = $('#table_scheduling_entries tbody tr').length;
     var i = 1;
     // Delete all lines
-    while (i < rowCount) {
-      $('#table_scheduling_entries tbody tr:last').detach();
+    while (i < rowCount - 1) {
+      $('#table_scheduling_entries tbody tr:last').prev('tr').detach();
       i++;
     }
     // Fresh new line
@@ -50,13 +62,11 @@ $(function(){
 
 function rowsToArray(){
   $('#table_scheduling_entries tbody tr').each(function(i, row) {
-
     if(i!=0){
-      console.log($(row).find('td div').eq(0).textContent);
+      console.log(row);
       processArray[$(row).find('td div').eq(0).textContent] = 0;
 
     }
-
   });
   console.log(processArray);
 }
