@@ -49,16 +49,12 @@ $(function(){
 });
 
 function rowsToArray(){
+  processArray = {};
   $('#table_scheduling_entries tbody tr').each(function(i, row) {
-
     if(i!=0){
-      console.log($(row).find('td div').eq(0).textContent);
-      processArray[$(row).find('td div').eq(0).textContent] = 0;
-
+      processArray[$(row).find('td div').eq(0).text()] = [$(row).find('td div').eq(1).text(), $(row).find('td div').eq(2).text()];
     }
-
   });
-  console.log(processArray);
 }
 
 function countTableRows(){
@@ -66,18 +62,17 @@ function countTableRows(){
 }
 
 function doPSFJ (){
-  alert("psjf");
+
 }
 
 function doNPSFJ (){
-  alert("npsjf");
+
 }
 
 function doFIFO (){
 
-  alert("fifo");
 }
 
 function doRR (){
-  alert("rr");
+
 }
