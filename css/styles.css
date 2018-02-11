@@ -264,7 +264,10 @@ html, body {
   float: right;
   margin-left: 5px;
   margin-top: 20px;
+}
 
+.wide{
+  width: 100%;
 }
 
 /* PREDICTION */
