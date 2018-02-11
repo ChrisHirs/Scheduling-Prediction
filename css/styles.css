@@ -241,14 +241,20 @@ html, body {
 .table-remove:hover,
 .table-remove-row:hover,
 .table-remove-col:hover {
-  color: #f00;
+  color: #faa;
   cursor: pointer;
 }
 .table-add:hover,
 #add_row:hover,
-.table-add-col:hover {
+.table-add-col:hover,
+.table-check-burst:hover,
+.table-check-error:hover {
   cursor: pointer;
-  color: #0b0;
+  color: #b3f7b3;
+}
+
+.pointable{
+  cursor: pointer;
 }
 
 /* SCHEDULING */
@@ -287,4 +293,16 @@ html, body {
 .editable{
   width: 100%;
   height: 100%;
+}
+
+#table_predictions{
+  margin-bottom: 200px;
+}
+
+.correct-answer{
+  background-color: #b3f7b3;
+}
+
+.wrong-answer{
+  background-color: #faa;
 }

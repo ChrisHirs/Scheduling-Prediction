@@ -157,8 +157,8 @@
                   </tr>
                   <tr id="table_col_title" class="mdl-js-button mdl-button--raised mdl-button--colored">
                     <th style="color:white;text-align: center;">ID</th>
-                    <th style="color:white;text-align: center;">Préd. initale</th>
                     <th style="color:white;text-align: center;">&alpha;</th>
+                    <th style="color:white;text-align: center;">Préd. initale</th>
                     <th style="color:white;text-align: center;">R1</th>
                     <th style="color:white;text-align: center;">R2</th>
                     <th style="color:white;text-align: center;">R3</th>
@@ -178,36 +178,70 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="row-data" style="font-weight:bold;">
+                  <tr id="base_data" class="row-data" style="font-weight:bold;">
                     <td>Donnée</td>
-                    <td><div contentEditable class="editable">PI</div></td>
-                    <td><div contentEditable class="editable">&alpha;</div></td>
-                    <td><div contentEditable class="editable">Cell 1</div></td>
-                    <td><div contentEditable class="editable">Cell 2</div></td>
-                    <td><div contentEditable class="editable">Cell 3</div></td>
-                    <td><div contentEditable class="editable">Cell 4</div></td>
-                    <td><div contentEditable class="editable">Cell 5</div></td>
-                    <td><div contentEditable class="editable">Cell 6</div></td>
+                    <td><div>&alpha;</div></td>
+                    <td><div>PI</div></td>
+                    <td><div contentEditable class="editable data">2</div></td>
+                    <td><div contentEditable class="editable data">4</div></td>
+                    <td><div contentEditable class="editable data">12</div></td>
+                    <td><div contentEditable class="editable data">2</div></td>
+                    <td><div contentEditable class="editable data">14</div></td>
+                    <td><div contentEditable class="editable data">23</div></td>
                     <td></td>
                   </tr>
                   <tr class="row-nbr-1">
                     <td>1</td>
-                    <td><div contentEditable class="editable">PI</div></td>
-                    <td><div contentEditable class="editable">&alpha;</div></td>
-                    <td><div contentEditable class="editable">Cell 1</div></td>
-                    <td><div contentEditable class="editable">Cell 2</div></td>
-                    <td><div contentEditable class="editable">Cell 3</div></td>
-                    <td><div contentEditable class="editable">Cell 4</div></td>
-                    <td><div contentEditable class="editable">Cell 5</div></td>
-                    <td><div contentEditable class="editable">Cell 6</div></td>
-                    <td><i title="Supprimer la ligne" style="vertical-align: bottom;" class="table-remove-row material-icons md-24">&#xe15d;</i></td>
+                    <td><div contentEditable class="editable data">0.15</div></td>
+                    <td><div contentEditable class="editable data">10</div></td>
+                    <td><div contentEditable class="editable data">8.8</div></td>
+                    <td><div contentEditable class="editable data">8.10</div></td>
+                    <td><div contentEditable class="editable data">8.99</div></td>
+                    <td><div contentEditable class="editable data">7.66</div></td>
+                    <td><div contentEditable class="editable data">8.61</div></td>
+                    <td><div contentEditable class="editable data">10.77</div></td>
+                    <td>
+                      <i title="Vérifier la ligne" style="vertical-align: bottom;" class="table-check-burst pointable material-icons md-24">check_circle</i>
+                      <i title="Supprimer la ligne" style="vertical-align: bottom;" class="table-remove-row material-icons md-24">&#xe15d;</i>
+                    </td>
                   </tr>
-                  <tr id="add_row">
-                    <td id="" class="table-header mdl-button--colored mdl-button--accent mdl-js-button" style="text-align: center;" colspan="100%">
+                  <tr class="row-nbr-1">
+                    <td>1</td>
+                    <td><div contentEditable class="editable data">0.15</div></td>
+                    <td><div contentEditable class="editable data">10</div></td>
+                    <td><div contentEditable class="editable data">8.8</div></td>
+                    <td><div contentEditable class="editable data">8.10</div></td>
+                    <td><div contentEditable class="editable data">8.99</div></td>
+                    <td><div contentEditable class="editable data">7.66</div></td>
+                    <td><div contentEditable class="editable data">8.91</div></td>
+                    <td><div contentEditable class="editable data">10.77</div></td>
+                    <td>
+                      <i title="Vérifier la ligne" style="vertical-align: bottom;" class="table-check-burst pointable material-icons md-24">check_circle</i>
+                      <i title="Supprimer la ligne" style="vertical-align: bottom;" class="table-remove-row material-icons md-24">&#xe15d;</i>
+                    </td>
+                  </tr>
+                  <tr id="add_row" class="table-header">
+                    <td id="" class="mdl-button--colored mdl-button--accent mdl-js-button" style="text-align: center;" colspan="100%">
                       <i id="btn_table_add_row" style="vertical-align: bottom;" class="table-add-row material-icons md-24">add</i>
                       <div class="mdl-tooltip" data-mdl-for="btn_table_add_row">
                         Ajouter une nouvelle ligne
                       </div>
+                    </td>
+                  </tr>
+                  <!-- This is our clonable table line for predict part -->
+                  <tr class="hide" style="display:none;">
+                    <td>1</td>
+                    <td><div contentEditable class="editable data">&alpha;</div></td>
+                    <td><div contentEditable class="editable data">PI</div></td>
+                    <td><div contentEditable class="editable data">Cell 1</div></td>
+                    <td><div contentEditable class="editable data">Cell 2</div></td>
+                    <td><div contentEditable class="editable data">Cell 3</div></td>
+                    <td><div contentEditable class="editable data">Cell 4</div></td>
+                    <td><div contentEditable class="editable data">Cell 5</div></td>
+                    <td><div contentEditable class="editable data">Cell 6</div></td>
+                    <td>
+                      <i title="Vérifier la ligne" style="vertical-align: bottom;" class="table-check-burst pointable material-icons md-24">check_circle</i>
+                      <i title="Supprimer la ligne"  style="vertical-align: bottom;" class="table-remove-row material-icons md-24">&#xe15d;</i>
                     </td>
                   </tr>
                   <tr class="table-header error-header mdl-js-button mdl-button--raised mdl-button--accent">
@@ -215,29 +249,35 @@
                   </tr>
                   <tr class="row-nbr-1">
                     <td>1</td>
-                    <td><div contentEditable class="editable">PI</div></td>
-                    <td><div contentEditable class="editable">&alpha;</div></td>
+                    <td><div>&alpha;</div></td>
+                    <td><div>PI</div></td>
                     <td><div contentEditable class="editable">Cell 1</div></td>
                     <td><div contentEditable class="editable">Cell 2</div></td>
                     <td><div contentEditable class="editable">Cell 3</div></td>
                     <td><div contentEditable class="editable">Cell 4</div></td>
                     <td><div contentEditable class="editable">Cell 5</div></td>
                     <td><div contentEditable class="editable">Cell 6</div></td>
-                    <td><i title="Supprimer la ligne" style="vertical-align: bottom;" class="table-remove-row material-icons md-24">&#xe15d;</i></td>
+                    <td>
+                      <i title="Vérifier la ligne" style="vertical-align: bottom;" class="table-check-error pointable material-icons md-24">check_circle</i>
+                      <i title="Supprimer la ligne" style="vertical-align: bottom;" class="table-remove-row material-icons md-24">&#xe15d;</i>
+                    </td>
                   </tr>
                   <tr class="last-line-error" style="display:none;"></tr>
-                  <!-- This is our clonable table line -->
+                  <!-- This is our clonable table line for error part -->
                   <tr class="hide" style="display:none;">
                     <td>1</td>
-                    <td><div contentEditable class="editable">PI</div></td>
-                    <td><div contentEditable class="editable">&alpha;</div></td>
+                    <td><div>&alpha;</div></td>
+                    <td><div>PI</div></td>
                     <td><div contentEditable class="editable">Cell 1</div></td>
                     <td><div contentEditable class="editable">Cell 2</div></td>
                     <td><div contentEditable class="editable">Cell 3</div></td>
                     <td><div contentEditable class="editable">Cell 4</div></td>
                     <td><div contentEditable class="editable">Cell 5</div></td>
                     <td><div contentEditable class="editable">Cell 6</div></td>
-                    <td><i title="Supprimer la ligne"  style="vertical-align: bottom;" class="table-remove-row material-icons md-24">&#xe15d;</i></td>
+                    <td>
+                      <i title="Vérifier la ligne" style="vertical-align: bottom;" class="table-check-error pointable material-icons md-24">check_circle</i>
+                      <i title="Supprimer la ligne"  style="vertical-align: bottom;" class="table-remove-row material-icons md-24">&#xe15d;</i>
+                    </td>
                   </tr>
                 </tbody>
               </table>
