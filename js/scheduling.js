@@ -1,4 +1,4 @@
-var processArray = [];
+
 var currentNewArrivedProcessIndex;
 
 $(function(){
@@ -35,14 +35,14 @@ $(function(){
   });
 
   $('#empty_scheduling').click(function() {
-    rowsToArray();
-    emptySchedulingSolTab();
-    showCorrectionButton();
+    var processArray = rowsToArray();
+    emptySchedulingSolTab(processArray);
+    showCorrectionButton(processArray);
   });
 
   $('#resolve_scheduling').click(function() {
-    rowsToArray();
-    emptySchedulingSolTab();
+    var processArray = rowsToArray();
+    emptySchedulingSolTab(processArray);
 
     if( $('#psjf').is(':checked') ) {
       doPSFJ();
@@ -51,7 +51,7 @@ $(function(){
       doNPSFJ();
     }
     else if ( $('#fifo').is(':checked')) {
-      doFIFO();
+      doFIFO(processArray);
     }
     else if ( $('#rr').is(':checked')) {
       doRR();
@@ -60,13 +60,15 @@ $(function(){
 });
 
 function rowsToArray(){
-  processArray = [];
+  var processArray = [];
   var index = 0;
   $('#table_scheduling_entries tbody tr').each(function(i, row) {
     if (i!=0) {
       var arrival = parseInt($(row).find('td div').eq(1).text());
       var duration = parseInt($(row).find('td div').eq(2).text());
       var currentRow = [$(row).find('td div').eq(0).text(), arrival, duration];
+      console.log("rowToArray currentRow:");
+      console.log(currentRow);
       processArray.push(currentRow);
     }
   });
@@ -78,18 +80,19 @@ function rowsToArray(){
       alert("Une ou plusieurs entrées sont incorrectes. Vérifiez le tableau à nouveau.");
     }
   });
-  console.log("----")
+  console.log("rowToArray processArray:");
   console.log(processArray);
   // console.log(processArray.length)
+  return processArray;
 }
 
-function emptySchedulingSolTab() {
+function emptySchedulingSolTab(processArray) {
   //Initialization
   $('#correct_scheduling').addClass('hide').hide();
   $('#table_scheduling_responses').remove();
   var clone = $('#table_scheduling_copy').clone(true).removeClass('hide').attr('id','table_scheduling_responses').toggle();
   $(clone).insertBefore('#table_scheduling_copy');
-  var rowsNumber = getSchedulingSolTabRows();
+  var rowsNumber = getSchedulingSolTabRows(processArray);
   //Columns construction
   processArray.forEach(function(process) {
     var node = $('<th style="color:white;text-align: center;">'+ process[0] +'</th>');
@@ -107,7 +110,7 @@ function emptySchedulingSolTab() {
   }
 }
 
-function getSchedulingSolTabRows() {
+function getSchedulingSolTabRows(processArray) {
   var rowsNumber = 0;
   var maxDuration = 0;
   var maxArrival = 0;
@@ -132,7 +135,7 @@ function getSchedulingSolTabRows() {
   return rowsNumber;
 }
 
-function isNewProcessArrived(currentLine){
+function isNewProcessArrived(currentLine, processArray){
 
   for(j=0; j<processArray.length; j++){
     //console.log(j)
@@ -145,15 +148,15 @@ function isNewProcessArrived(currentLine){
   return false;
 }
 
-function showCorrectionButton() {
+function showCorrectionButton(processArray) {
   $('#correct_scheduling').removeClass('hide').show();
 }
 
-function printResult(result){
+function printResult(result, processArray){
   for(var i = 0; i<result.length; i++){
     //$('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(result[i]).find('div').text(processArray[result[i]][2]);
-    console.log($('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(1).find('div').text(processArray[result[i]][2]));
-    console.log("process array durée: "+processArray[result[i]][2]);
+    $('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(result[i]+1).find('div').text(processArray[result[i]][2]);
+    console.log("printResult processArray durée: "+processArray[result[i]][2]);
     processArray[result[i]][2]--;
   }
 }
@@ -166,21 +169,22 @@ function doNPSFJ() {
 
 }
 
-function doFIFO (){
+function doFIFO (processArray){
   var actifProcessIndex = [];
   var result = [];
-  var tmpProcessArray = processArray.slice();
+  var tmpProcessArray = $.extend(true,[],processArray);
 
-  for(var i=0; i<=getSchedulingSolTabRows(); i++){
+
+
+
+  for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
     //console.log("fifo arr i: "+i);
 
-    if(isNewProcessArrived(i)){
+    if(isNewProcessArrived(i, processArray)){
       actifProcessIndex.push(currentNewArrivedProcessIndex);
       //console.log("row: "+i+" column: "+currentNewArrivedProcessIndex+" value: "+processArray[currentNewArrivedProcessIndex][2]);
     }
   }
-  console.log(processArray);
-  console.log(tmpProcessArray);
 
   for(var i=0; i<actifProcessIndex.length; i++){
     while(tmpProcessArray[actifProcessIndex[i]][2]>0){
@@ -189,10 +193,12 @@ function doFIFO (){
     }
   }
 
+  console.log("doFIFO process puis tmpProcessArray: ");
+  console.log(processArray);
+  console.log(tmpProcessArray);
+  console.log("doFIFO Résultat: " + result);
 
-  console.log("Résultat FIFO : " + result);
-
-  printResult(result);
+  printResult(result, processArray);
 }
 
 function doRR() {
