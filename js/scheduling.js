@@ -78,8 +78,9 @@ function rowsToArray(){
       alert("Une ou plusieurs entrées sont incorrectes. Vérifiez le tableau à nouveau.");
     }
   });
+  console.log("----")
   console.log(processArray);
-  console.log(processArray.length)
+  // console.log(processArray.length)
 }
 
 function emptySchedulingSolTab() {
@@ -125,27 +126,36 @@ function getSchedulingSolTabRows() {
       }
     });
   }
-  console.log("Durée totale : " + maxDuration);
-  console.log("Arrivée + Durée max. : " + maxArrival);
+  // console.log("Durée totale : " + maxDuration);
+  // console.log("Arrivée + Durée max. : " + maxArrival);
   rowsNumber = Math.max(maxDuration, maxArrival) + minArrival + 1;
   return rowsNumber;
 }
+
 function isNewProcessArrived(currentLine){
 
-  for(j=0; j<=processArray.length; j++){
+  for(j=0; j<processArray.length; j++){
+    //console.log(j)
     if(processArray[j][1] == currentLine){
-      console.log("IS ARRIVED process arr: "+processArray[j][1]+" current: "+currentLine+" i: "+j);
+      //console.log("IS ARRIVED process arr: "+processArray[j][1]+" current: "+currentLine+" i: "+j);
       currentNewArrivedProcessIndex = j;
       return true;
     }
-    else {
-      console.log("IS NOT ARRIVED process arr: "+processArray[j][1]+" current: "+currentLine+" i: "+j);
-      return false;
-    }
   }
+  return false;
+}
+
 function showCorrectionButton() {
   $('#correct_scheduling').removeClass('hide').show();
 }
+
+function printResult(result){
+  for(var i = 0; i<result.length; i++){
+    //$('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(result[i]).find('div').text(processArray[result[i]][2]);
+    console.log($('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(1).find('div').text(processArray[result[i]][2]));
+    console.log("process array durée: "+processArray[result[i]][2]);
+    processArray[result[i]][2]--;
+  }
 }
 
 function doPSFJ (){
@@ -157,22 +167,32 @@ function doNPSFJ() {
 }
 
 function doFIFO (){
-  var queue = [];
-  console.log("in FIFO");
-  console.log(processArray);
-  for(i=0; i<=5; i++){
-    console.log("fifo arr i: "+i);
+  var actifProcessIndex = [];
+  var result = [];
+  var tmpProcessArray = processArray.slice();
+
+  for(var i=0; i<=getSchedulingSolTabRows(); i++){
+    //console.log("fifo arr i: "+i);
+
     if(isNewProcessArrived(i)){
-      queue.push(processArray[currentNewArrivedProcessIndex]);
-      //$('#table_scheduling_entries tbody').rows[i].cells[currentNewArrivedProcessIndex+1].text(processArray[currentNewArrivedProcessIndex][2]);
-      console.log("row: "+i+" column: "+currentNewArrivedProcessIndex+" value: "+processArray[currentNewArrivedProcessIndex][2]);
+      actifProcessIndex.push(currentNewArrivedProcessIndex);
+      //console.log("row: "+i+" column: "+currentNewArrivedProcessIndex+" value: "+processArray[currentNewArrivedProcessIndex][2]);
     }
-
-
-    //while()
   }
-  console.log(queue);
   console.log(processArray);
+  console.log(tmpProcessArray);
+
+  for(var i=0; i<actifProcessIndex.length; i++){
+    while(tmpProcessArray[actifProcessIndex[i]][2]>0){
+      result.push(actifProcessIndex[i]);
+      tmpProcessArray[actifProcessIndex[i]][2]--;
+    }
+  }
+
+
+  console.log("Résultat FIFO : " + result);
+
+  printResult(result);
 }
 
 function doRR() {
