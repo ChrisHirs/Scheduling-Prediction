@@ -109,13 +109,13 @@
               <table id="table_scheduling_entries" class="mdl-data-table mdl-shadow--2dp wide">
           			<thead>
                   <tr class="mdl-js-button mdl-button--raised mdl-button--accent">
-					         <th style="color:white;text-align: center;" colspan="100%">Entrées de la distribution temporelle</th>
+					         <th class="table-head" colspan="100%">Entrées de la distribution temporelle</th>
                   </tr>
           				<tr class="mdl-js-button mdl-button--raised mdl-button--colored">
-          					<th style="color:white;text-align: center;">Nom</th>
-          					<th style="color:white;text-align: center;">Arrivée</th>
-                    <th style="color:white;text-align: center;">Durée</th>
-          					<th style="color:white;text-align: center;"></th>
+          					<th class="table-head">Nom</th>
+          					<th class="table-head">Arrivée</th>
+                    <th class="table-head">Durée</th>
+          					<th class="table-head"></th>
           				</tr>
           			</thead>
           			<tbody>
@@ -133,7 +133,7 @@
           					<td><i style="vertical-align: bottom;" class="table-remove material-icons md-24">&#xe15d;</i></td>
           				</tr>
                   <tr id="add_row_scheduling">
-                    <td class="table-header mdl-button--colored mdl-button--accent mdl-js-button" style="text-align: center;" colspan="100%">
+                    <td class="table-row-header mdl-button--colored mdl-button--accent mdl-js-button" style="text-align: center;" colspan="100%">
                       <i id="btn_table_add_row_sch" style="vertical-align: bottom;" class="table-add material-icons md-24">add</i>
                       <div class="mdl-tooltip" data-mdl-for="btn_table_add_row_sch">
                         Ajouter une nouvelle ligne
@@ -158,10 +158,10 @@
                 <table id="table_scheduling_copy" style="display:none;" class="hide mdl-data-table mdl-shadow--2dp wide">
             			<thead>
                     <tr class="mdl-js-button mdl-button--raised mdl-button--accent">
-  					         <th style="color:white;text-align: center;" colspan="100%">Diagramme de Gantt pour l'algorithme choisi</th>
+  					         <th class="table-head" colspan="100%">Diagramme de Gantt pour l'algorithme choisi</th>
                     </tr>
             				<tr class="mdl-js-button mdl-button--raised mdl-button--colored">
-            					<th style="color:white;text-align: center;">Cycle</th>
+            					<th class="table-head">Cycle</th>
             				</tr>
             			</thead>
             			<tbody>
@@ -180,20 +180,21 @@
               <h4>Predictions</h4>
               <table id="table_predictions" class="mdl-cell mdl-cell--12-col mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                 <thead>
-                  <tr class="table-header mdl-js-button mdl-button--raised mdl-button--accent">
-                    <th style="color:white;text-align: center;" colspan="100%">Tableau des Prédictions</th>
+                  <tr class="table-row-header mdl-js-button mdl-button--raised mdl-button--accent">
+                    <th class="table-head" colspan="100%">Tableau des Prédictions</th>
                   </tr>
                   <tr id="table_col_title" class="mdl-js-button mdl-button--raised mdl-button--colored">
-                    <th style="color:white;text-align: center;">ID</th>
-                    <th style="color:white;text-align: center;">&alpha;</th>
-                    <th style="color:white;text-align: center;">Préd. initale</th>
-                    <th style="color:white;text-align: center;">R1</th>
-                    <th style="color:white;text-align: center;">R2</th>
-                    <th style="color:white;text-align: center;">R3</th>
-                    <th style="color:white;text-align: center;">R4</th>
-                    <th style="color:white;text-align: center;">R5</th>
-                    <th style="color:white;text-align: center;">R6</th>
-                    <th style="color:white;text-align: center;">
+                    <th class="table-head">ID</th>
+                    <th class="table-head">&alpha;</th>
+                    <th class="table-head">Préd. initale</th>
+                    <th class="table-head">R1</th>
+                    <th class="table-head">R2</th>
+                    <th class="table-head">R3</th>
+                    <th class="table-head">R4</th>
+                    <th class="table-head">R5</th>
+                    <th class="table-head">R6</th>
+                    <th class="table-head">&Sigma;<sub>error</sub></th>
+                    <th class="table-head">
                       <i id="btn_table_add_col" style="vertical-align: bottom;" class="table-add-col material-icons md-24">add_circle</i>
                       <div class="mdl-tooltip" data-mdl-for="btn_table_add_col">
                         Ajouter une nouvelle colonne
@@ -216,6 +217,7 @@
                     <td><div contentEditable class="editable data">2</div></td>
                     <td><div contentEditable class="editable data">14</div></td>
                     <td><div contentEditable class="editable data">23</div></td>
+                    <td>-</td>
                     <td></td>
                   </tr>
                   <tr class="row-nbr-1">
@@ -228,13 +230,14 @@
                     <td><div contentEditable class="editable data">7.66</div></td>
                     <td><div contentEditable class="editable data">8.61</div></td>
                     <td><div contentEditable class="editable data">10.77</div></td>
+                    <td>-</td>
                     <td>
                       <i title="Vérifier la ligne" style="vertical-align: bottom;" class="table-check-burst pointable material-icons md-24">check_circle</i>
                       <i title="Remplacer par correction" style="vertical-align: bottom;" class="table-show-burst pointable material-icons md-24">done_all</i>
                       <i title="Supprimer la ligne" style="vertical-align: bottom;" class="table-remove-row material-icons md-24">&#xe15d;</i>
                     </td>
                   </tr>
-                  <tr id="add_row" class="table-header">
+                  <tr id="add_row" class="table-row-header">
                     <td id="" class="mdl-button--colored mdl-button--accent mdl-js-button" style="text-align: center;" colspan="100%">
                       <i id="btn_table_add_row" style="vertical-align: bottom;" class="table-add-row material-icons md-24">add</i>
                       <div class="mdl-tooltip" data-mdl-for="btn_table_add_row">
@@ -253,25 +256,27 @@
                     <td><div contentEditable class="editable data">Cell 4</div></td>
                     <td><div contentEditable class="editable data">Cell 5</div></td>
                     <td><div contentEditable class="editable data">Cell 6</div></td>
+                    <td>-</td>
                     <td>
                       <i title="Vérifier la ligne" style="vertical-align: bottom;" class="table-check-burst pointable material-icons md-24">check_circle</i>
                       <i title="Remplacer par correction" style="vertical-align: bottom;" class="table-show-burst pointable material-icons md-24">done_all</i>
                       <i title="Supprimer la ligne"  style="vertical-align: bottom;" class="table-remove-row material-icons md-24">&#xe15d;</i>
                     </td>
                   </tr>
-                  <tr class="table-header error-header mdl-js-button mdl-button--raised mdl-button--accent">
-                    <th style="color:white;text-align: center;" colspan="100%">Tableau des Erreurs</th>
+                  <tr class="table-row-header error-header mdl-js-button mdl-button--raised mdl-button--accent">
+                    <th class="table-head" colspan="100%">Tableau des Erreurs</th>
                   </tr>
                   <tr class="row-nbr-1">
                     <td>1</td>
-                    <td><div class="data">0.15</div></td>
-                    <td><div class="data">10</div></td>
+                    <td><div contentEditable class="editable data">0.15</div></td>
+                    <td><div contentEditable class="editable data">10</div></td>
                     <td><div contentEditable class="editable data">8.00</div></td>
                     <td><div contentEditable class="editable data">5</div></td>
                     <td><div contentEditable class="editable data">3.92</div></td>
                     <td><div contentEditable class="editable data">6.67</div></td>
                     <td><div contentEditable class="editable data">6.5</div></td>
                     <td><div contentEditable class="editable data">14.38</div></td>
+                    <td><div contentEditable class="editable data">44.47</div></td>
                     <td>
                       <i title="Vérifier la ligne" style="vertical-align: bottom;" class="table-check-error pointable material-icons md-24">check_circle</i>
                       <i title="Remplacer par correction" style="vertical-align: bottom;" class="table-show-error pointable material-icons md-24">done_all</i>
@@ -282,14 +287,15 @@
                   <!-- This is our clonable table line for error part -->
                   <tr class="hide" style="display:none;">
                     <td>1</td>
-                    <td><div class="data">&alpha;</div></td>
-                    <td><div class="data">PI</div></td>
+                    <td><div contentEditable class="editable data">&alpha;</div></td>
+                    <td><div contentEditable class="editable data">PI</div></td>
                     <td><div contentEditable class="editable data">Cell 1</div></td>
                     <td><div contentEditable class="editable data">Cell 2</div></td>
                     <td><div contentEditable class="editable data">Cell 3</div></td>
                     <td><div contentEditable class="editable data">Cell 4</div></td>
                     <td><div contentEditable class="editable data">Cell 5</div></td>
                     <td><div contentEditable class="editable data">Cell 6</div></td>
+                    <td><div contentEditable class="editable data">Sum</div></td>
                     <td>
                       <i title="Vérifier la ligne" style="vertical-align: bottom;" class="table-check-error pointable material-icons md-24">check_circle</i>
                       <i title="Remplacer par correction" style="vertical-align: bottom;" class="table-show-error pointable material-icons md-24">done_all</i>

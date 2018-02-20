@@ -7,7 +7,7 @@ $(function(){
   }
 
   function countColTablePredict(){
-    return ($('#table_col_title th').length - 4); // 4 = other col than Rx
+    return ($('#table_col_title th').length - 5); // 5 = other col than Rx
   }
 
   // Table utilisation - add row
@@ -35,19 +35,19 @@ $(function(){
 
   // Table utilisation - add column
   $('.table-add-col').click(function () {
-    $('#table_predictions tr').not('.table-header').each(function(i, row) {
+    $('#table_predictions tr').not('.table-row-header').each(function(i, row) {
 
       var newCell = $('<td></td>');
       var colCount = countColTablePredict();
       $(newCell).append($('<div contentEditable class="editable data">Cell ' + colCount + '</div>'));
 
       if(i == 0){
-        newCell = $('<th style="color:white;text-align: center;"></th>');
+        newCell = $('<th class="table-head""></th>');
         colCount++; // Because it needs to be the next columns
         $(newCell).html('R' + colCount);
       }
 
-      $(row).children().last().before(newCell);
+      $(row).children().eq(-2).before(newCell);
 
     })
   });
@@ -55,7 +55,7 @@ $(function(){
   // Table utilisation - remove column
   $('.table-remove-col').click(function () {
     $('#table_predictions tr').not('.table-header').each(function(i, row) {
-      $(row).children().last().prev().detach();
+      $(row).children().eq(-2).prev().detach();
     })
   });
 
@@ -175,12 +175,17 @@ $(function(){
 
     var alpha = arrayDataToCheck.splice(0, 1);
     var lastPred = arrayDataToCheck.splice(0, 1);
+    var sum = arrayDataToCheck.splice(arrayDataToCheck.length-1, arrayDataToCheck.length);
 
     var arraySolutionBurst = getSolutionBurst(lastPred, arrayBaseData, alpha)
     var arraySolutionError = getSolutionError(lastPred, arrayBaseData, arraySolutionBurst);
 
+    var correctSum = arraySolutionError.reduce((x, y) => x + y);
+
     console.log("alpha="+alpha);
     console.log("inital pred="+lastPred);
+    console.log("sum="+sum);
+    console.log("correctSum="+correctSum);
 
     console.log(arraySolutionBurst);
     console.log(arraySolutionError);
@@ -191,6 +196,20 @@ $(function(){
     var MORE_OR_LESS = 0.2;
 
     compareAndCorrect(arrayDataToCheck, arraySolutionError, MORE_OR_LESS, this);
+
+    //Sum check
+    var tolerableError = arrayDataToCheck.length * MORE_OR_LESS;
+    console.log("tolerableErrorOnSum="+tolerableError);
+    if(sum < correctSum+tolerableError && sum > correctSum-tolerableError){
+      var className = 'correct-answer';
+      console.log('sum correct');
+    }
+    else{
+      var className = 'wrong-answer';
+      console.log('sum wrong');
+    }
+
+    $(this).parents('tr').find('td').eq(-2).removeClass('wrong-answer correct-answer').addClass(className);
 
   });
 
@@ -226,9 +245,14 @@ $(function(){
     var arraySolutionBurst = getSolutionBurst(lastPred, arrayBaseData, alpha)
     var arraySolutionError = getSolutionError(lastPred, arrayBaseData, arraySolutionBurst);
 
+    var correctSum = arraySolutionError.reduce((x, y) => x + y);
+
     $(arraySolutionError).each(function(i, solVal) {
       $(self).parents('tr').find('td').eq(3+i).removeClass('wrong-answer').addClass('correct-answer').find('div').text(solVal.toFixed(2));
     })
+
+    // Sum
+    $(self).parents('tr').find('td').eq(-2).removeClass('wrong-answer').addClass('correct-answer').find('div').text(correctSum.toFixed(2));
 
   });
 

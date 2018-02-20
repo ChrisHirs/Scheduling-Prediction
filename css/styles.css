@@ -336,6 +336,11 @@ html, body {
   background-color: #eee;
 }
 
+table .table-head{
+  color:white;
+  text-align: center;
+}
+
 #table_predictions div, #table_predictions td,
 #table_scheduling_responses div, #table_scheduling_responses td,
 #table_scheduling_entries div, #table_scheduling_entries td
