@@ -239,9 +239,23 @@ html, body {
 
 /* TITRE */
 
+/* #dummy-title-bar {
+  background-color: #e64a19;
+  position: absolute;
+  z-index : 7;
+  top: 0px;
+  left: 0px;
+  height: 32px;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  font-family: sans-serif;
+}
+
 #title-bar {
  -webkit-app-region: drag;
  background-color: #e64a19;
+ z-index : 8;
  height: 32px;
  padding: 0px;
  margin: 0px;
@@ -251,12 +265,13 @@ html, body {
 #title-bar-btns {
  -webkit-app-region: no-drag;
  position: fixed;
- top: 1px;
+ z-index : 9;
+ top: 0px;
  left: 0px;
 }
 
 #title-bar-btns button {
- height: 30px;
+ height: 32px;
  width: 40px;
  background-color: transparent;
  border: none;
@@ -271,13 +286,7 @@ html, body {
 #max-btn:hover, #min-btn:hover,
 #close-btn:hover {
   color: white;
-}
-
-@media screen and (min-width: 1024px) {
-  #title-bar-btns {
-    position: relative;
-  }
-}
+} */
 
 /* Table CSS */
 .table-remove:hover,
@@ -353,4 +362,31 @@ html, body {
 
 .wrong-answer{
   background-color: #faa;
+}
+
+/* MISCELLACOUSCOUS */
+
+::-webkit-scrollbar {
+	width: 10px;
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+	margin: 5px;
+	-webkit-border-radius: 10px;
+	background-color: #d3d3d3;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #ededed;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+	height: 5px;
+	display: block;
 }
