@@ -304,6 +304,14 @@
                   </tr>
                 </tbody>
               </table>
+              <h5>Best alpha</h5>
+              <div id="div_best_alpha_ip" class="left mdl-textfield mdl-js-textfield">
+                <input value="10" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input_best_alpha_ip">
+                <label class="mdl-textfield__label" for="sample2">Initial prediction</label>
+                <span class="mdl-textfield__error">Input is not a number!</span>
+              </div>
+              <button id="btn_find_best_alpha" name="submit" class="left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Find the best alpha</button>
+              <div id="answer_best_alpha" class="hidden left"><b>&alpha;</b><sub>best</sub> = <span id="best_alpha">-</span> avec <b>&Sigma;</b><sub>error</sub> = <span id="best_error">-</span></div>
             </div>
           </section>
         </div>
