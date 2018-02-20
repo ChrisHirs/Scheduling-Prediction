@@ -12,7 +12,6 @@ function createWindow () {
         width: 800,
         height: 600,
         frame: false,
-        nodeIntegration: true,
         icon: path.join(__dirname, 'images/android-desktop.png')
     })
     // Cacher le menu de base.

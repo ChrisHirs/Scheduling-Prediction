@@ -1,5 +1,5 @@
 {
-    "name" : "Scheduling & Predictions",
+    "name" : "SchedulingAndPredictions",
     "version" : "0.0.1",
     "main" : "electrapp.js"
 }
