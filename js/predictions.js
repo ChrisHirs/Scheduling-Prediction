@@ -64,7 +64,7 @@ $(function(){
 
     console.log('check burst');
 
-    arrayBaseData = getDataFromRow('#base_data div.data', null);
+    var arrayBaseData = getDataFromRow('#base_data div.data', null);
     var arrayDataToCheck = getDataFromRow('div.data', $(this).parents('tr'));
 
     var alpha = arrayDataToCheck.splice(0, 1);
@@ -81,7 +81,7 @@ $(function(){
 
     console.log(arraySolutionBurst);
 
-    var MORE_OR_LESS = 0.2;
+    const MORE_OR_LESS = 0.2;
 
     compareAndCorrect(arrayDataToCheck, arraySolutionBurst, MORE_OR_LESS, this);
 
@@ -170,7 +170,7 @@ $(function(){
   // Table utilisation - check error row
   $('.table-check-error').click(function () {
 
-    arrayBaseData = getDataFromRow('#base_data div.data', null);
+    var arrayBaseData = getDataFromRow('#base_data div.data', null);
     var arrayDataToCheck = getDataFromRow('div.data', $(this).parents('tr'));
 
     var alpha = arrayDataToCheck.splice(0, 1);
@@ -193,7 +193,7 @@ $(function(){
     console.log(arrayBaseData);
     console.log(arrayDataToCheck);
 
-    var MORE_OR_LESS = 0.2;
+    const MORE_OR_LESS = 0.2;
 
     compareAndCorrect(arrayDataToCheck, arraySolutionError, MORE_OR_LESS, this);
 
@@ -219,7 +219,7 @@ $(function(){
 
     var self = this;
 
-    arrayBaseData = getDataFromRow('#base_data div.data', null);
+    var arrayBaseData = getDataFromRow('#base_data div.data', null);
     var arrayDataToCheck = getDataFromRow('div.data', $(this).parents('tr'));
 
     var alpha = arrayDataToCheck.splice(0, 1);
@@ -236,7 +236,7 @@ $(function(){
   $('.table-show-error').click(function () {
     var self = this;
 
-    arrayBaseData = getDataFromRow('#base_data div.data', null);
+    var arrayBaseData = getDataFromRow('#base_data div.data', null);
     var arrayDataToCheck = getDataFromRow('div.data', $(this).parents('tr'));
 
     var alpha = arrayDataToCheck.splice(0, 1);
@@ -254,6 +254,46 @@ $(function(){
     // Sum
     $(self).parents('tr').find('td').eq(-2).removeClass('wrong-answer').addClass('correct-answer').find('div').text(correctSum.toFixed(2));
 
+  });
+
+  // Table utilisation - show error row
+  $('#btn_find_best_alpha').click(function () {
+
+    var initialPred = $('#input_best_alpha_ip').val();
+
+    if(!isNaN(initialPred)){
+
+      var arrayBaseData = getDataFromRow('#base_data div.data', null);
+
+      console.log(arrayBaseData);
+
+      var bestAlpha = 0;
+      var bestError = Number.MAX_SAFE_INTEGER;
+      const STEP = 0.01;
+
+      // Calc best alpha between 0 dans 1 by step of 0.01
+      for(i = 0.00; i < 1; i += STEP){
+
+        var arraySolutionBurst = getSolutionBurst(initialPred, arrayBaseData, i)
+        var arraySolutionError = getSolutionError(initialPred, arrayBaseData, arraySolutionBurst);
+
+        var correctSum = arraySolutionError.reduce((x, y) => x + y);
+
+        if(correctSum < bestError){
+          bestAlpha = i;
+          bestError = correctSum;
+        }
+
+      }
+
+      console.log('best alpha ='+bestAlpha);
+      console.log('best error ='+bestError);
+
+      $('#best_alpha').text(bestAlpha.toFixed(2));
+      $('#best_error').text(bestError.toFixed(2));
+      $('#answer_best_alpha').removeClass('hidden');
+
+    }
   });
 
   // Higlighting rows

@@ -288,6 +288,10 @@ html, body {
   color: white;
 } */
 
+.left{
+  float: left;
+}
+
 /* Table CSS */
 .table-remove:hover,
 .table-remove-row:hover,
@@ -332,6 +336,30 @@ html, body {
 
 /* PREDICTION */
 
+#div_best_alpha_ip{
+  width: 150px;
+}
+
+#btn_find_best_alpha{
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
+#answer_best_alpha{
+  margin-left: 20px;
+  margin-top: 25px;
+  font-size: 20px;
+}
+
+#best_alpha{
+  margin-right: 20px;
+  margin-left: 5px;
+}
+
+#best_error{
+  margin-left: 5px;
+}
+
 .table-row-hover{
   background-color: #eee;
 }
@@ -358,7 +386,9 @@ table .table-head{
 }
 
 #table_predictions{
-  margin-bottom: 200px;
+  margin-bottom: 20px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .correct-answer{
