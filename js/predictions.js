@@ -268,7 +268,7 @@ $(function(){
 
   });
 
-  // Table utilisation - show error row
+  // Click on btn find best alpha for a given burst series and initial prediction
   $('#btn_find_best_alpha').click(function () {
 
     var initialPred = $('#input_best_alpha_ip').val();
@@ -306,12 +306,6 @@ $(function(){
       $('#answer_best_alpha').removeClass('hidden');
 
     }
-  });
-
-  // Higlighting rows
-  $('#table_predictions tbody tr').on( "mouseenter mouseleave", function() {
-    var className = $(this).attr('class').split(' ')[0];
-    $('.' + className).toggleClass('table-row-hover');
   });
 
   // Button to plot graph burst
@@ -426,5 +420,23 @@ $(function(){
 
     Plotly.newPlot('plot_error', data, layout);
   }
+
+  // Higlighting rows
+  $('#table_predictions tbody tr').on( "mouseenter mouseleave", function() {
+    var className = $(this).attr('class').split(' ')[0];
+    $('.' + className).toggleClass('table-row-hover');
+  });
+
+  // Update Initial prediction field of Error Array when editing field in Prediction array
+  $('.burst-row .data-alpha').focusout(function() {
+    var className = $(this).parents('tr').attr('class').split(' ')[0];
+    $('.' + className + '.error-row').find('div.data-alpha').text($(this).text());
+  })
+
+  // Update Alpha field of Error Array when editing field in Prediction array
+  $('.burst-row .data-ip').focusout(function() {
+    var className = $(this).parents('tr').attr('class').split(' ')[0];
+    $('.' + className + '.error-row').find('div.data-ip').text($(this).text());
+  })
 
 });
