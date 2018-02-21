@@ -347,23 +347,22 @@ $(function(){
       x: array_x,
       y: arrayBaseData,
       mode: 'lines+markers',
-      name: 'Real Bursts'
+      name: 'Rafales effectives'
     };
 
     data.push(traceBaseData);
 
     $('#table_predictions tr.burst-row').not('.hide').each(function(i, row) {
 
+      var idData = getDataFromRow('.data-id', row);
       var array_y = getDataFromRow('div.data', row);
-      array_y = array_y.splice(1, array_y.length);
-
-      var rowNumber = i + 1;
+      var alpha = array_y.splice(0, 1);
 
       var trace = {
         x: array_x,
         y: array_y,
         mode: 'lines+markers',
-        name: 'Row ' + rowNumber
+        name: 'Ligne ' + idData + ' | α = ' + alpha
       };
 
       data.push(trace);
@@ -371,7 +370,7 @@ $(function(){
     })
 
     var layout = {
-      title:'Bursts'
+      title:'Rafales'
     };
 
     Plotly.newPlot('plot_burst', data, layout);
@@ -397,23 +396,24 @@ $(function(){
       x: array_x,
       y: arrayBaseData,
       mode: 'lines+markers',
-      name: 'Real Bursts Errors'
+      name: 'Erreur rafales effectives'
     };
 
     data.push(traceBaseData);
 
     $('#table_predictions tr.error-row').not('.hide').each(function(i, row) {
 
-      var array_y = getDataFromRow('div.data', row);
-      array_y = array_y.splice(2, array_y.length);
+      var idData = getDataFromRow('.data-id', row);
 
-      var rowNumber = i + 1;
+      var array_y = getDataFromRow('div.data', row);
+      var alpha = array_y.splice(0, 1);
+      array_y = array_y.splice(1, array_y.length);
 
       var trace = {
         x: array_x,
         y: array_y,
         mode: 'lines+markers',
-        name: 'Row ' + rowNumber
+        name: 'Ligne ' + idData + ' | α = ' + alpha
       };
 
       data.push(trace);
@@ -421,7 +421,7 @@ $(function(){
     })
 
     var layout = {
-      title:'Errors'
+      title:'Erreurs'
     };
 
     Plotly.newPlot('plot_error', data, layout);
