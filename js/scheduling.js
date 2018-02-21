@@ -1,5 +1,5 @@
 
-var currentNewArrivedProcessIndex;
+var currentNewArrivedProcessesIndexes = [];
 
 $(function(){
 
@@ -59,6 +59,8 @@ $(function(){
   });
 });
 
+
+//Transform the HTML table to a JS array
 function rowsToArray(){
   var processArray = [];
   var index = 0;
@@ -80,12 +82,13 @@ function rowsToArray(){
       alert("Une ou plusieurs entrées sont incorrectes. Vérifiez le tableau à nouveau.");
     }
   });
-  console.log("rowToArray processArray:");
-  console.log(processArray);
+  //console.log("rowToArray processArray:");
+  //console.log(processArray);
   // console.log(processArray.length)
   return processArray;
 }
 
+//Generate à empty HTML table for the user to enter his solution
 function emptySchedulingSolTab(processArray) {
   //Initialization
   $('#correct_scheduling').addClass('hide').hide();
@@ -110,6 +113,7 @@ function emptySchedulingSolTab(processArray) {
   }
 }
 
+//get the number of rows needed to generate de solution HTML table.
 function getSchedulingSolTabRows(processArray) {
   var rowsNumber = 0;
   var maxDuration = 0;
@@ -129,78 +133,104 @@ function getSchedulingSolTabRows(processArray) {
       }
     });
   }
-  // console.log("Durée totale : " + maxDuration);
-  // console.log("Arrivée + Durée max. : " + maxArrival);
+  //console.log("Durée totale : " + maxDuration);
+  //console.log("Arrivée + Durée max. : " + maxArrival);
   rowsNumber = Math.max(maxDuration, maxArrival) + minArrival + 1;
   return rowsNumber;
 }
 
+
+//Check if a new Process has arrived
 function isNewProcessArrived(currentLine, processArray){
+
+  var isFound = false;
+  currentNewArrivedProcessesIndexes = [];
 
   for(j=0; j<processArray.length; j++){
     //console.log(j)
     if(processArray[j][1] == currentLine){
-      //console.log("IS ARRIVED process arr: "+processArray[j][1]+" current: "+currentLine+" i: "+j);
-      currentNewArrivedProcessIndex = j;
-      return true;
+      // console.log("IS ARRIVED process arr: "+processArray[j][1]+" current: "+currentLine+" i: "+j);
+      currentNewArrivedProcessesIndexes.push(j);
+      isFound = true;
     }
   }
-  return false;
+  return isFound;
 }
 
+//enable the solution button
 function showCorrectionButton(processArray) {
   $('#correct_scheduling').removeClass('hide').show();
 }
 
+//show the solution in the HTML talbe
 function printResult(result, processArray){
   for(var i = 0; i<result.length; i++){
     //$('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(result[i]).find('div').text(processArray[result[i]][2]);
-    $('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(result[i]+1).find('div').text(processArray[result[i]][2]);
-    console.log("printResult processArray durée: "+processArray[result[i]][2]);
+    $('#table_scheduling_responses tbody').find('tr').eq(i+processArray[result[0]][1]).find('td').eq(result[i]+1).find('div').text(processArray[result[i]][2]);
+    // console.log("printResult processArray durée: "+processArray[result[i]][2]);
     processArray[result[i]][2]--;
   }
 }
 
+// preemtif Shortest Job First scheduling algorithme
 function doPSFJ (){
 
 }
 
-function doNPSFJ() {
-
-}
-
-function doFIFO (processArray){
+// Non-preemtif Shortest Job First scheduling algorithme
+function doNPSFJ(processArray) {
   var actifProcessIndex = [];
   var result = [];
-  var tmpProcessArray = $.extend(true,[],processArray);
-
-
-
+  var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
 
   for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
     //console.log("fifo arr i: "+i);
 
     if(isNewProcessArrived(i, processArray)){
-      actifProcessIndex.push(currentNewArrivedProcessIndex);
+
+      actifProcessIndex.push(currentNewArrivedProcessesIndexes); //put the new arrived process in the queue
       //console.log("row: "+i+" column: "+currentNewArrivedProcessIndex+" value: "+processArray[currentNewArrivedProcessIndex][2]);
+    }
+  }
+
+}
+
+//First In First Out scheduling algorithme
+function doFIFO (processArray){
+  var actifProcessIndex = [];
+  var result = [];
+  var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
+
+  for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
+    // console.log("fifo arr i: "+i);
+
+    if(isNewProcessArrived(i, processArray)){
+      currentNewArrivedProcessesIndexes.forEach(function(process, index) {
+          actifProcessIndex.push(currentNewArrivedProcessesIndexes[index]); //put the new arrived process in the queue
+      });
+      // console.log("processArray puis currentNewArrivedProcessesIndexes");
+      // console.log(processArray);
+      // console.log(currentNewArrivedProcessesIndexes);
+      //console.log("row: "+i+" column: "+currentNewArrivedProcessesIndexes+" value: "+processArray[currentNewArrivedProcessesIndexes[i]][2]);
     }
   }
 
   for(var i=0; i<actifProcessIndex.length; i++){
     while(tmpProcessArray[actifProcessIndex[i]][2]>0){
-      result.push(actifProcessIndex[i]);
+      result.push(actifProcessIndex[i]); //put the actual process name in the solution array
       tmpProcessArray[actifProcessIndex[i]][2]--;
     }
   }
 
-  console.log("doFIFO process puis tmpProcessArray: ");
-  console.log(processArray);
-  console.log(tmpProcessArray);
-  console.log("doFIFO Résultat: " + result);
+  // console.log("doFIFO process puis tmpProcessArray: ");
+  // console.log(processArray);
+  // console.log(tmpProcessArray);
+  // console.log("doFIFO Résultat: " + result);
 
   printResult(result, processArray);
 }
 
+//Round Robin scheduling algorithme
 function doRR() {
 
 }
