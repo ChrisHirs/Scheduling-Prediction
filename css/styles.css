@@ -237,6 +237,65 @@ html, body {
   z-index: 99;
 }
 
+/* TITRE */
+
+/* #dummy-title-bar {
+  background-color: #e64a19;
+  position: absolute;
+  z-index : 7;
+  top: 0px;
+  left: 0px;
+  height: 32px;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  font-family: sans-serif;
+}
+
+#title-bar {
+ -webkit-app-region: drag;
+ background-color: #e64a19;
+ z-index : 8;
+ height: 32px;
+ padding: 0px;
+ margin: 0px;
+ font-family: sans-serif;
+}
+
+#title-bar-btns {
+ -webkit-app-region: no-drag;
+ position: fixed;
+ z-index : 9;
+ top: 0px;
+ left: 0px;
+}
+
+#title-bar-btns button {
+ height: 32px;
+ width: 40px;
+ background-color: transparent;
+ border: none;
+ color: rgba(255,255,255,.6);
+ font-size: 10px;
+}
+
+#title-bar-btns button:hover {
+ background-color: #ff5722;
+}
+
+#max-btn:hover, #min-btn:hover,
+#close-btn:hover {
+  color: white;
+} */
+
+.left{
+  float: left;
+}
+
+.clear{
+  clear: both;
+}
+
 /* Table CSS */
 .table-remove:hover,
 .table-remove-row:hover,
@@ -281,8 +340,41 @@ html, body {
 
 /* PREDICTION */
 
+#div_best_alpha_ip{
+  width: 150px;
+}
+
+#btn_find_best_alpha{
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
+#answer_best_alpha{
+  margin-left: 20px;
+  margin-top: 25px;
+  font-size: 20px;
+}
+
+#best_alpha{
+  margin-right: 20px;
+  margin-left: 5px;
+}
+
+#best_error{
+  margin-left: 5px;
+}
+
+#predictions{
+  padding-bottom: 50px;
+}
+
 .table-row-hover{
   background-color: #eee;
+}
+
+table .table-head{
+  color:white;
+  text-align: center;
 }
 
 #table_predictions div, #table_predictions td,
@@ -302,7 +394,9 @@ html, body {
 }
 
 #table_predictions{
-  margin-bottom: 200px;
+  margin-bottom: 20px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .correct-answer{
@@ -311,4 +405,31 @@ html, body {
 
 .wrong-answer{
   background-color: #faa;
+}
+
+/* MISCELLACOUSCOUS */
+
+::-webkit-scrollbar {
+	width: 10px;
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+	margin: 5px;
+	-webkit-border-radius: 10px;
+	background-color: #d3d3d3;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #ededed;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+	height: 5px;
+	display: block;
 }
