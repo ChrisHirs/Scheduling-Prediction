@@ -10,6 +10,15 @@ $(function(){
     return ($('#table_col_title th').length - 5); // 5 = other col than Rx
   }
 
+  function prependClass(sel, strClass) {
+    var $el = jQuery(sel);
+
+    /* prepend class */
+    var classes = $el.attr('class');
+    classes = strClass +' ' +classes;
+    $el.attr('class', classes);
+}
+
   // Table utilisation - add row
   $('#add_row').click(function () {
 
@@ -17,8 +26,11 @@ $(function(){
     var cloneBurstRow = $(this).closest('table').find('tr.hide').eq(0).clone(true).removeClass('hide').toggle();
     var cloneErrorRow = $(this).closest('table').find('tr.hide').eq(1).clone(true).removeClass('hide').toggle();
 
-    $(cloneBurstRow).addClass('row-nbr-' + rowCount).find('td:first-child').html(rowCount);
-    $(cloneErrorRow).addClass('row-nbr-' + rowCount).find('td:first-child').html(rowCount);
+    $(cloneBurstRow).find('td:first-child').html(rowCount);
+    $(cloneErrorRow).find('td:first-child').html(rowCount);
+
+    prependClass(cloneBurstRow, 'row-nbr-' + rowCount);
+    prependClass(cloneErrorRow, 'row-nbr-' + rowCount);
 
     $(cloneBurstRow).insertBefore('#add_row');
     $(cloneErrorRow).insertBefore('.last-line-error');
@@ -54,7 +66,7 @@ $(function(){
 
   // Table utilisation - remove column
   $('.table-remove-col').click(function () {
-    $('#table_predictions tr').not('.table-header').each(function(i, row) {
+    $('#table_predictions tr').not('.table-row-header').each(function(i, row) {
       $(row).children().eq(-2).prev().detach();
     })
   });
@@ -301,5 +313,118 @@ $(function(){
     var className = $(this).attr('class').split(' ')[0];
     $('.' + className).toggleClass('table-row-hover');
   });
+
+  // Button to plot graph burst
+  $('#btn_generate_plot_burst').click(function () {
+    drawBurst();
+  });
+
+  // Button to plot graph error
+  $('#btn_generate_plot_error').click(function () {
+    drawError();
+  });
+
+  function drawBurst()
+  {
+    // // Answer with
+    // var arrayTraceBurstAnswerX = [];
+    // for(i = 1; i <= countColTablePredict(); i++){
+    //   arrayTraceBurstAnswerX.push(i);
+    // }
+    // var arrayTraceBurstAnswerX = [];
+
+    var data = [];
+
+    var arrayBaseData = getDataFromRow('#base_data div.data', null);
+
+    var array_x = [];
+
+    for(j = 1; j <= countColTablePredict(); j++){
+      array_x.push(j);
+    }
+
+    var traceBaseData = {
+      x: array_x,
+      y: arrayBaseData,
+      mode: 'lines+markers',
+      name: 'Real Bursts'
+    };
+
+    data.push(traceBaseData);
+
+    $('#table_predictions tr.burst-row').not('.hide').each(function(i, row) {
+
+      var array_y = getDataFromRow('div.data', row);
+      array_y = array_y.splice(1, array_y.length);
+
+      var rowNumber = i + 1;
+
+      var trace = {
+        x: array_x,
+        y: array_y,
+        mode: 'lines+markers',
+        name: 'Row ' + rowNumber
+      };
+
+      data.push(trace);
+
+    })
+
+    var layout = {
+      title:'Bursts'
+    };
+
+    Plotly.newPlot('plot_burst', data, layout);
+  }
+
+  function drawError()
+  {
+
+    var data = [];
+
+    var arrayBaseData = getDataFromRow('#base_data div.data', null);
+
+    var array_x = [];
+
+    var arrayBaseData = [];
+
+    for(j = 1; j <= countColTablePredict(); j++){
+      array_x.push(j);
+      arrayBaseData.push(0);
+    }
+
+    var traceBaseData = {
+      x: array_x,
+      y: arrayBaseData,
+      mode: 'lines+markers',
+      name: 'Real Bursts Errors'
+    };
+
+    data.push(traceBaseData);
+
+    $('#table_predictions tr.error-row').not('.hide').each(function(i, row) {
+
+      var array_y = getDataFromRow('div.data', row);
+      array_y = array_y.splice(2, array_y.length);
+
+      var rowNumber = i + 1;
+
+      var trace = {
+        x: array_x,
+        y: array_y,
+        mode: 'lines+markers',
+        name: 'Row ' + rowNumber
+      };
+
+      data.push(trace);
+
+    })
+
+    var layout = {
+      title:'Errors'
+    };
+
+    Plotly.newPlot('plot_error', data, layout);
+  }
 
 });

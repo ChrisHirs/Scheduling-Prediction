@@ -292,6 +292,10 @@ html, body {
   float: left;
 }
 
+.clear{
+  clear: both;
+}
+
 /* Table CSS */
 .table-remove:hover,
 .table-remove-row:hover,
@@ -358,6 +362,10 @@ html, body {
 
 #best_error{
   margin-left: 5px;
+}
+
+#predictions{
+  padding-bottom: 50px;
 }
 
 .table-row-hover{
