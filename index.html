@@ -179,6 +179,8 @@
           <section class="section--center mdl-grid mdl-grid--no-spacing">
             <div class="mdl-cell mdl-cell--12-col">
               <h4>Predictions</h4>
+              <hr>
+              <h5>Tableaux de prédictions et erreurs</h5>
               <table id="table_predictions" class="mdl-cell mdl-cell--12-col mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                 <thead>
                   <tr class="table-row-header mdl-js-button mdl-button--raised mdl-button--accent">
@@ -194,7 +196,7 @@
                     <th class="table-head">R4</th>
                     <th class="table-head">R5</th>
                     <th class="table-head">R6</th>
-                    <th class="table-head">&Sigma;<sub>error</sub></th>
+                    <th class="table-head">&Sigma;<sub>erreur</sub></th>
                     <th class="table-head">
                       <i id="btn_table_add_col" style="vertical-align: bottom;" class="table-add-col material-icons md-24">add_circle</i>
                       <div class="mdl-tooltip" data-mdl-for="btn_table_add_col">
@@ -222,9 +224,9 @@
                     <td></td>
                   </tr>
                   <tr class="row-nbr-1 burst-row">
-                    <td>1</td>
-                    <td><div contentEditable class="editable data alpha-data">0.15</div></td>
-                    <td><div contentEditable class="editable data pi-data">10</div></td>
+                    <td class="data-id">1</td>
+                    <td><div contentEditable class="editable data data-alpha">0.15</div></td>
+                    <td><div contentEditable class="editable data data-ip">10</div></td>
                     <td><div contentEditable class="editable data">8.8</div></td>
                     <td><div contentEditable class="editable data">8.10</div></td>
                     <td><div contentEditable class="editable data">8.99</div></td>
@@ -248,9 +250,9 @@
                   </tr>
                   <!-- This is our clonable table line for predict part -->
                   <tr class="hide burst-row" style="display:none;">
-                    <td>1</td>
-                    <td><div contentEditable class="editable data alpha-data">&alpha;</div></td>
-                    <td><div contentEditable class="editable data pi-data">PI</div></td>
+                    <td class="data-id">1</td>
+                    <td><div contentEditable class="editable data data-alpha">&alpha;</div></td>
+                    <td><div contentEditable class="editable data data-ip">PI</div></td>
                     <td><div contentEditable class="editable data">Cell 1</div></td>
                     <td><div contentEditable class="editable data">Cell 2</div></td>
                     <td><div contentEditable class="editable data">Cell 3</div></td>
@@ -268,9 +270,9 @@
                     <th class="table-head" colspan="100%">Tableau des Erreurs</th>
                   </tr>
                   <tr class="row-nbr-1 error-row">
-                    <td>1</td>
-                    <td><div contentEditable class="editable data">0.15</div></td>
-                    <td><div contentEditable class="editable data">10</div></td>
+                    <td class="data-id">1</td>
+                    <td><div class="data data-alpha">0.15</div></td>
+                    <td><div class="data data-ip">10</div></td>
                     <td><div contentEditable class="editable data">8.00</div></td>
                     <td><div contentEditable class="editable data">5</div></td>
                     <td><div contentEditable class="editable data">3.92</div></td>
@@ -287,9 +289,9 @@
                   <tr class="last-line-error" style="display:none;"></tr>
                   <!-- This is our clonable table line for error part -->
                   <tr class="hide error-row" style="display:none;">
-                    <td>1</td>
-                    <td><div contentEditable class="editable data">&alpha;</div></td>
-                    <td><div contentEditable class="editable data">PI</div></td>
+                    <td class="data-id">1</td>
+                    <td><div class="data data-alpha">&alpha;</div></td>
+                    <td><div class="data data-ip">PI</div></td>
                     <td><div contentEditable class="editable data">Cell 1</div></td>
                     <td><div contentEditable class="editable data">Cell 2</div></td>
                     <td><div contentEditable class="editable data">Cell 3</div></td>
@@ -305,18 +307,18 @@
                   </tr>
                 </tbody>
               </table>
-              <h5>Best alpha</h5>
+              <h5>Calcul du meilleur Alpha</h5>
               <div id="div_best_alpha_ip" class="left mdl-textfield mdl-js-textfield">
                 <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input_best_alpha_ip">
-                <label class="mdl-textfield__label" for="sample2">Initial prediction</label>
-                <span class="mdl-textfield__error">Input is not a number!</span>
+                <label class="mdl-textfield__label" for="sample2">Prédiction initiale</label>
+                <span class="mdl-textfield__error">L'entrée doit être un nombre!</span>
               </div>
-              <button id="btn_find_best_alpha" name="submit" class="left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Find the best alpha</button>
+              <button id="btn_find_best_alpha" name="submit" class="left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Calculer <i class="material-icons">youtube_searched_for</i></button>
               <div id="answer_best_alpha" class="hidden left"><b>&alpha;</b><sub>best</sub> = <span id="best_alpha">-</span> avec <b>&Sigma;</b><sub>error</sub> = <span id="best_error">-</span></div>
               <div class="clear"></div>
-              <h5>Graphs</h5>
-              <button id="btn_generate_plot_burst" name="submit" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Plot Burst Graph</button>
-              <button id="btn_generate_plot_error" name="submit" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Plot Error Graph</button>
+              <h5>Graphiques</h5>
+              <button id="btn_generate_plot_burst" name="submit" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Afficher le graphe des rafales <i class="material-icons">show_chart</i></button>
+              <button id="btn_generate_plot_error" name="submit" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Afficher le graphes des erreurs <i class="material-icons">show_chart</i></button>
               <div class="clear"></div>
           		<div id="plot_burst"></div>
               <div id="plot_error"></div>

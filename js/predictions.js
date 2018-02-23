@@ -268,7 +268,7 @@ $(function(){
 
   });
 
-  // Table utilisation - show error row
+  // Click on btn find best alpha for a given burst series and initial prediction
   $('#btn_find_best_alpha').click(function () {
 
     var initialPred = $('#input_best_alpha_ip').val();
@@ -308,12 +308,6 @@ $(function(){
     }
   });
 
-  // Higlighting rows
-  $('#table_predictions tbody tr').on( "mouseenter mouseleave", function() {
-    var className = $(this).attr('class').split(' ')[0];
-    $('.' + className).toggleClass('table-row-hover');
-  });
-
   // Button to plot graph burst
   $('#btn_generate_plot_burst').click(function () {
     drawBurst();
@@ -347,23 +341,22 @@ $(function(){
       x: array_x,
       y: arrayBaseData,
       mode: 'lines+markers',
-      name: 'Real Bursts'
+      name: 'Rafales effectives'
     };
 
     data.push(traceBaseData);
 
     $('#table_predictions tr.burst-row').not('.hide').each(function(i, row) {
 
+      var idData = getDataFromRow('.data-id', row);
       var array_y = getDataFromRow('div.data', row);
-      array_y = array_y.splice(1, array_y.length);
-
-      var rowNumber = i + 1;
+      var alpha = array_y.splice(0, 1);
 
       var trace = {
         x: array_x,
         y: array_y,
         mode: 'lines+markers',
-        name: 'Row ' + rowNumber
+        name: 'Ligne ' + idData + ' | α = ' + alpha
       };
 
       data.push(trace);
@@ -371,7 +364,7 @@ $(function(){
     })
 
     var layout = {
-      title:'Bursts'
+      title:'Rafales'
     };
 
     Plotly.newPlot('plot_burst', data, layout);
@@ -397,23 +390,24 @@ $(function(){
       x: array_x,
       y: arrayBaseData,
       mode: 'lines+markers',
-      name: 'Real Bursts Errors'
+      name: 'Erreur rafales effectives'
     };
 
     data.push(traceBaseData);
 
     $('#table_predictions tr.error-row').not('.hide').each(function(i, row) {
 
-      var array_y = getDataFromRow('div.data', row);
-      array_y = array_y.splice(2, array_y.length);
+      var idData = getDataFromRow('.data-id', row);
 
-      var rowNumber = i + 1;
+      var array_y = getDataFromRow('div.data', row);
+      var alpha = array_y.splice(0, 1);
+      array_y = array_y.splice(1, array_y.length);
 
       var trace = {
         x: array_x,
         y: array_y,
         mode: 'lines+markers',
-        name: 'Row ' + rowNumber
+        name: 'Ligne ' + idData + ' | α = ' + alpha
       };
 
       data.push(trace);
@@ -421,10 +415,28 @@ $(function(){
     })
 
     var layout = {
-      title:'Errors'
+      title:'Erreurs'
     };
 
     Plotly.newPlot('plot_error', data, layout);
   }
+
+  // Higlighting rows
+  $('#table_predictions tbody tr').on( "mouseenter mouseleave", function() {
+    var className = $(this).attr('class').split(' ')[0];
+    $('.' + className).toggleClass('table-row-hover');
+  });
+
+  // Update Initial prediction field of Error Array when editing field in Prediction array
+  $('.burst-row .data-alpha').focusout(function() {
+    var className = $(this).parents('tr').attr('class').split(' ')[0];
+    $('.' + className + '.error-row').find('div.data-alpha').text($(this).text());
+  })
+
+  // Update Alpha field of Error Array when editing field in Prediction array
+  $('.burst-row .data-ip').focusout(function() {
+    var className = $(this).parents('tr').attr('class').split(' ')[0];
+    $('.' + className + '.error-row').find('div.data-ip').text($(this).text());
+  })
 
 });
