@@ -48,7 +48,7 @@ $(function(){
       doPSFJ();
     }
     else if ( $('#npsjf').is(':checked')) {
-      doNPSFJ();
+      doNPSFJ(processArray);
     }
     else if ( $('#fifo').is(':checked')) {
       doFIFO(processArray);
@@ -69,8 +69,8 @@ function rowsToArray(){
       var arrival = parseInt($(row).find('td div').eq(1).text());
       var duration = parseInt($(row).find('td div').eq(2).text());
       var currentRow = [$(row).find('td div').eq(0).text(), arrival, duration];
-      console.log("rowToArray currentRow:");
-      console.log(currentRow);
+      //console.log("rowToArray currentRow:");
+      //console.log(currentRow);
       processArray.push(currentRow);
     }
   });
@@ -164,12 +164,40 @@ function showCorrectionButton(processArray) {
 
 //show the solution in the HTML talbe
 function printResult(result, processArray){
-  for(var i = 0; i<result.length; i++){
-    //$('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(result[i]).find('div').text(processArray[result[i]][2]);
-    $('#table_scheduling_responses tbody').find('tr').eq(i+processArray[result[0]][1]).find('td').eq(result[i]+1).find('div').text(processArray[result[i]][2]);
+  var nbRows = getSchedulingSolTabRows(processArray);
+  console.log("PRINT nbRows: "+nbRows);
+  var shift = true;
+
+  for(var i = 0; i<nbRows; i++){
+    if(shift){
+      var currentProcess = result.shift();
+      shift = false;
+    }
+
+    // console.log("PRINT i: "+i);
+    // console.log("PRINT currentProcess: "+currentProcess);
+    // console.log("PRINT shift: "+currentProcess);
+
+    if((currentProcess !== undefined)){
+      if(!(i < processArray[currentProcess][1])){
+        $('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(currentProcess+1).find('div').text(processArray[currentProcess][2]);
+        processArray[currentProcess][2]--;
+        shift = true;
+      }
+    }
     // console.log("printResult processArray durée: "+processArray[result[i]][2]);
-    processArray[result[i]][2]--;
   }
+}
+
+function findNextProcessNPSFJ(actifProcessesIndexes, processArray){
+  var minBurstIndex = 0;
+
+  actifProcessesIndexes.forEach(function(index, i){
+    if(processArray[index][2]<minBurst){
+      minBurstIndex=i;
+    }
+  });
+  return minBurstIndex;
 }
 
 // preemtif Shortest Job First scheduling algorithme
@@ -179,7 +207,7 @@ function doPSFJ (){
 
 // Non-preemtif Shortest Job First scheduling algorithme
 function doNPSFJ(processArray) {
-  var actifProcessIndex = [];
+  var actifProcessesIndexes = [];
   var result = [];
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
 
@@ -187,12 +215,24 @@ function doNPSFJ(processArray) {
     //console.log("fifo arr i: "+i);
 
     if(isNewProcessArrived(i, processArray)){
+        currentNewArrivedProcessesIndexes.forEach(function(process, index) {
+          actifProcessesIndexes.push(currentNewArrivedProcessesIndexes[index]); //put the new arrived process in the stack
+        });
 
-      actifProcessIndex.push(currentNewArrivedProcessesIndexes); //put the new arrived process in the queue
-      //console.log("row: "+i+" column: "+currentNewArrivedProcessIndex+" value: "+processArray[currentNewArrivedProcessIndex][2]);
+        var minBurstIndex = findNextProcessNPSFJ(actifProcessesIndexes, processArray);
+
+      //sortIndexDependingOnBurstSize(actifProcessesIndexes, processArray);
+      // console.log("processArray puis currentNewArrivedProcessesIndexes");
+      // console.log(processArray);
+      // console.log(currentNewArrivedProcessesIndexes);
+      //console.log("row: "+i+" column: "+currentNewArrivedProcessesIndexes+" value: "+processArray[currentNewArrivedProcessesIndexes[i]][2]);
     }
-  }
 
+    for(var i=0; i<processArray[actifProcessesIndexes[minBurstIndex]][2]; i++){
+      //decrémenter le process array durée
+    }
+
+  }
 }
 
 //First In First Out scheduling algorithme
