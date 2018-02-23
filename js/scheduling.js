@@ -54,7 +54,13 @@ $(function(){
       doFIFO(processArray);
     }
     else if ( $('#rr').is(':checked')) {
-      doRR();
+      var rrnumber = parseInt($('#rr_number').val());
+      if (!isNaN(rrnumber)) {
+        doRR(rrnumber, processArray);
+      }
+      else {
+        alert("La valeur du Round Robin ne semble pas être un nombre valide...");
+      }
     }
   });
 });
@@ -135,7 +141,7 @@ function getSchedulingSolTabRows(processArray) {
   }
   //console.log("Durée totale : " + maxDuration);
   //console.log("Arrivée + Durée max. : " + maxArrival);
-  rowsNumber = Math.max(maxDuration, maxArrival) + minArrival + 1;
+  rowsNumber = Math.max(maxDuration, maxArrival) + minArrival + 2; //lol pk 2? tg
   return rowsNumber;
 }
 
@@ -271,6 +277,44 @@ function doFIFO (processArray){
 }
 
 //Round Robin scheduling algorithme
-function doRR() {
+function doRR(round, processArray) {
+  var activeProcessIndex = [];
+  var activeArrivalIndex = [];
+  var result = [];
+  var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
 
+  for (var i = 0; i <= getSchedulingSolTabRows(processArray); i++) {
+    if (isNewProcessArrived(i, processArray)) {
+      currentNewArrivedProcessesIndexes.forEach(function(process, index) {
+        activeProcessIndex.push(currentNewArrivedProcessesIndexes[index]); //put the new arrived process in the queue
+      });
+    }
+    if (activeProcessIndex.length > 0) {
+      for (var j = 0; j < activeProcessIndex.length; j++) {
+        for (var h = 0; h < round; h++) {
+          if (tmpProcessArray[activeProcessIndex[j]][2] > 0) {
+            result.push(activeProcessIndex[j]); //put the actual process name in the solution array
+            tmpProcessArray[activeProcessIndex[j]][2]--;
+            i++;
+            //TODO: Pas du tout DRY
+            if (isNewProcessArrived(i, processArray)) {
+              currentNewArrivedProcessesIndexes.forEach(function(process, index) {
+                activeProcessIndex.push(currentNewArrivedProcessesIndexes[index]); //put the new arrived process in the queue
+              });
+            }
+          }
+        }
+        tmpProcessArray.forEach(function(process) {
+          if (process[2] <= 0) {
+            var indexToDelete = tmpProcessArray.indexOf(process);
+            if (indexToDelete > -1) {
+              activeProcessIndex.splice(i, 1);
+            }
+          }
+        });
+      }
+    }
+  }
+
+  printResult(result, processArray);
 }
