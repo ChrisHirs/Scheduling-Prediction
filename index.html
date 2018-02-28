@@ -67,7 +67,8 @@
           <a href="#home" class="mdl-layout__tab is-active">Accueil</a>
           <a href="#scheduling" class="mdl-layout__tab">Scheduling</a>
           <a href="#predictions" class="mdl-layout__tab">Predictions</a>
-          <a href="#faq" class="mdl-layout__tab">FAQ</a>
+          <a href="#course_predictions" class="mdl-layout__tab">Théorie Prédictions</a>
+          <a href="#help_predictions" class="mdl-layout__tab">Aide Prédictions</a>
         </div>
       </header>
       <main class="mdl-layout__content">
@@ -324,11 +325,48 @@
             </div>
           </section>
         </div>
-        <div class="mdl-layout__tab-panel" id="faq">
+        <div class="mdl-layout__tab-panel" id="course_predictions">
           <section class="section--center mdl-grid mdl-grid--no-spacing">
             <div class="mdl-cell mdl-cell--12-col">
-              <h4>F.A.Q.</h4>
-              Minim duis incididunt est cillum est ex occaecat consectetur. Qui sint ut et qui nisi cupidatat. Reprehenderit nostrud proident officia exercitation anim et pariatur ex.
+              <h4>Aide Prédiction</h4>
+              <hr>
+              <h5>Qu'est-ce que les prédictions ?</h5>
+              <p>Certains algorithmes d'ordonnancement utilisent les tailles des prochaines rafales des processus afin de savoir lequel d'entre eux sera le prochain à utiliser le CPU, on peut notemment citer l'agorithme <a href="https://fr.wikipedia.org/wiki/Shortest_job_first">Shortest Job First (SJF)</a>. </p>
+              <p>Seulement, lorsqu'un processus s'ajoute à la file des processus prêts, l'ordonanceur ne connaît pas la taille de la rafale de ce dernier. Il est donc nécessaire pour lui d'avoir une méthode lui permettant de déterminer cette taille. </p>
+              <p>C'est là qu'entrent en jeux les prédictions !</p>
+              <h5>Comment se calculent les prédictions ?</h5>
+              <p>Une façon de prédire les tailles des futures rafales est d'utiliser la technique du <a href="https://fr.wikipedia.org/wiki/Lissage_exponentiel">lissage exponentiel</a>.</p>
+              <p>Cette technique se base sur la taille réelle de la dernière rafale traitée et la prévision qui avait été calculée.</p>
+              <ul>
+                <li>t<sub>n</sub> = taille réelle de la n<sup>ème</sup> rafale CPU</li>
+                <li>&tau;<sub>n+1</sub> = taille prédite pour la prochaine rafale CPU</li>
+                <li>0 &le; &alpha; &le; 1</li>
+                <li>&tau;<sub>0</sub> = une valeur arbitraire appelée prédiction initiale</li>
+                <li>Formule du lissage exponentiel :</li>
+              </ul>
+              <p class="centered-formula">&tau;<sub>n+1</sub> = &alpha; &middot; t<sub>n</sub> + (1 - &alpha;) &middot; &tau;<sub>n</sub></p>
+              <p>Cette technique permet de se baser sur la taille de la dernière rafale effective et l'historique des prédiction. La constante &alpha; joue un rôle de pondération entre ces deux valeurs.</p>
+              <ul>
+                <li>Quand &alpha; vaut 1.0, alors l'historique des prédictions est ignoré et la prédiction équivaut à la dernière taille de rafale CPU.</li>
+                <li>Quand &alpha; vaut 0.0, alors la dernière rafale réelle n'est pas prise en compte et la prédiction reste constante puisqu'elle sera égale à la dernière prédiction.</li>
+              </ul>
+              <h5>Analyse du résultat</h5>
+              <p>Beaucoup de résultats différents sont possibles en faisant varier les valuers &alpha; et &tau;<sub>0</sub>. Il existe cependant une façon très simple de comparer les résultats obtenus via différentes paramétrisations.</p>
+              <p>Il suffit de calculer la somme des différences (absolue) entre t<sub>n</sub> et &tau;<sub>n</sub> pour chaque rafale <i>n</i>.</p>
+              <p>La version obtenant la somme la plus petite sera considérée comme meilleure, car cela signifie que l'équart entre les prédictions et les valeurs réelles est moindre.</p>
+            </div>
+          </section>
+        </div>
+        <div class="mdl-layout__tab-panel" id="help_predictions">
+          <section class="section--center mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+              <h4>Aide Prédiction</h4>
+              <hr>
+              <h5>Fonctionnalités</h5>
+              <p>La page Prédiction permet de vous exercer au calcul des prédictions ainsi qu'à la comparaison des résultats obtenus. Elle permet également de mieux visualiser les résultats à l'aide de graphes et de trouver les valeurs optimales.</p>
+              <ul>
+
+              </ul>
             </div>
           </section>
         </div>

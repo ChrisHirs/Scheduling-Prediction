@@ -296,6 +296,13 @@ html, body {
   clear: both;
 }
 
+.centered-formula{
+  text-align: center;
+  font-size: 18px;
+  padding-top:10px;
+  padding-bottom: 10px;
+}
+
 /* Table CSS */
 .table-remove:hover,
 .table-remove-row:hover,
