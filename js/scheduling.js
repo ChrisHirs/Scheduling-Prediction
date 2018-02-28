@@ -196,14 +196,15 @@ function printResult(result, processArray){
 }
 
 function findNextProcessNPSJF(actifProcessesIndexes, processArray){
-  var minBurstIndex = actifProcessesIndexes[0];
+  var minBurstIndex = 0;
   var minBurst = processArray[actifProcessesIndexes[0]][2]
   var i=0;
 
   actifProcessesIndexes.forEach(function(index, i){
     console.log("find processArray: "+processArray[index][2]);
     console.log(processArray);
-    if(processArray[index][2]<=minBurst){
+    console.log("i: "+i);
+    if(processArray[index][2]<minBurst){
       console.log("find i: "+i+" index: "+index);
       minBurstIndex=i;
       minBurst = processArray[index][2];
@@ -215,15 +216,59 @@ function findNextProcessNPSJF(actifProcessesIndexes, processArray){
 
 // preemtif Shortest Job First scheduling algorithme
 function doPSJF (){
+  var actifProcessesIndexes = [];
+  var result = [];
+  var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
+  var findnext = true;
 
+  for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
+    //console.log("fifo arr i: "+i);
+    console.log("i: "+i);
+    if(isNewProcessArrived(i, processArray)){
+      actifProcessesIndexes.push(currentNewArrivedProcessIndex); //put the new arrived process in the stack
+    }
+    console.log("actifProcessesIndexes");
+    console.log(actifProcessesIndexes);
+    console.log("findnext:"+findnext);
+    if(findnext && (actifProcessesIndexes.length > 0)){
+      var minBurstIndex = findNextProcessNPSJF(actifProcessesIndexes, processArray);
+      findnext = false;
+    }
+
+    console.log("minBurstIndex: "+minBurstIndex+" actifProcessesIndexes: "+actifProcessesIndexes);
+
+    if((minBurstIndex != null) && (actifProcessesIndexes.length > 0)){
+      console.log("tmpProcessArray: "+tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]);
+      if(tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2] > 0){
+        result.push(actifProcessesIndexes[minBurstIndex]);
+        tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]--;
+      }
+      else{
+        var shift = actifProcessesIndexes.splice(minBurstIndex,1);
+        console.log("actifProcessIndex shift: "+shift);
+
+        findnext = true;
+      }
+    }
+    console.log("");
+  }
+  console.log("result");
+  console.log(result);
+  printResult(result, processArray);
 }
 
 // Non-preemtif Shortest Job First scheduling algorithme
 function doNPSJF(processArray) {
   var actifProcessesIndexes = [];
   var result = [];
+
+  var tmpProcessArrayass = $.extend(true,[],processArray); //Deep Copy of processArray
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
   var findnext = true;
+
+  console.log("--processArray--");
+  console.log(tmpProcessArrayass);
+
 
   for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
     //console.log("fifo arr i: "+i);
