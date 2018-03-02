@@ -69,6 +69,7 @@
           <a href="#predictions" class="mdl-layout__tab">Predictions</a>
           <a href="#course_predictions" class="mdl-layout__tab">Théorie Prédictions</a>
           <a href="#help_predictions" class="mdl-layout__tab">Aide Prédictions</a>
+          <a href="#course_scheduling" class="mdl-layout__tab">Théorie Scheduling</a>
         </div>
       </header>
       <main class="mdl-layout__content">
@@ -332,7 +333,7 @@
               <hr>
               <h5>Qu'est-ce que les prédictions ?</h5>
               <p>Certains algorithmes d'ordonnancement utilisent les tailles des prochaines rafales des processus afin de savoir lequel d'entre eux sera le prochain à utiliser le CPU, on peut notemment citer l'agorithme <a href="https://fr.wikipedia.org/wiki/Shortest_job_first">Shortest Job First (SJF)</a>. </p>
-              <p>Seulement, lorsqu'un processus s'ajoute à la file des processus prêts, l'ordonanceur ne connaît pas la taille de la rafale de ce dernier. Il est donc nécessaire pour lui d'avoir une méthode lui permettant de déterminer cette taille. </p>
+              <p>Seulement, lorsqu'un processus s'ajoute à la file des processus prêts, l'ordonnanceur ne connaît pas la taille de la rafale de ce dernier. Il est donc nécessaire pour lui d'avoir une méthode lui permettant de déterminer cette taille. </p>
               <p>C'est là qu'entrent en jeux les prédictions !</p>
               <h5>Comment se calculent les prédictions ?</h5>
               <p>Une façon de prédire les tailles des futures rafales est d'utiliser la technique du <a href="https://fr.wikipedia.org/wiki/Lissage_exponentiel">lissage exponentiel</a>.</p>
@@ -383,6 +384,35 @@
                 <li>Le premier graphe permet de comparer les tailles des rafales effectives à celles estimées pour chaque processus</li>
                 <li>Le second graphe permet de constater l'erreur entre la prédiction et les valeurs effectives pour chaque rafale</li>
               </ul>
+            </div>
+          </section>
+        </div>
+        <div class="mdl-layout__tab-panel" id="course_scheduling">
+          <section class="section--center mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+              <h4>Théorie Scheduling</h4>
+              <hr>
+              <h5>Qu'est-ce que le Scheduling ?</h5>
+              <p>L'<a href="https://fr.wikipedia.org/wiki/Ordonnancement_dans_les_syst%C3%A8mes_d%27exploitation">ordonnanceur (scheduler)</a> dans un système d'exploitation est le composant choisissant l'ordre d'exécution des processus sur le processeur.</p>
+              <p>Chaque processus prêt désirant utiliser le CPU s'inscrit dans une file permettant à l'ordonnanceur de connaître son état.</p>
+              <p>L'ordonnanceur utilise un algorithme dit d'ordonnacement lui permettant de définir l'ordre dans lequel les processus vont accéder à la ressource CPU.</p>
+
+              <p>Il existe plusieurs algorithmes d'ordonnancement, nous allons les décrire ci-dessous.</p>
+
+              <h5>Shortest Job First non préemptif (SJF)</h5>
+              <p>Comme son nom l'indique, cet algorithme va laisser passer le processus ayant la rafale CPU la plus courte.</p>
+              <p>Cependant, l'ordonnanceur ne connaît pas la taille des rafales des processus. Pour résoudre ce problème, il utilise un système de <a href="#help_predictions"></a>prédictions.</p>
+              <p>Chaque processus gagnant l'accès au CPU va y rester jusqu'à ce qu'il se termine.</p>
+              <h5>Shortest Job First préemptif (SJF) ou Shortest Remaining Time First (SRTF)</h5>
+              <p>L'idée est la même que pour la version non préemptive, mais cette fois-ci un processus ayant accès au processeur n'est pas garanti de pouvoir terminer sa rafale en une seule session.</p>
+              <p>En effet, dans cette version-ci l'ordonnanceur vérifiera en tout temps si un processus avec une rafale plus petite n'est pas présent et si c'est le cas, ce dernier prendra la place de celui en cours.</p>
+              <h5>First In First Out (FIFO)</h5>
+              <p>Dans cet algorithme c'est l'ordre d'arrivée des processus qui sera important. Les processus auront donc accès au CPU selon l'ordre dans lequel ils se seront inscrits dans la file.</p>
+              <p>Le processus gagnant l'accès au CPU complétera sa rafale en une seule session.</p>
+              <h5>Round Robin</h5>
+              <p>Cet algorithme-ci est plutôt simple, c'est une sorte de FIFO dans lequel chaque processus gagnant l'accès au CPU ne pourra y effectuer qu'une certaine taille de rafale. Cette taille qui est fixe est appelée quantum.</p>
+              <p>Lorsque le temps permis au processus actif dans le CPU est terminé, il passe en attente et le processus suivant prend sa place.</p>
+
             </div>
           </section>
         </div>
