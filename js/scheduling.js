@@ -168,8 +168,47 @@ function showCorrectionButton(processArray) {
   $('#correct_scheduling').removeClass('hide').show();
 }
 
+//add additionnal numbers on post-processed table
+function beautifyResult(processArray) {
+  processArray.forEach(function(process, indexProc) {
+    var currentColumn = $('#table_scheduling_responses tbody tr > td:nth-child('+ (indexProc+2) +')');
+    // Parcours des lignes de la colonne en cours
+    currentColumn.each(function(indexCell) {
+      // Si la ligne actuelle >= à l'arrivée du processus
+      if(indexCell >= process[1]) {
+        var currentCell = $(this).find('div');
+        // Si la valeur de la cellule vaut '...'
+        if(currentCell.text() == "...") {
+          if(indexCell > 0) {
+            var prevCell = $('#table_scheduling_responses tbody').find('tr').eq(indexCell-1).find('td').eq(indexProc+1).find('div');
+            var valuePrevCell = parseInt(prevCell.text());
+            if(!isNaN(valuePrevCell)) {
+              if(valuePrevCell > 1) {
+                currentCell.text(valuePrevCell);
+              }
+              else if(valuePrevCell == 0) {
+                return false; // Joue le role de break dans un .each
+              }
+              else {
+                currentCell.text(0);
+              }
+            }
+            else {
+              currentCell.text(process[2]);
+            }
+          }
+          else {
+            currentCell.text(process[2]);
+          }
+        }
+      }
+     });
+  });
+}
+
 //show the solution in the HTML talbe
 function printResult(result, processArray){
+  var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
   var nbRows = getSchedulingSolTabRows(processArray);
   //console.log("PRINT nbRows: "+nbRows);
   var shift = true;
@@ -185,14 +224,17 @@ function printResult(result, processArray){
     // console.log("PRINT shift: "+currentProcess);
 
     if((currentProcess !== undefined)){
-      if(!(i < processArray[currentProcess][1])){
-        $('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(currentProcess+1).find('div').text(processArray[currentProcess][2]);
-        processArray[currentProcess][2]--;
+      if(!(i < tmpProcessArray[currentProcess][1])){
+        var tabElem = $('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(currentProcess+1);
+        tabElem.find('div').text(tmpProcessArray[currentProcess][2]);
+        tabElem.addClass('grey-cell');
+        tmpProcessArray[currentProcess][2]--;
         shift = true;
       }
     }
     // console.log("printResult processArray durée: "+processArray[result[i]][2]);
   }
+  beautifyResult(processArray);
 }
 
 function findNextProcessNPSJF(actifProcessesIndexes, processArray){
@@ -348,9 +390,7 @@ function doRR(round, processArray) {
 
   for (var i = 0; i <= getSchedulingSolTabRows(processArray); i++) {
     if (isNewProcessArrived(i, processArray)) {
-      currentNewArrivedProcessesIndexes.forEach(function(process, index) {
-        activeProcessIndex.push(currentNewArrivedProcessesIndexes[index]); //put the new arrived process in the queue
-      });
+      activeProcessIndex.push(currentNewArrivedProcessIndex); //put the new arrived process in the queue
     }
     if (activeProcessIndex.length > 0) {
       for (var j = 0; j < activeProcessIndex.length; j++) {
@@ -361,9 +401,7 @@ function doRR(round, processArray) {
             i++;
             //TODO: Pas du tout DRY
             if (isNewProcessArrived(i, processArray)) {
-              currentNewArrivedProcessesIndexes.forEach(function(process, index) {
-                activeProcessIndex.push(currentNewArrivedProcessesIndexes[index]); //put the new arrived process in the queue
-              });
+              activeProcessIndex.push(currentNewArrivedProcessIndex); //put the new arrived process in the queue
             }
           }
         }

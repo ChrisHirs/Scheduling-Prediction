@@ -414,6 +414,10 @@ table .table-head{
   background-color: #faa;
 }
 
+.grey-cell {
+  background-color: #eee;
+}
+
 /* MISCELLACOUSCOUS */
 
 ::-webkit-scrollbar {

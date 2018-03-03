@@ -85,29 +85,32 @@
           <section class="section--center mdl-grid mdl-grid--no-spacing">
             <div class="mdl-cell mdl-cell--12-col">
               <h4>Scheduling</h4>
-              <div  style="padding: 20px 0;">
-              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="psjf">
-                <input checked class="mdl-radio__button" id="psjf" name="algorithm" type="radio" value="on">
-                <span class="mdl-radio__label">SJF préemptif </span>
-              </label>
-              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="npsjf">
-                <input class="mdl-radio__button" id="npsjf" name="algorithm" type="radio" value="auto">
-                <span class="mdl-radio__label">SJF non-préemptif</span>
-              </label>
-              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="fifo">
-                <input class="mdl-radio__button" id="fifo" name="algorithm" type="radio" value="auto">
-                <span class="mdl-radio__label">FIFO</span>
-              </label>
-              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rr">
-                <input class="mdl-radio__button" id="rr" name="algorithm" type="radio" value="auto">
-                <span class="mdl-radio__label">Round Robin</span>
-              </label>
-            </div>
+              <hr>
+              <div>
+                <h5>Sélection de l'algorithme</h5>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="psjf">
+                  <input checked class="mdl-radio__button" id="psjf" name="algorithm" type="radio" value="on">
+                  <span class="mdl-radio__label">SJF préemptif </span>
+                </label>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="npsjf">
+                  <input class="mdl-radio__button" id="npsjf" name="algorithm" type="radio" value="auto">
+                  <span class="mdl-radio__label">SJF non-préemptif</span>
+                </label>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="fifo">
+                  <input class="mdl-radio__button" id="fifo" name="algorithm" type="radio" value="auto">
+                  <span class="mdl-radio__label">FIFO</span>
+                </label>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rr">
+                  <input class="mdl-radio__button" id="rr" name="algorithm" type="radio" value="auto">
+                  <span class="mdl-radio__label">Round Robin</span>
+                </label>
+              </div>
               <div style="display:none;" class="mdl-textfield mdl-js-textfield roundrobinnumber">
                 <input class="mdl-textfield__input" type="text" pattern="[0-9]*" id="rr_number">
                 <label class="mdl-textfield__label" for="rr_number">Quantum pour le Round Robin...</label>
                 <span class="mdl-textfield__error">Ce n'est pas un nombre !</span>
               </div>
+              <h5>Tableau de la distribution temporelle</h5>
               <table id="table_scheduling_entries" class="mdl-data-table mdl-shadow--2dp wide">
           			<thead>
                   <tr class="mdl-js-button mdl-button--raised mdl-button--accent">
@@ -126,13 +129,13 @@
                     <td><div contentEditable class="editable">...</div></td>
           					<td><div contentEditable class="editable">...</div></td>
                     <td><div contentEditable class="editable">...</div></td>
-          					<td><i style="vertical-align: bottom;" class="table-remove material-icons md-24">&#xe15d;</i></td>
+          					<td><i title="Supprimer la ligne" style="vertical-align: bottom;" class="table-remove material-icons md-24">&#xe15d;</i></td>
           				</tr>
           				<tr>
           					<td><div contentEditable class="editable">...</div></td>
           					<td><div contentEditable class="editable">...</div></td>
                     <td><div contentEditable class="editable">...</div></td>
-          					<td><i style="vertical-align: bottom;" class="table-remove material-icons md-24">&#xe15d;</i></td>
+          					<td><i title="Supprimer la ligne" style="vertical-align: bottom;" class="table-remove material-icons md-24">&#xe15d;</i></td>
           				</tr>
                   <tr id="add_row_scheduling">
                     <td class="table-row-header mdl-button--colored mdl-button--accent mdl-js-button" style="text-align: center;" colspan="100%">
@@ -146,13 +149,13 @@
               </table>
               <div>
                 <button id="reset_scheduling" class="toolbar-right mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
-                  Reset
+                  Reset <i class="material-icons">clear_all</i>
                 </button>
                 <button id="empty_scheduling" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                  Grille vide à remplir
+                  Grille vide à remplir <i class="material-icons">create</i>
                 </button>
                 <button id="resolve_scheduling" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                  Grille avec solutions
+                  Grille avec solutions <i class="material-icons">check</i>
                 </button>
               </div>
               <div id="div_responses" style="clear: both;">
@@ -170,7 +173,7 @@
             			</tbody>
                 </table>
                 <button id="correct_scheduling" style="display:none;" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                  Corriger
+                  Corriger <i class="material-icons">done_all</i>
                 </button>
               </div>
             </div>
