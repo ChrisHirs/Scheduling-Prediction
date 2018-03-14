@@ -41,30 +41,42 @@ $(function(){
   });
 
   $('#resolve_scheduling').click(function() {
-    var processArray = rowsToArray();
-    emptySchedulingSolTab(processArray);
-
-    if( $('#psjf').is(':checked') ) {
-      doPSJF(processArray);
-    }
-    else if ( $('#npsjf').is(':checked')) {
-      doNPSJF(processArray);
-    }
-    else if ( $('#fifo').is(':checked')) {
-      doFIFO(processArray);
-    }
-    else if ( $('#rr').is(':checked')) {
-      var rrnumber = parseInt($('#rr_number').val());
-      if (!isNaN(rrnumber)) {
-        doRR(rrnumber, processArray);
-      }
-      else {
-        alert("La valeur du Round Robin ne semble pas être un nombre valide...");
-      }
-    }
+    callAlgorithm(false);
   });
+
+  $('#correct_scheduling').click(function() {
+    callAlgorithm(true);
+  });
+
 });
 
+// Calls correct algorithm
+function callAlgorithm(isCorrecting) {
+  var processArray = rowsToArray();
+
+  if (!isCorrecting) {
+    emptySchedulingSolTab(processArray);
+  }
+
+  if( $('#psjf').is(':checked') ) {
+    doPSJF(processArray, isCorrecting);
+  }
+  else if ( $('#npsjf').is(':checked')) {
+    doNPSJF(processArray, isCorrecting);
+  }
+  else if ( $('#fifo').is(':checked')) {
+    doFIFO(processArray, isCorrecting);
+  }
+  else if ( $('#rr').is(':checked')) {
+    var rrnumber = parseInt($('#rr_number').val());
+    if (!isNaN(rrnumber)) {
+      doRR(rrnumber, processArray, isCorrecting);
+    }
+    else {
+      alert("La valeur du Round Robin ne semble pas être un nombre valide...");
+    }
+  }
+}
 
 //Transform the HTML table to a JS array
 function rowsToArray(){
@@ -200,7 +212,7 @@ function beautifyResult(processArray) {
   });
 }
 
-//show the solution in the HTML talbe
+// Show the solution in the HTML talbe
 function printResult(result, processArray){
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
   var nbRows = getSchedulingSolTabRows(processArray);
@@ -229,9 +241,40 @@ function printResult(result, processArray){
   beautifyResult(processArray);
 }
 
+// Show the correction in the HTML talbe
+function printCorrection(result, processArray) {
+  var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
+  var nbRows = getSchedulingSolTabRows(processArray);
+  var shift = true;
+
+  for(var i = 0; i<nbRows; i++){
+    if(shift){
+      var currentProcess = result.shift();
+      shift = false;
+    }
+
+    if ((currentProcess !== undefined)){
+      if (!(i < tmpProcessArray[currentProcess][1])){
+        var tabElem = $('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(currentProcess+1);
+        var value = parseInt(tabElem.find('div').text());
+        if (!isNaN(value)) {
+          if (value == tmpProcessArray[currentProcess][2]) {
+            var className = 'correct-answer';
+          }
+          else {
+            var className = 'wrong-answer';
+          }
+        }
+        tabElem.removeClass('wrong-answer correct-answer').addClass(className);
+        tmpProcessArray[currentProcess][2]--;
+        shift = true;
+      }
+    }
+  }
+}
 
 //find the next shortest process index
-function findNextProcessNPSJF(actifProcessesIndexes, processArray){
+function findNextProcessNPSJF(actifProcessesIndexes, processArray) {
   var minBurstIndex = 0;
   var minBurst = processArray[actifProcessesIndexes[0]][2]
   var i=0;
@@ -244,12 +287,11 @@ function findNextProcessNPSJF(actifProcessesIndexes, processArray){
       minBurst = processArray[index][2];
     }
   });
-
   return minBurstIndex;
 }
 
 // preemtif Shortest Job First scheduling algorithme
-function doPSJF (processArray){
+function doPSJF (processArray, isCorrecting){
   var actifProcessesIndexes = [];
   var result = [];
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
@@ -282,12 +324,17 @@ function doPSJF (processArray){
       }
     }
   }
-  //Function that print the result array into the HTML array.
-  printResult(result, processArray);
+  if (!isCorrecting) {
+    printResult(result, processArray);
+  }
+  else {
+    //Function that print the result array into the HTML array.
+    printCorrection(result, processArray);
+  }
 }
 
 // Non-preemtif Shortest Job First scheduling algorithme
-function doNPSJF(processArray) {
+function doNPSJF(processArray, isCorrecting) {
   var actifProcessesIndexes = [];
   var result = [];
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
@@ -321,12 +368,17 @@ function doNPSJF(processArray) {
       }
     }
   }
-  //Function that print the result array into the HTML array.
-  printResult(result, processArray);
+  if (!isCorrecting) {
+    //Function that print the result array into the HTML array.
+    printResult(result, processArray);
+  }
+  else {
+    printCorrection(result, processArray);
+  }
 }
 
 //First In First Out scheduling algorithme
-function doFIFO (processArray){
+function doFIFO (processArray, isCorrecting){
   var actifProcessIndex = [];
   var result = [];
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
@@ -347,13 +399,17 @@ function doFIFO (processArray){
       tmpProcessArray[actifProcessIndex[i]][2]--;
     }
   }
-
-  //Function that print the result array into the HTML array.
-  printResult(result, processArray);
+  if (!isCorrecting) {
+    //Function that print the result array into the HTML array.
+    printResult(result, processArray);
+  }
+  else {
+    printCorrection(result, processArray);
+  }
 }
 
 //Round Robin scheduling algorithme
-function doRR(round, processArray) {
+function doRR(round, processArray, isCorrecting) {
   var activeProcessIndex = [];
   var activeArrivalIndex = [];
   var result = [];
@@ -387,6 +443,11 @@ function doRR(round, processArray) {
       }
     }
   }
-  //Function that print the result array into the HTML array.
-  printResult(result, processArray);
+  if (!isCorrecting) {
+    //Function that print the result array into the HTML array.
+    printResult(result, processArray);
+  }
+  else {
+    printCorrection(result, processArray);
+  }
 }
