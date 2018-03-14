@@ -265,6 +265,9 @@ function printCorrection(result, processArray) {
             var className = 'wrong-answer';
           }
         }
+        else {
+          var className = undefined;
+        }
         tabElem.removeClass('wrong-answer correct-answer').addClass(className);
         tmpProcessArray[currentProcess][2]--;
         shift = true;
