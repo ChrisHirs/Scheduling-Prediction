@@ -45,7 +45,7 @@ $(function(){
     emptySchedulingSolTab(processArray);
 
     if( $('#psjf').is(':checked') ) {
-      doPSJF();
+      doPSJF(processArray);
     }
     else if ( $('#npsjf').is(':checked')) {
       doNPSJF(processArray);
@@ -243,59 +243,57 @@ function findNextProcessNPSJF(actifProcessesIndexes, processArray){
   var i=0;
 
   actifProcessesIndexes.forEach(function(index, i){
-    console.log("find processArray: "+processArray[index][2]);
+    /*console.log("find processArray: "+processArray[index][2]);
     console.log(processArray);
-    console.log("i: "+i);
+    console.log("i: "+i);*/
     if(processArray[index][2]<minBurst){
-      console.log("find i: "+i+" index: "+index);
+      //console.log("find i: "+i+" index: "+index);
       minBurstIndex=i;
       minBurst = processArray[index][2];
     }
   });
-  console.log("minBurstIndex: "+minBurstIndex+" minBurst: "+minBurst);
+  //console.log("minBurstIndex: "+minBurstIndex+" minBurst: "+minBurst);
   return minBurstIndex;
 }
 
 // preemtif Shortest Job First scheduling algorithme
-function doPSJF (){
+function doPSJF (processArray){
   var actifProcessesIndexes = [];
   var result = [];
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
-  var findnext = true;
 
   for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
     //console.log("fifo arr i: "+i);
-    console.log("i: "+i);
+    //console.log("i: "+i);
     if(isNewProcessArrived(i, processArray)){
       actifProcessesIndexes.push(currentNewArrivedProcessIndex); //put the new arrived process in the stack
     }
-    console.log("actifProcessesIndexes");
-    console.log(actifProcessesIndexes);
-    console.log("findnext:"+findnext);
-    if(findnext && (actifProcessesIndexes.length > 0)){
-      var minBurstIndex = findNextProcessNPSJF(actifProcessesIndexes, processArray);
-      findnext = false;
+    /*console.log("actifProcessesIndexes");
+    console.log(actifProcessesIndexes);*/
+    //console.log("findnext:"+findnext);
+    if(actifProcessesIndexes.length > 0){
+      var minBurstIndex = findNextProcessNPSJF(actifProcessesIndexes, tmpProcessArray);
     }
 
-    console.log("minBurstIndex: "+minBurstIndex+" actifProcessesIndexes: "+actifProcessesIndexes);
+    //console.log("minBurstIndex: "+minBurstIndex+" actifProcessesIndexes: "+actifProcessesIndexes);
 
     if((minBurstIndex != null) && (actifProcessesIndexes.length > 0)){
-      console.log("tmpProcessArray: "+tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]);
+      //console.log("tmpProcessArray: "+tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]);
       if(tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2] > 0){
         result.push(actifProcessesIndexes[minBurstIndex]);
         tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]--;
       }
-      else{
-        var shift = actifProcessesIndexes.splice(minBurstIndex,1);
-        console.log("actifProcessIndex shift: "+shift);
 
-        findnext = true;
+      if(tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]==0)
+      {
+        var shift = actifProcessesIndexes.splice(minBurstIndex,1);
+        //console.log("actifProcessIndex shift: "+shift);
       }
     }
-    console.log("");
+    //console.log("");
   }
-  console.log("result");
-  console.log(result);
+  /*console.log("result");
+  console.log(result);*/
   printResult(result, processArray);
 }
 
@@ -304,47 +302,47 @@ function doNPSJF(processArray) {
   var actifProcessesIndexes = [];
   var result = [];
 
-  var tmpProcessArrayass = $.extend(true,[],processArray); //Deep Copy of processArray
+  //var tmpProcessArrayass = $.extend(true,[],processArray); //Deep Copy of processArray
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
   var findnext = true;
 
-  console.log("--processArray--");
-  console.log(tmpProcessArrayass);
+  /*console.log("--processArray--");
+  console.log(tmpProcessArrayass);*/
 
 
   for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
     //console.log("fifo arr i: "+i);
-    console.log("i: "+i);
+    //console.log("i: "+i);
     if(isNewProcessArrived(i, processArray)){
       actifProcessesIndexes.push(currentNewArrivedProcessIndex); //put the new arrived process in the stack
     }
-    console.log("actifProcessesIndexes");
+    /*console.log("actifProcessesIndexes");
     console.log(actifProcessesIndexes);
-    console.log("findnext:"+findnext);
+    console.log("findnext:"+findnext);*/
     if(findnext && (actifProcessesIndexes.length > 0)){
       var minBurstIndex = findNextProcessNPSJF(actifProcessesIndexes, processArray);
       findnext = false;
     }
 
-    console.log("minBurstIndex: "+minBurstIndex+" actifProcessesIndexes: "+actifProcessesIndexes);
+    //console.log("minBurstIndex: "+minBurstIndex+" actifProcessesIndexes: "+actifProcessesIndexes);
 
     if((minBurstIndex != null) && (actifProcessesIndexes.length > 0)){
-      console.log("tmpProcessArray: "+tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]);
+      //console.log("tmpProcessArray: "+tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]);
       if(tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2] > 0){
         result.push(actifProcessesIndexes[minBurstIndex]);
         tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]--;
       }
       else{
         var shift = actifProcessesIndexes.splice(minBurstIndex,1);
-        console.log("actifProcessIndex shift: "+shift);
+        //console.log("actifProcessIndex shift: "+shift);
 
         findnext = true;
       }
     }
-    console.log("");
+    //console.log("");
   }
-  console.log("result");
-  console.log(result);
+  // console.log("result");
+  // console.log(result);
   printResult(result, processArray);
 }
 
@@ -416,6 +414,5 @@ function doRR(round, processArray) {
       }
     }
   }
-
   printResult(result, processArray);
 }
