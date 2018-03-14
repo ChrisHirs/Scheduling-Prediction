@@ -75,8 +75,6 @@ function rowsToArray(){
       var arrival = parseInt($(row).find('td div').eq(1).text());
       var duration = parseInt($(row).find('td div').eq(2).text());
       var currentRow = [$(row).find('td div').eq(0).text(), arrival, duration];
-      //console.log("rowToArray currentRow:");
-      //console.log(currentRow);
       processArray.push(currentRow);
     }
   });
@@ -88,9 +86,6 @@ function rowsToArray(){
       alert("Une ou plusieurs entrées sont incorrectes. Vérifiez le tableau à nouveau.");
     }
   });
-  //console.log("rowToArray processArray:");
-  //console.log(processArray);
-  // console.log(processArray.length)
   return processArray;
 }
 
@@ -152,11 +147,10 @@ function isNewProcessArrived(currentLine, processArray){
   var isFound = false;
   currentNewArrivedProcessIndex = null;
 
+  //run throught the process array to see if arrive time is equal to the current line
   for(j=0; j<processArray.length; j++){
-    //console.log(j)
     if(processArray[j][1] == currentLine){
-      // console.log("IS ARRIVED process arr: "+processArray[j][1]+" current: "+currentLine+" i: "+j);
-      currentNewArrivedProcessIndex = j;
+      currentNewArrivedProcessIndex = j; //globale variable to get the index of the new arrived process
       isFound = true;
     }
   }
@@ -210,49 +204,47 @@ function beautifyResult(processArray) {
 function printResult(result, processArray){
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
   var nbRows = getSchedulingSolTabRows(processArray);
-  //console.log("PRINT nbRows: "+nbRows);
   var shift = true;
 
   for(var i = 0; i<nbRows; i++){
+    //get the actual process
     if(shift){
+      //remove index of current process
       var currentProcess = result.shift();
       shift = false;
     }
 
-    // console.log("PRINT i: "+i);
-    // console.log("PRINT currentProcess: "+currentProcess);
-    // console.log("PRINT shift: "+currentProcess);
-
+    //check if process is arrived
     if((currentProcess !== undefined)){
+      //if process isn't arrive don't print
       if(!(i < tmpProcessArray[currentProcess][1])){
-        var tabElem = $('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(currentProcess+1);
+        var tabElem = $('#table_scheduling_responses tbody').find('tr').eq(i).find('td').eq(currentProcess+1); //find the cell to print into
         tabElem.find('div').text(tmpProcessArray[currentProcess][2]);
         tabElem.addClass('grey-cell');
-        tmpProcessArray[currentProcess][2]--;
+        tmpProcessArray[currentProcess][2]--; //decrement current procress
         shift = true;
       }
     }
-    // console.log("printResult processArray durée: "+processArray[result[i]][2]);
   }
   beautifyResult(processArray);
 }
 
+
+//find the next shortest process index
 function findNextProcessNPSJF(actifProcessesIndexes, processArray){
   var minBurstIndex = 0;
   var minBurst = processArray[actifProcessesIndexes[0]][2]
   var i=0;
 
+  //run throught every index from the actif process array
   actifProcessesIndexes.forEach(function(index, i){
-    /*console.log("find processArray: "+processArray[index][2]);
-    console.log(processArray);
-    console.log("i: "+i);*/
+    //find the shortest index
     if(processArray[index][2]<minBurst){
-      //console.log("find i: "+i+" index: "+index);
       minBurstIndex=i;
       minBurst = processArray[index][2];
     }
   });
-  //console.log("minBurstIndex: "+minBurstIndex+" minBurst: "+minBurst);
+
   return minBurstIndex;
 }
 
@@ -262,38 +254,35 @@ function doPSJF (processArray){
   var result = [];
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
 
+  // run throught every raw of the table
   for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
-    //console.log("fifo arr i: "+i);
-    //console.log("i: "+i);
+
+    //if a new process arrive put it in the array
     if(isNewProcessArrived(i, processArray)){
       actifProcessesIndexes.push(currentNewArrivedProcessIndex); //put the new arrived process in the stack
     }
-    /*console.log("actifProcessesIndexes");
-    console.log(actifProcessesIndexes);*/
-    //console.log("findnext:"+findnext);
+
+    //find the index of the next shortest process
     if(actifProcessesIndexes.length > 0){
       var minBurstIndex = findNextProcessNPSJF(actifProcessesIndexes, tmpProcessArray);
     }
 
-    //console.log("minBurstIndex: "+minBurstIndex+" actifProcessesIndexes: "+actifProcessesIndexes);
-
     if((minBurstIndex != null) && (actifProcessesIndexes.length > 0)){
-      //console.log("tmpProcessArray: "+tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]);
+
+      //decrement the actif process
       if(tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2] > 0){
-        result.push(actifProcessesIndexes[minBurstIndex]);
+        result.push(actifProcessesIndexes[minBurstIndex]); //put the actual process name in the solution array
         tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]--;
       }
 
+      //remove terminated process from actif process list
       if(tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]==0)
       {
         var shift = actifProcessesIndexes.splice(minBurstIndex,1);
-        //console.log("actifProcessIndex shift: "+shift);
       }
     }
-    //console.log("");
   }
-  /*console.log("result");
-  console.log(result);*/
+  //Function that print the result array into the HTML array.
   printResult(result, processArray);
 }
 
@@ -301,48 +290,38 @@ function doPSJF (processArray){
 function doNPSJF(processArray) {
   var actifProcessesIndexes = [];
   var result = [];
-
-  //var tmpProcessArrayass = $.extend(true,[],processArray); //Deep Copy of processArray
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
-  var findnext = true;
+  var findnext = true; //if the active process arrives to 0 can find the next shortest job from the actifProcessesIndexes
 
-  /*console.log("--processArray--");
-  console.log(tmpProcessArrayass);*/
-
-
+  // run throught every raw of the table
   for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
-    //console.log("fifo arr i: "+i);
-    //console.log("i: "+i);
+
+    //if a new process arrive put it in the array
     if(isNewProcessArrived(i, processArray)){
       actifProcessesIndexes.push(currentNewArrivedProcessIndex); //put the new arrived process in the stack
     }
-    /*console.log("actifProcessesIndexes");
-    console.log(actifProcessesIndexes);
-    console.log("findnext:"+findnext);*/
+
+    //find the index of the next shortest process
     if(findnext && (actifProcessesIndexes.length > 0)){
       var minBurstIndex = findNextProcessNPSJF(actifProcessesIndexes, processArray);
       findnext = false;
     }
 
-    //console.log("minBurstIndex: "+minBurstIndex+" actifProcessesIndexes: "+actifProcessesIndexes);
-
     if((minBurstIndex != null) && (actifProcessesIndexes.length > 0)){
-      //console.log("tmpProcessArray: "+tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]);
+
+      //decrement the actif process until 0
       if(tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2] > 0){
-        result.push(actifProcessesIndexes[minBurstIndex]);
+        result.push(actifProcessesIndexes[minBurstIndex]); //put the actual process name in the solution array
         tmpProcessArray[actifProcessesIndexes[minBurstIndex]][2]--;
       }
+      //remove terminated process from actif process list
       else{
         var shift = actifProcessesIndexes.splice(minBurstIndex,1);
-        //console.log("actifProcessIndex shift: "+shift);
-
         findnext = true;
       }
     }
-    //console.log("");
   }
-  // console.log("result");
-  // console.log(result);
+  //Function that print the result array into the HTML array.
   printResult(result, processArray);
 }
 
@@ -352,30 +331,24 @@ function doFIFO (processArray){
   var result = [];
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
 
+  // run throught every raw of the table
   for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
-    // console.log("fifo arr i: "+i);
-
-    if(isNewProcessArrived(i, processArray)){
-          actifProcessIndex.push(currentNewArrivedProcessIndex); //put the new arrived process in the queue
-    }
-      // console.log("processArray puis currentNewArrivedProcessIndex");
-      // console.log(processArray);
-      // console.log(currentNewArrivedProcessIndex);
-      //console.log("row: "+i+" column: "+currentNewArrivedProcessIndex+" value: "+processArray[currentNewArrivedProcessIndex[i]][2]);
+      //if a new process arrive put it in the queue
+      if(isNewProcessArrived(i, processArray)){
+            actifProcessIndex.push(currentNewArrivedProcessIndex); //put the new arrived process in the queue
+      }
     }
 
+  //generate the result array running througth the queue
   for(var i=0; i<actifProcessIndex.length; i++){
+    //decrement the actif process until 0
     while(tmpProcessArray[actifProcessIndex[i]][2]>0){
       result.push(actifProcessIndex[i]); //put the actual process name in the solution array
       tmpProcessArray[actifProcessIndex[i]][2]--;
     }
   }
 
-  // console.log("doFIFO process puis tmpProcessArray: ");
-  // console.log(processArray);
-  // console.log(tmpProcessArray);
-  // console.log("doFIFO Résultat: " + result);
-
+  //Function that print the result array into the HTML array.
   printResult(result, processArray);
 }
 
@@ -414,5 +387,6 @@ function doRR(round, processArray) {
       }
     }
   }
+  //Function that print the result array into the HTML array.
   printResult(result, processArray);
 }
