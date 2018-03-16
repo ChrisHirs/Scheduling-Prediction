@@ -221,7 +221,6 @@ function printResult(result, processArray){
   for(var i = 0; i<nbRows; i++){
     //get the actual process
     if(shift){
-      //remove index of current process
       var currentProcess = result.shift();
       shift = false;
     }
@@ -239,6 +238,71 @@ function printResult(result, processArray){
     }
   }
   beautifyResult(processArray);
+}
+
+function calculateTimes(results, processArray){
+  var processes=[];
+  var result = $.extend(true,[],results); //Deep Copy of processArray
+  var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
+  var nbRows = getSchedulingSolTabRows(processArray);
+  var shift = true;
+
+  var totalWatingTime=0;
+  var totalTurnaroundTime=0;
+  var totalResponseTime=0;
+  var averageWatingTime;
+  var averageTurnaroundTime;
+  var averageResponseTime;
+
+
+  //initialisation of processes
+  for(var i=0; i<tmpProcessArray.length;i++){
+      processes.push([0,0,0, false])
+  }
+
+  for(var i = 0; i<nbRows; i++){
+
+    //get the actual process
+    if(shift){
+      var currentProcess = result.shift();
+      shift = false;
+    }
+
+    //check if process is arrived
+    if((currentProcess !== undefined)){
+      processes[currentProcess][3]=true;
+      for(var j=0; j<processes.length; j++){
+        //turnaround time
+        if(tmpProcessArray[j][2]>0 && tmpProcessArray[j][1]<=i){
+          processes[j][0]+=1;
+        }
+        //waiting time
+        if(currentProcess != j && tmpProcessArray[j][2]>0 && tmpProcessArray[j][1]<=i){
+          processes[j][1]+=1;
+        }
+        //respons time
+        if(tmpProcessArray[j][1]<=i && !processes[j][3]){
+          processes[j][2]+=1;
+        }
+      }
+
+      //if process isn't arrive don't print
+      if(!(i < tmpProcessArray[currentProcess][1])){
+        tmpProcessArray[currentProcess][2]--;
+        shift = true;
+      }
+    }
+  }
+
+  for(var i=0; i<processes.length; i++){
+    totalTurnaroundTime += processes[i][0];
+    totalWatingTime += processes[i][1];
+    totalResponseTime += processes[i][2];
+  }
+
+  averageTurnaroundTime = totalTurnaroundTime/processes.length;
+  averageWatingTime = totalWatingTime/processes.length;
+  averageResponseTime = totalResponseTime/processes.length;
 }
 
 // Show the correction in the HTML talbe
@@ -327,6 +391,9 @@ function doPSJF (processArray, isCorrecting){
       }
     }
   }
+
+  calculateTimes(result, processArray);
+
   if (!isCorrecting) {
     printResult(result, processArray);
   }
@@ -371,6 +438,9 @@ function doNPSJF(processArray, isCorrecting) {
       }
     }
   }
+
+  calculateTimes(result, processArray);
+
   if (!isCorrecting) {
     //Function that print the result array into the HTML array.
     printResult(result, processArray);
@@ -391,6 +461,7 @@ function doFIFO (processArray, isCorrecting){
       //if a new process arrive put it in the queue
       if(isNewProcessArrived(i, processArray)){
             actifProcessIndex.push(currentNewArrivedProcessIndex); //put the new arrived process in the queue
+            //waitingTime[currentNewArrivedProcessIndex] = i;
       }
     }
 
@@ -402,6 +473,9 @@ function doFIFO (processArray, isCorrecting){
       tmpProcessArray[actifProcessIndex[i]][2]--;
     }
   }
+
+  calculateTimes(result, processArray);
+
   if (!isCorrecting) {
     //Function that print the result array into the HTML array.
     printResult(result, processArray);
@@ -446,6 +520,9 @@ function doRR(round, processArray, isCorrecting) {
       }
     }
   }
+
+  calculateTimes(result, processArray);
+
   if (!isCorrecting) {
     //Function that print the result array into the HTML array.
     printResult(result, processArray);
