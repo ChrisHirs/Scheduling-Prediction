@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Scheduling & Predictions</title>
+    <title>Scheduling & Prédictions</title>
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -59,17 +59,16 @@
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-          <h3>Scheduling &amp; Predictions</h3>
+          <h3>Scheduling &amp; Prédictions</h3>
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
           <a href="#home" class="mdl-layout__tab is-active">Accueil</a>
           <a href="#scheduling" class="mdl-layout__tab">Scheduling</a>
-          <a href="#predictions" class="mdl-layout__tab">Predictions</a>
-          <a href="#course_predictions" class="mdl-layout__tab">Théorie Prédictions</a>
-          <a href="#help_predictions" class="mdl-layout__tab">Aide Prédictions</a>
-          <a href="#course_scheduling" class="mdl-layout__tab">Théorie Scheduling</a>
+          <a href="#predictions" class="mdl-layout__tab">Prédictions</a>
+          <a href="#course" class="mdl-layout__tab">Théorie</a>
+          <a href="#help" class="mdl-layout__tab">Aide</a>
         </div>
       </header>
       <main class="mdl-layout__content">
@@ -182,7 +181,7 @@
         <div class="mdl-layout__tab-panel" id="predictions">
           <section class="section--center mdl-grid mdl-grid--no-spacing">
             <div class="mdl-cell mdl-cell--12-col">
-              <h4>Predictions</h4>
+              <h4>Prédictions</h4>
               <hr>
               <h5>Tableaux de prédictions et erreurs</h5>
               <table id="table_predictions" class="mdl-cell mdl-cell--12-col mdl-data-table mdl-js-data-table mdl-shadow--2dp">
@@ -329,103 +328,108 @@
             </div>
           </section>
         </div>
-        <div class="mdl-layout__tab-panel" id="course_predictions">
+        <div class="mdl-layout__tab-panel" id="course">
           <section class="section--center mdl-grid mdl-grid--no-spacing">
-            <div class="mdl-cell mdl-cell--12-col">
-              <h4>Aide Prédiction</h4>
-              <hr>
-              <h5>Qu'est-ce que les prédictions ?</h5>
-              <p>Certains algorithmes d'ordonnancement utilisent les tailles des prochaines rafales des processus afin de savoir lequel d'entre eux sera le prochain à utiliser le CPU, on peut notemment citer l'agorithme <a href="https://fr.wikipedia.org/wiki/Shortest_job_first">Shortest Job First (SJF)</a>. </p>
-              <p>Seulement, lorsqu'un processus s'ajoute à la file des processus prêts, l'ordonnanceur ne connaît pas la taille de la rafale de ce dernier. Il est donc nécessaire pour lui d'avoir une méthode lui permettant de déterminer cette taille. </p>
-              <p>C'est là qu'entrent en jeux les prédictions !</p>
-              <h5>Comment se calculent les prédictions ?</h5>
-              <p>Une façon de prédire les tailles des futures rafales est d'utiliser la technique du <a href="https://fr.wikipedia.org/wiki/Lissage_exponentiel">lissage exponentiel</a>.</p>
-              <p>Cette technique se base sur la taille réelle de la dernière rafale traitée et la prévision qui avait été calculée.</p>
-              <ul>
-                <li>t<sub>n</sub> = taille réelle de la n<sup>ème</sup> rafale CPU</li>
-                <li>&tau;<sub>n+1</sub> = taille prédite pour la prochaine rafale CPU</li>
-                <li>0 &le; &alpha; &le; 1</li>
-                <li>&tau;<sub>0</sub> = une valeur arbitraire appelée prédiction initiale</li>
-                <li>Formule du lissage exponentiel :</li>
-              </ul>
-              <p class="centered-formula">&tau;<sub>n+1</sub> = &alpha; &middot; t<sub>n</sub> + (1 - &alpha;) &middot; &tau;<sub>n</sub></p>
-              <p>Cette technique permet de se baser sur la taille de la dernière rafale effective et l'historique des prédiction. La constante &alpha; joue un rôle de pondération entre ces deux valeurs.</p>
-              <ul>
-                <li>Quand &alpha; vaut 1.0, alors l'historique des prédictions est ignoré et la prédiction équivaut à la dernière taille de rafale CPU.</li>
-                <li>Quand &alpha; vaut 0.0, alors la dernière rafale réelle n'est pas prise en compte et la prédiction reste constante puisqu'elle sera égale à la dernière prédiction.</li>
-              </ul>
-              <h5>Analyse du résultat</h5>
-              <p>Beaucoup de résultats différents sont possibles en faisant varier les valuers &alpha; et &tau;<sub>0</sub>. Il existe cependant une façon très simple de comparer les résultats obtenus via différentes paramétrisations.</p>
-              <p>Il suffit de calculer la somme des différences (absolue) entre t<sub>n</sub> et &tau;<sub>n</sub> pour chaque rafale <i>n</i>.</p>
-              <p>La version obtenant la somme la plus petite sera considérée comme meilleure, car cela signifie que l'équart entre les prédictions et les valeurs réelles est moindre.</p>
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+              <div class="mdl-tabs__tab-bar">
+                  <a href="#course_prediction" class="mdl-tabs__tab is-active">Prédictions</a>
+                  <a href="#course_scheduling" class="mdl-tabs__tab">Scheduling</a>
+              </div>
+              <div class="mdl-tabs__panel is-active" id="course_prediction">
+                <h5>Qu'est-ce que les prédictions ?</h5>
+                <p>Certains algorithmes d'ordonnancement utilisent les tailles des prochaines rafales des processus afin de savoir lequel d'entre eux sera le prochain à utiliser le CPU, on peut notemment citer l'agorithme <a href="https://fr.wikipedia.org/wiki/Shortest_job_first">Shortest Job First (SJF)</a>. </p>
+                <p>Seulement, lorsqu'un processus s'ajoute à la file des processus prêts, l'ordonnanceur ne connaît pas la taille de la rafale de ce dernier. Il est donc nécessaire pour lui d'avoir une méthode lui permettant de déterminer cette taille. </p>
+                <p>C'est là qu'entrent en jeux les prédictions !</p>
+                <h5>Comment se calculent les prédictions ?</h5>
+                <p>Une façon de prédire les tailles des futures rafales est d'utiliser la technique du <a href="https://fr.wikipedia.org/wiki/Lissage_exponentiel">lissage exponentiel</a>.</p>
+                <p>Cette technique se base sur la taille réelle de la dernière rafale traitée et la prévision qui avait été calculée.</p>
+                <ul>
+                  <li>t<sub>n</sub> = taille réelle de la n<sup>ème</sup> rafale CPU</li>
+                  <li>&tau;<sub>n+1</sub> = taille prédite pour la prochaine rafale CPU</li>
+                  <li>0 &le; &alpha; &le; 1</li>
+                  <li>&tau;<sub>0</sub> = une valeur arbitraire appelée prédiction initiale</li>
+                  <li>Formule du lissage exponentiel :</li>
+                </ul>
+                <p class="centered-formula">&tau;<sub>n+1</sub> = &alpha; &middot; t<sub>n</sub> + (1 - &alpha;) &middot; &tau;<sub>n</sub></p>
+                <p>Cette technique permet de se baser sur la taille de la dernière rafale effective et l'historique des prédiction. La constante &alpha; joue un rôle de pondération entre ces deux valeurs.</p>
+                <ul>
+                  <li>Quand &alpha; vaut 1.0, alors l'historique des prédictions est ignoré et la prédiction équivaut à la dernière taille de rafale CPU.</li>
+                  <li>Quand &alpha; vaut 0.0, alors la dernière rafale réelle n'est pas prise en compte et la prédiction reste constante puisqu'elle sera égale à la dernière prédiction.</li>
+                </ul>
+                <h5>Analyse du résultat</h5>
+                <p>Beaucoup de résultats différents sont possibles en faisant varier les valuers &alpha; et &tau;<sub>0</sub>. Il existe cependant une façon très simple de comparer les résultats obtenus via différentes paramétrisations.</p>
+                <p>Il suffit de calculer la somme des différences (absolue) entre t<sub>n</sub> et &tau;<sub>n</sub> pour chaque rafale <i>n</i>.</p>
+                <p>La version obtenant la somme la plus petite sera considérée comme meilleure, car cela signifie que l'équart entre les prédictions et les valeurs réelles est moindre.</p>
+              </div>
+              <div class="mdl-tabs__panel" id="course_scheduling">
+                <h5>Qu'est-ce que le Scheduling ?</h5>
+                <p>L'<a href="https://fr.wikipedia.org/wiki/Ordonnancement_dans_les_syst%C3%A8mes_d%27exploitation">ordonnanceur (scheduler)</a> dans un système d'exploitation est le composant choisissant l'ordre d'exécution des processus sur le processeur.</p>
+                <p>Chaque processus prêt désirant utiliser le CPU s'inscrit dans une file permettant à l'ordonnanceur de connaître son état.</p>
+                <p>L'ordonnanceur utilise un algorithme dit d'ordonnacement lui permettant de définir l'ordre dans lequel les processus vont accéder à la ressource CPU.</p>
+
+                <p>Il existe plusieurs algorithmes d'ordonnancement, nous allons les décrire ci-dessous.</p>
+
+                <h5>Shortest Job First non préemptif (SJF)</h5>
+                <p>Comme son nom l'indique, cet algorithme va laisser passer le processus ayant la rafale CPU la plus courte.</p>
+                <p>Cependant, l'ordonnanceur ne connaît pas la taille des rafales des processus. Pour résoudre ce problème, il utilise un système de prédictions.</p>
+                <p>Chaque processus gagnant l'accès au CPU va y rester jusqu'à ce qu'il se termine.</p>
+                <h5>Shortest Job First préemptif (SJF) ou Shortest Remaining Time First (SRTF)</h5>
+                <p>L'idée est la même que pour la version non préemptive, mais cette fois-ci un processus ayant accès au processeur n'est pas garanti de pouvoir terminer sa rafale en une seule session.</p>
+                <p>En effet, dans cette version-ci l'ordonnanceur vérifiera en tout temps si un processus avec une rafale plus petite n'est pas présent et si c'est le cas, ce dernier prendra la place de celui en cours.</p>
+                <h5>First In First Out (FIFO)</h5>
+                <p>Dans cet algorithme c'est l'ordre d'arrivée des processus qui sera important. Les processus auront donc accès au CPU selon l'ordre dans lequel ils se seront inscrits dans la file.</p>
+                <p>Le processus gagnant l'accès au CPU complétera sa rafale en une seule session.</p>
+                <h5>Round Robin</h5>
+                <p>Cet algorithme-ci est plutôt simple, c'est une sorte de FIFO dans lequel chaque processus gagnant l'accès au CPU ne pourra y effectuer qu'une certaine taille de rafale. Cette taille qui est fixe est appelée quantum.</p>
+                <p>Lorsque le temps permis au processus actif dans le CPU est terminé, il passe en attente et le processus suivant prend sa place.</p>
+
+              </div>
             </div>
           </section>
         </div>
-        <div class="mdl-layout__tab-panel" id="help_predictions">
+        <div class="mdl-layout__tab-panel" id="help">
           <section class="section--center mdl-grid mdl-grid--no-spacing">
-            <div class="mdl-cell mdl-cell--12-col">
-              <h4>Aide Prédiction</h4>
-              <hr>
-              <h5>Fonctionnalités</h5>
-              <p>La page Prédiction permet de vous exercer au calcul des prédictions ainsi qu'à la comparaison des résultats obtenus. Elle permet également de mieux visualiser les résultats à l'aide de graphes et de trouver les valeurs optimales.</p>
-              <h5>Comment s'exercer ?</h5>
-              <p>Pour compléter un champ il suffit de cliquer dessus</p>
-              <ol>
-                <li>Ligne de donnée - Permet de rentrer les informations de la donnée</li>
-                <li>Bouton d'ajout de nouvelle ligne - Ajoute une ligne d'exercice de prédiction et d'erreur</li>
-                <li>Ligne d'exercice de prédiction - Ligne à remplir pour compléter l'exercice de prédiction</li>
-                <li>Boutons d'ajout et suppression de colonne - Permet d'ajouter et retirer un processus</li>
-                <li>Boutons de contrôle de ligne <ul><li>Bouton 1 - Permet de corriger la ligne (vert = correct, rouge = faux)</li><li>Bouton 2 - Permet de remplacer les données de la ligne par les bonnes réponses</li><li>Bouton 3 - Supprime la ligne de prédiction et sa ligne d'erreur correspondante</li></ul></li>
-                <li>Ligne d'exercice de calcul d'erreur - Ligne à remplir pour compléter l'exrcice d'erreur</li>
-              </ol>
-              <img src="images/prediction-exemple.png" alt="Illustration de l'exercice de prediction">
-              <h5>Calcul du meilleur alpha</h5>
-              <p>Cette partie permet d'indiquer une prédiction initiale et en utilisant les informations des rafales fournies dans la donnée, le meilleur alpha à deux chiffre après la virgule est calculé.</p>
-              <h5>Génération des graphes</h5>
-              <p>Grâce aux deux boutons situés dans la troisième partie de la page, il est possible de générer deux graphes différents selon les données :</p>
-              <ul>
-                <li>Le premier graphe permet de comparer les tailles des rafales effectives à celles estimées pour chaque processus</li>
-                <li>Le second graphe permet de constater l'erreur entre la prédiction et les valeurs effectives pour chaque rafale</li>
-              </ul>
-            </div>
-          </section>
-        </div>
-        <div class="mdl-layout__tab-panel" id="course_scheduling">
-          <section class="section--center mdl-grid mdl-grid--no-spacing">
-            <div class="mdl-cell mdl-cell--12-col">
-              <h4>Théorie Scheduling</h4>
-              <hr>
-              <h5>Qu'est-ce que le Scheduling ?</h5>
-              <p>L'<a href="https://fr.wikipedia.org/wiki/Ordonnancement_dans_les_syst%C3%A8mes_d%27exploitation">ordonnanceur (scheduler)</a> dans un système d'exploitation est le composant choisissant l'ordre d'exécution des processus sur le processeur.</p>
-              <p>Chaque processus prêt désirant utiliser le CPU s'inscrit dans une file permettant à l'ordonnanceur de connaître son état.</p>
-              <p>L'ordonnanceur utilise un algorithme dit d'ordonnacement lui permettant de définir l'ordre dans lequel les processus vont accéder à la ressource CPU.</p>
-
-              <p>Il existe plusieurs algorithmes d'ordonnancement, nous allons les décrire ci-dessous.</p>
-
-              <h5>Shortest Job First non préemptif (SJF)</h5>
-              <p>Comme son nom l'indique, cet algorithme va laisser passer le processus ayant la rafale CPU la plus courte.</p>
-              <p>Cependant, l'ordonnanceur ne connaît pas la taille des rafales des processus. Pour résoudre ce problème, il utilise un système de <a href="#help_predictions"></a>prédictions.</p>
-              <p>Chaque processus gagnant l'accès au CPU va y rester jusqu'à ce qu'il se termine.</p>
-              <h5>Shortest Job First préemptif (SJF) ou Shortest Remaining Time First (SRTF)</h5>
-              <p>L'idée est la même que pour la version non préemptive, mais cette fois-ci un processus ayant accès au processeur n'est pas garanti de pouvoir terminer sa rafale en une seule session.</p>
-              <p>En effet, dans cette version-ci l'ordonnanceur vérifiera en tout temps si un processus avec une rafale plus petite n'est pas présent et si c'est le cas, ce dernier prendra la place de celui en cours.</p>
-              <h5>First In First Out (FIFO)</h5>
-              <p>Dans cet algorithme c'est l'ordre d'arrivée des processus qui sera important. Les processus auront donc accès au CPU selon l'ordre dans lequel ils se seront inscrits dans la file.</p>
-              <p>Le processus gagnant l'accès au CPU complétera sa rafale en une seule session.</p>
-              <h5>Round Robin</h5>
-              <p>Cet algorithme-ci est plutôt simple, c'est une sorte de FIFO dans lequel chaque processus gagnant l'accès au CPU ne pourra y effectuer qu'une certaine taille de rafale. Cette taille qui est fixe est appelée quantum.</p>
-              <p>Lorsque le temps permis au processus actif dans le CPU est terminé, il passe en attente et le processus suivant prend sa place.</p>
-
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+              <div class="mdl-tabs__tab-bar">
+                  <a href="#help_prediction" class="mdl-tabs__tab is-active">Prédictions</a>
+                  <a href="#help_scheduling" class="mdl-tabs__tab">Scheduling</a>
+              </div>
+              <div class="mdl-tabs__panel is-active" id="help_prediction">
+                <h5>Fonctionnalités</h5>
+                <p>La page Prédiction permet de vous exercer au calcul des prédictions ainsi qu'à la comparaison des résultats obtenus. Elle permet également de mieux visualiser les résultats à l'aide de graphes et de trouver les valeurs optimales.</p>
+                <h5>Comment s'exercer ?</h5>
+                <p>Pour compléter un champ il suffit de cliquer dessus</p>
+                <ol>
+                  <li>Ligne de donnée - Permet de rentrer les informations de la donnée</li>
+                  <li>Bouton d'ajout de nouvelle ligne - Ajoute une ligne d'exercice de prédiction et d'erreur</li>
+                  <li>Ligne d'exercice de prédiction - Ligne à remplir pour compléter l'exercice de prédiction</li>
+                  <li>Boutons d'ajout et suppression de colonne - Permet d'ajouter et retirer un processus</li>
+                  <li>Boutons de contrôle de ligne <ul><li>Bouton 1 - Permet de corriger la ligne (vert = correct, rouge = faux)</li><li>Bouton 2 - Permet de remplacer les données de la ligne par les bonnes réponses</li><li>Bouton 3 - Supprime la ligne de prédiction et sa ligne d'erreur correspondante</li></ul></li>
+                  <li>Ligne d'exercice de calcul d'erreur - Ligne à remplir pour compléter l'exrcice d'erreur</li>
+                </ol>
+                <img src="images/prediction-exemple.png" alt="Illustration de l'exercice de prediction">
+                <h5>Calcul du meilleur alpha</h5>
+                <p>Cette partie permet d'indiquer une prédiction initiale et en utilisant les informations des rafales fournies dans la donnée, le meilleur alpha à deux chiffre après la virgule est calculé.</p>
+                <h5>Génération des graphes</h5>
+                <p>Grâce aux deux boutons situés dans la troisième partie de la page, il est possible de générer deux graphes différents selon les données :</p>
+                <ul>
+                  <li>Le premier graphe permet de comparer les tailles des rafales effectives à celles estimées pour chaque processus</li>
+                  <li>Le second graphe permet de constater l'erreur entre la prédiction et les valeurs effectives pour chaque rafale</li>
+                </ul>
+              </div>
+              <div class="mdl-tabs__panel" id="help_scheduling">
+                <h5>Kek</h5>
+              </div>
             </div>
           </section>
         </div>
         <footer class="mdl-mini-footer">
           <div class="mdl-mini-footer__left-section">
-            <div class="mdl-logo">Scheduling &amp; Predictions</div>
+            <div class="mdl-logo">Scheduling &amp; Prédictions</div>
             <ul class="mdl-mini-footer__link-list">
               <li><a href="#home">Accueil</a></li>
               <li><a href="#scheduling">Scheduling</a></li>
-              <li><a href="#predictions">Predictions</a></li>
+              <li><a href="#predictions">Prédictions</a></li>
             </ul>
           </div>
         </footer>
