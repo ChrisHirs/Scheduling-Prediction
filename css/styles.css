@@ -418,6 +418,17 @@ table .table-head{
   background-color: #eee;
 }
 
+/* IMAGES */
+.image-all-width {
+  width: 100%;
+  height: auto;
+}
+
+/* ICONS */
+.md-18 {
+  font-size: 18px;
+}
+
 /* MISCELLACOUSCOUS */
 
 ::-webkit-scrollbar {

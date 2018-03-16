@@ -382,7 +382,19 @@
                 <h5>Round Robin</h5>
                 <p>Cet algorithme-ci est plutôt simple, c'est une sorte de FIFO dans lequel chaque processus gagnant l'accès au CPU ne pourra y effectuer qu'une certaine taille de rafale. Cette taille qui est fixe est appelée quantum.</p>
                 <p>Lorsque le temps permis au processus actif dans le CPU est terminé, il passe en attente et le processus suivant prend sa place.</p>
-
+                <h5>Statistiques</h5>
+                <p>Il existe différents critères appliquables aux algorithmes d'ordonnancement :<p>
+                <ul>
+                  <li>
+                    <b>Turnaround Time</b> : temps total pour éxecuter un processus de son arrivée à sa disparition
+                  </li>
+                  <li>
+                    <b>Waiting Time</b> : temps total passé dans la queue à attendre
+                  </li>
+                  <li>
+                    <b>Response Time</b> : temps total entre l'arrivée du processus et sa première utilisation
+                  </li>
+                </ul>
               </div>
             </div>
           </section>
@@ -398,7 +410,7 @@
                 <h5>Fonctionnalités</h5>
                 <p>La page Prédiction permet de vous exercer au calcul des prédictions ainsi qu'à la comparaison des résultats obtenus. Elle permet également de mieux visualiser les résultats à l'aide de graphes et de trouver les valeurs optimales.</p>
                 <h5>Comment s'exercer ?</h5>
-                <p>Pour compléter un champ il suffit de cliquer dessus</p>
+                <p>Pour compléter un champ il suffit de cliquer dessus.</p>
                 <ol>
                   <li>Ligne de donnée - Permet de rentrer les informations de la donnée</li>
                   <li>Bouton d'ajout de nouvelle ligne - Ajoute une ligne d'exercice de prédiction et d'erreur</li>
@@ -407,7 +419,7 @@
                   <li>Boutons de contrôle de ligne <ul><li>Bouton 1 - Permet de corriger la ligne (vert = correct, rouge = faux)</li><li>Bouton 2 - Permet de remplacer les données de la ligne par les bonnes réponses</li><li>Bouton 3 - Supprime la ligne de prédiction et sa ligne d'erreur correspondante</li></ul></li>
                   <li>Ligne d'exercice de calcul d'erreur - Ligne à remplir pour compléter l'exrcice d'erreur</li>
                 </ol>
-                <img src="images/prediction-exemple.png" alt="Illustration de l'exercice de prediction">
+                <img src="images/prediction-exemple.png" class="image-all-width" alt="Illustration de l'exercice de prediction">
                 <h5>Calcul du meilleur alpha</h5>
                 <p>Cette partie permet d'indiquer une prédiction initiale et en utilisant les informations des rafales fournies dans la donnée, le meilleur alpha à deux chiffre après la virgule est calculé.</p>
                 <h5>Génération des graphes</h5>
@@ -418,7 +430,23 @@
                 </ul>
               </div>
               <div class="mdl-tabs__panel" id="help_scheduling">
-                <h5>Kek</h5>
+                <h5>Fonctionnalités</h5>
+                <p>La page Scheduling permet de vous exercer à dérouler les algorithmes d'ordonnancement ainsi qu'à la comparaison des résultats obtenus.</p>
+                <h5>Comment s'exercer ?</h5>
+                <p>Pour compléter un champ il suffit de cliquer dessus.</p>
+                <ol>
+                  <li>Bouton de suppression de la ligne courante - Permet de retirer un processus</li>
+                  <li>Bouton d'ajout de nouvelle ligne - Ajoute un nouveau processus vide</li>
+                  <li>Bouton "Grille vide à remplir" - Génère un tableau vide au nombre de lignes nécessaires au remplissage manuel des données :</li>
+                    <ul>
+                      <li>L'utilisateur remplit lui-même les cases</li>
+                      <li>Le bouton "Corriger" vérifie les entrées de l'utilisateur</li>
+                    </ul>
+                  <i class="material-icons md-18">warning</i> Veuillez noter que seules les cellules du processus qui a accès au CPU au cycle <i>c</i> sont corrigées
+                  <li>Bouton "Grille avec solutions" - Génère la solution de l'ordonnancement de l'algorithme choisi. Les cases grisées représentent l'accès au CPU. Les statistiques (Turnaround Time, Waiting Time et Response Time) sont également calculées</li>
+                  <li>Bouton "Reset" - Efface le tableau des entrées de la distribution temporelle</li>
+                  </ol>
+                <img src="images/scheduling-exemple.png" class="image-all-width" alt="Illustration de l'exercice de scheduling">
               </div>
             </div>
           </section>
