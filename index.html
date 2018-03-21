@@ -75,8 +75,10 @@
         <div class="mdl-layout__tab-panel is-active" id="home">
           <section class="section--center mdl-grid mdl-grid--no-spacing">
             <div class="mdl-cell mdl-cell--12-col">
-              <h4>Accueil</h4>
-              Minim duis incididunt est cillum est ex occaecat consectetur. Qui sint ut et qui nisi cupidatat. Reprehenderit nostrud proident officia exercitation anim et pariatur ex.
+              <h4>Bienvenue !</h4>
+              <p>Ce petit programme vous aide à comprendre et à vous exercer sur les principes de prédiction et d'ordonnancement de processus. Il est basé sur et pour le cours de M. Cortinovis.</p>
+              <p>Nous espérons qu'il vous plaira !</p>
+              <img src="images/logo-hearc.png" style="display: block;padding:20px;margin-left:auto;margin-right:auto;width:50%;" alt="Illustration du logo HE-Arc"/>
             </div>
           </section>
         </div>
@@ -107,7 +109,7 @@
               <div style="display:none;" class="mdl-textfield mdl-js-textfield roundrobinnumber">
                 <input class="mdl-textfield__input" type="text" pattern="[0-9]*" id="rr_number">
                 <label class="mdl-textfield__label" for="rr_number">Quantum pour le Round Robin...</label>
-                <span class="mdl-textfield__error">Ce n'est pas un nombre !</span>
+                <span class="mdl-textfield__error">L'entrée doit être un nombre!</span>
               </div>
               <h5>Tableau de la distribution temporelle</h5>
               <table id="table_scheduling_entries" class="mdl-data-table mdl-shadow--2dp wide">
@@ -337,7 +339,7 @@
               </div>
               <div class="mdl-tabs__panel is-active" id="course_prediction">
                 <h5>Qu'est-ce que les prédictions ?</h5>
-                <p>Certains algorithmes d'ordonnancement utilisent les tailles des prochaines rafales des processus afin de savoir lequel d'entre eux sera le prochain à utiliser le CPU, on peut notemment citer l'agorithme <a href="https://fr.wikipedia.org/wiki/Shortest_job_first">Shortest Job First (SJF)</a>. </p>
+                <p>Certains algorithmes d'ordonnancement utilisent les tailles des prochaines rafales des processus afin de savoir lequel d'entre eux sera le prochain à utiliser le CPU, on peut notamment citer l'algorithme <a href="https://fr.wikipedia.org/wiki/Shortest_job_first">Shortest Job First (SJF)</a>. </p>
                 <p>Seulement, lorsqu'un processus s'ajoute à la file des processus prêts, l'ordonnanceur ne connaît pas la taille de la rafale de ce dernier. Il est donc nécessaire pour lui d'avoir une méthode lui permettant de déterminer cette taille. </p>
                 <p>C'est là qu'entrent en jeux les prédictions !</p>
                 <h5>Comment se calculent les prédictions ?</h5>
@@ -351,21 +353,21 @@
                   <li>Formule du lissage exponentiel :</li>
                 </ul>
                 <p class="centered-formula">&tau;<sub>n+1</sub> = &alpha; &middot; t<sub>n</sub> + (1 - &alpha;) &middot; &tau;<sub>n</sub></p>
-                <p>Cette technique permet de se baser sur la taille de la dernière rafale effective et l'historique des prédiction. La constante &alpha; joue un rôle de pondération entre ces deux valeurs.</p>
+                <p>Cette technique permet de se baser sur la taille de la dernière rafale effective et l'historique des prédictions. La constante &alpha; joue un rôle de pondération entre ces deux valeurs.</p>
                 <ul>
                   <li>Quand &alpha; vaut 1.0, alors l'historique des prédictions est ignoré et la prédiction équivaut à la dernière taille de rafale CPU.</li>
                   <li>Quand &alpha; vaut 0.0, alors la dernière rafale réelle n'est pas prise en compte et la prédiction reste constante puisqu'elle sera égale à la dernière prédiction.</li>
                 </ul>
                 <h5>Analyse du résultat</h5>
-                <p>Beaucoup de résultats différents sont possibles en faisant varier les valuers &alpha; et &tau;<sub>0</sub>. Il existe cependant une façon très simple de comparer les résultats obtenus via différentes paramétrisations.</p>
+                <p>Beaucoup de résultats différents sont possibles en faisant varier les valeurs &alpha; et &tau;<sub>0</sub>. Il existe cependant une façon très simple de comparer les résultats obtenus via différentes paramétrisations.</p>
                 <p>Il suffit de calculer la somme des différences (absolue) entre t<sub>n</sub> et &tau;<sub>n</sub> pour chaque rafale <i>n</i>.</p>
-                <p>La version obtenant la somme la plus petite sera considérée comme meilleure, car cela signifie que l'équart entre les prédictions et les valeurs réelles est moindre.</p>
+                <p>La version obtenant la somme la plus petite sera considérée comme meilleure, car cela signifie que l'écart entre les prédictions et les valeurs réelles est moindre.</p>
               </div>
               <div class="mdl-tabs__panel" id="course_scheduling">
                 <h5>Qu'est-ce que le Scheduling ?</h5>
                 <p>L'<a href="https://fr.wikipedia.org/wiki/Ordonnancement_dans_les_syst%C3%A8mes_d%27exploitation">ordonnanceur (scheduler)</a> dans un système d'exploitation est le composant choisissant l'ordre d'exécution des processus sur le processeur.</p>
                 <p>Chaque processus prêt désirant utiliser le CPU s'inscrit dans une file permettant à l'ordonnanceur de connaître son état.</p>
-                <p>L'ordonnanceur utilise un algorithme dit d'ordonnacement lui permettant de définir l'ordre dans lequel les processus vont accéder à la ressource CPU.</p>
+                <p>L'ordonnanceur utilise un algorithme dit d'ordonnancement lui permettant de définir l'ordre dans lequel les processus vont accéder à la ressource CPU.</p>
 
                 <p>Il existe plusieurs algorithmes d'ordonnancement, nous allons les décrire ci-dessous.</p>
 
@@ -380,13 +382,13 @@
                 <p>Dans cet algorithme c'est l'ordre d'arrivée des processus qui sera important. Les processus auront donc accès au CPU selon l'ordre dans lequel ils se seront inscrits dans la file.</p>
                 <p>Le processus gagnant l'accès au CPU complétera sa rafale en une seule session.</p>
                 <h5>Round Robin</h5>
-                <p>Cet algorithme-ci est plutôt simple, c'est une sorte de FIFO dans lequel chaque processus gagnant l'accès au CPU ne pourra y effectuer qu'une certaine taille de rafale. Cette taille qui est fixe est appelée quantum.</p>
+                <p>Cet algorithme-ci est plutôt simple, c'est une sorte de FIFO dans lequel chaque processus gagnant l'accès au CPU ne pourra y effectuer qu'une certaine taille de rafale. Cette taille, qui est fixe, est appelée quantum.</p>
                 <p>Lorsque le temps permis au processus actif dans le CPU est terminé, il passe en attente et le processus suivant prend sa place.</p>
                 <h5>Statistiques</h5>
-                <p>Il existe différents critères appliquables aux algorithmes d'ordonnancement :<p>
+                <p>Il existe différents critères applicables aux algorithmes d'ordonnancement :<p>
                 <ul>
                   <li>
-                    <b>Turnaround Time</b> : temps total pour éxecuter un processus de son arrivée à sa disparition
+                    <b>Turnaround Time</b> : temps total pour exécuter un processus de son arrivée à sa disparition
                   </li>
                   <li>
                     <b>Waiting Time</b> : temps total passé dans la queue à attendre
@@ -417,11 +419,11 @@
                   <li>Ligne d'exercice de prédiction - Ligne à remplir pour compléter l'exercice de prédiction</li>
                   <li>Boutons d'ajout et suppression de colonne - Permet d'ajouter et retirer un processus</li>
                   <li>Boutons de contrôle de ligne <ul><li>Bouton 1 - Permet de corriger la ligne (vert = correct, rouge = faux)</li><li>Bouton 2 - Permet de remplacer les données de la ligne par les bonnes réponses</li><li>Bouton 3 - Supprime la ligne de prédiction et sa ligne d'erreur correspondante</li></ul></li>
-                  <li>Ligne d'exercice de calcul d'erreur - Ligne à remplir pour compléter l'exrcice d'erreur</li>
+                  <li>Ligne d'exercice de calcul d'erreur - Ligne à remplir pour compléter l'exercice d'erreur</li>
                 </ol>
                 <img src="images/prediction-exemple.png" class="image-all-width" alt="Illustration de l'exercice de prediction">
                 <h5>Calcul du meilleur alpha</h5>
-                <p>Cette partie permet d'indiquer une prédiction initiale et en utilisant les informations des rafales fournies dans la donnée, le meilleur alpha à deux chiffre après la virgule est calculé.</p>
+                <p>Cette partie permet d'indiquer une prédiction initiale et en utilisant les informations des rafales fournies dans la donnée, le meilleur alpha à deux chiffres après la virgule est calculé.</p>
                 <h5>Génération des graphes</h5>
                 <p>Grâce aux deux boutons situés dans la troisième partie de la page, il est possible de générer deux graphes différents selon les données :</p>
                 <ul>
@@ -455,9 +457,7 @@
           <div class="mdl-mini-footer__left-section">
             <div class="mdl-logo">Scheduling &amp; Prédictions</div>
             <ul class="mdl-mini-footer__link-list">
-              <li><a href="#home">Accueil</a></li>
-              <li><a href="#scheduling">Scheduling</a></li>
-              <li><a href="#predictions">Prédictions</a></li>
+              <li><a>&copy; HE-Arc</a></li>
             </ul>
           </div>
         </footer>
