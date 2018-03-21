@@ -5,7 +5,8 @@ $(function(){
   //   componentHandler.upgradeDom();
   // });
 
-  $('.editable').on('click', function () { document.execCommand('selectAll', false, null); });
+  $('.editable').on('click', function() { document.execCommand('selectAll', false, null); });
+  $('.editable').keyup(function(e) { if(e.which === 9) { document.execCommand('selectAll', false, null); } });
 });
 
 // (function () {
