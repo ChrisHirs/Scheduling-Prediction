@@ -17,13 +17,13 @@ Pour générer les applications, il faut installer _electron-packager_ :
 ```
 npm install electron-packager -g --save-dev
 ```
-Puis, comme exemples, effectuer les commandes suivantes àa la racine du projet :
+Puis, comme exemples, effectuer les commandes suivantes à la racine du projet (toutes les plateformes) :
 ```
-electron-packager . --all --name "Scheduling and Predictions" --version "1.0.0" --electronVersion "1.7.11"
+electron-packager . --all --name "SaP" --version "1.0.0" --electronVersion "1.7.11"
 ```
-ou
+ou (seulement pour Linux)
 ```
-electron-packager . --platform="linux" --name "Scheduling and Predictions" --version "1.0.0" --electronVersion "1.7.11"
+electron-packager . --platform="linux" --name "SaP" --version "1.0.0" --electronVersion "1.7.11"
 ```
-Avec la version d'electron se trouvant avec la commande `electron --version`.
+avec la version d'electron se trouvant avec la commande `electron --version`.
 Plus d'infos, sur la [documentation officielle](https://github.com/electron-userland/electron-packager).
