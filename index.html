@@ -171,9 +171,28 @@
             			<tbody>
             			</tbody>
                 </table>
-                <button id="correct_scheduling" style="display:none;" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                  Corriger <i class="material-icons">done_all</i>
-                </button>
+
+                <div id="div_time" style="display:none;">
+                  <div id="div_watingtime" class="left mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input_watingtime">
+                    <label class="mdl-textfield__label" for="input_watingtime" id="lbl_watingtime">Average waiting time</label>
+                    <span class="mdl-textfield__error">L'entrée doit être un nombre!</span>
+                  </div>
+                  <div id="div_turnaroundtime" class="left mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input_turnaroundtime">
+                    <label class="mdl-textfield__label" for="input_turnaroundtime" id="lbl_turnaroundtime">Average turnaround time</label>
+                    <span class="mdl-textfield__error">L'entrée doit être un nombre!</span>
+                  </div>
+                  <div id="div_responstime" class="left mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input_responstime">
+                    <label class="mdl-textfield__label" for="input_responstime" id="lbl_responstime">Average respons time</label>
+                    <span class="mdl-textfield__error">L'entrée doit être un nombre!</span>
+                  </div>
+                  <button id="correct_scheduling" style="display:none;" class="toolbar-left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                    Corriger <i class="material-icons">done_all</i>
+                  </button>
+                </div>
+
               </div>
             </div>
           </section>
@@ -313,7 +332,7 @@
               <h5>Calcul du meilleur Alpha</h5>
               <div id="div_best_alpha_ip" class="left mdl-textfield mdl-js-textfield">
                 <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input_best_alpha_ip">
-                <label class="mdl-textfield__label" for="sample2">Prédiction initiale</label>
+                <label class="mdl-textfield__label" for="input_best_alpha_ip">Prédiction initiale</label>
                 <span class="mdl-textfield__error">L'entrée doit être un nombre!</span>
               </div>
               <button id="btn_find_best_alpha" name="submit" class="left mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Calculer <i class="material-icons">youtube_searched_for</i></button>

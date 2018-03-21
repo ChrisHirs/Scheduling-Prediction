@@ -236,6 +236,10 @@ html, body {
 .mdl-demo .mdl-menu__container {
   z-index: 99;
 }
+.mdl-js-textfield{
+  width: 180px;
+  margin-right: 20px;
+}
 
 /* TITRE */
 
@@ -393,6 +397,10 @@ table .table-head{
 
 #table_predictions tr td:first-child{
   font-weight: bold;
+}
+
+#div_time{
+  clear: both;
 }
 
 .editable{

@@ -38,16 +38,17 @@ $(function(){
     var processArray = rowsToArray();
     emptySchedulingSolTab(processArray);
     showCorrectionButton(processArray);
+    $('#div_time').show();
   });
 
   $('#resolve_scheduling').click(function() {
     callAlgorithm(false);
+    $('#div_time').show();
   });
 
   $('#correct_scheduling').click(function() {
     callAlgorithm(true);
   });
-
 });
 
 // Calls correct algorithm
@@ -114,8 +115,9 @@ function emptySchedulingSolTab(processArray) {
     var node = $('<th style="color:white;text-align: center;">'+ process[0] +'</th>');
     $('#table_scheduling_responses thead tr').eq(1).append(node);
   });
+
   //Rows construction
-  for (i = 0; i < rowsNumber; i++) {
+  for (var i = 0; i < rowsNumber; i++) {
     var node = $('<tr></tr>');
     $(node).append($('<td><div>'+ i +'</div></td>'));
     processArray.forEach(function(process) {
@@ -124,7 +126,7 @@ function emptySchedulingSolTab(processArray) {
     $('#table_scheduling_responses tbody').append(node);
     $('.editable').on('click', function () { document.execCommand('selectAll', false, null); });
   }
-}
+ }
 
 //get the number of rows needed to generate de solution HTML table.
 function getSchedulingSolTabRows(processArray) {
@@ -240,7 +242,7 @@ function printResult(result, processArray){
   beautifyResult(processArray);
 }
 
-function calculateTimes(results, processArray){
+function calculateTimes(results, processArray, isCorrecting){
   var processes=[];
   var result = $.extend(true,[],results); //Deep Copy of processArray
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
@@ -303,6 +305,43 @@ function calculateTimes(results, processArray){
   averageTurnaroundTime = totalTurnaroundTime/processes.length;
   averageWatingTime = totalWatingTime/processes.length;
   averageResponseTime = totalResponseTime/processes.length;
+
+  console.log("turn "+averageTurnaroundTime+" wating "+averageWatingTime+" response "+averageResponseTime);
+
+  if(isCorrecting){
+    printCorrections(averageTurnaroundTime, averageWatingTime, averageResponseTime);
+  }
+  else{
+    printTime(averageTurnaroundTime, averageWatingTime, averageResponseTime);
+  }
+
+}
+
+function printCorrections(averageTurnaroundTime, averageWatingTime, averageResponseTime){
+  if($('input[id="input_watingtime"]').val()==averageWatingTime){
+    $('input[id="input_watingtime"]').css({'background-color' : '#b3f7b3'});
+  }
+  else{
+    $('input[id="input_watingtime"]').css({'background-color' : '#faa'});
+  }
+  if($('input[id="input_turnaroundtime"]').val()==averageTurnaroundTime){
+    $('input[id="input_turnaroundtime"]').css({'background-color' : '#b3f7b3'});
+  }
+  else{
+    $('input[id="input_turnaroundtime"]').css({'background-color' : '#faa'});
+  }
+  if($('input[id="input_responstime"]').val()==averageResponseTime){
+    $('input[id="input_responstime"]').css({'background-color' : '#b3f7b3'});
+  }
+  else{
+    $('input[id="input_responstime"]').css({'background-color' : '#faa'});
+  }
+}
+
+function printTime(averageTurnaroundTime, averageWatingTime, averageResponseTime){
+  document.querySelector('input[id="input_watingtime"]').parentNode.MaterialTextfield.change(averageWatingTime.toString());
+  document.querySelector('input[id="input_turnaroundtime"]').parentNode.MaterialTextfield.change(averageTurnaroundTime.toString());
+  document.querySelector('input[id="input_responstime"]').parentNode.MaterialTextfield.change(averageResponseTime.toString());
 }
 
 // Show the correction in the HTML talbe
@@ -392,12 +431,15 @@ function doPSJF (processArray, isCorrecting){
     }
   }
 
-  calculateTimes(result, processArray);
+
 
   if (!isCorrecting) {
+    calculateTimes(result, processArray, isCorrecting);
     printResult(result, processArray);
+
   }
   else {
+    calculateTimes(result, processArray, isCorrecting);
     //Function that print the result array into the HTML array.
     printCorrection(result, processArray);
   }
@@ -439,14 +481,16 @@ function doNPSJF(processArray, isCorrecting) {
     }
   }
 
-  calculateTimes(result, processArray);
+
 
   if (!isCorrecting) {
-    //Function that print the result array into the HTML array.
     printResult(result, processArray);
+    calculateTimes(result, processArray, isCorrecting);
   }
   else {
+    //Function that print the result array into the HTML array.
     printCorrection(result, processArray);
+    calculateTimes(result, processArray, isCorrecting);
   }
 }
 
@@ -474,14 +518,14 @@ function doFIFO (processArray, isCorrecting){
     }
   }
 
-  calculateTimes(result, processArray);
-
   if (!isCorrecting) {
-    //Function that print the result array into the HTML array.
     printResult(result, processArray);
+    calculateTimes(result, processArray, isCorrecting);
   }
   else {
+    //Function that print the result array into the HTML array.
     printCorrection(result, processArray);
+    calculateTimes(result, processArray, isCorrecting);
   }
 }
 
@@ -521,13 +565,13 @@ function doRR(round, processArray, isCorrecting) {
     }
   }
 
-  calculateTimes(result, processArray);
-
   if (!isCorrecting) {
-    //Function that print the result array into the HTML array.
     printResult(result, processArray);
+    calculateTimes(result, processArray, isCorrecting);
   }
   else {
+    //Function that print the result array into the HTML array.
     printCorrection(result, processArray);
+    calculateTimes(result, processArray, isCorrecting);
   }
 }
