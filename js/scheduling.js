@@ -36,12 +36,14 @@ $(function(){
 
   $('#empty_scheduling').click(function() {
     var processArray = rowsToArray();
+    resetTimes();
     emptySchedulingSolTab(processArray);
     showCorrectionButton(processArray);
     $('#div_time').show();
   });
 
   $('#resolve_scheduling').click(function() {
+    resetTimes();
     callAlgorithm(false);
     $('#div_time').show();
   });
@@ -240,6 +242,15 @@ function printResult(result, processArray){
     }
   }
   beautifyResult(processArray);
+}
+
+function resetTimes() {
+  $('input[id="input_watingtime"]').val('');
+  $('input[id="input_watingtime"]').css({'background-color' : '#fff'});
+  $('input[id="input_turnaroundtime"]').val('');
+  $('input[id="input_turnaroundtime"]').css({'background-color' : '#fff'});
+  $('input[id="input_responstime"]').val('');
+  $('input[id="input_responstime"]').css({'background-color' : '#fff'});
 }
 
 function calculateTimes(results, processArray, isCorrecting){
