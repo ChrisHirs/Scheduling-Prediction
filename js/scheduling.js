@@ -244,6 +244,7 @@ function printResult(result, processArray){
   beautifyResult(processArray);
 }
 
+// Resets times inputs
 function resetTimes() {
   $('input[id="input_watingtime"]').val('');
   $('input[id="input_watingtime"]').css({'background-color' : '#fff'});
@@ -329,23 +330,18 @@ function calculateTimes(results, processArray, isCorrecting){
 }
 
 function printCorrections(averageTurnaroundTime, averageWatingTime, averageResponseTime){
-  if($('input[id="input_watingtime"]').val()==averageWatingTime){
-    $('input[id="input_watingtime"]').css({'background-color' : '#b3f7b3'});
+  var delta = 0.11;
+  checkTimesAndBackgrounds($('input[id="input_watingtime"]'), averageWatingTime, delta);
+  checkTimesAndBackgrounds($('input[id="input_turnaroundtime"]'), averageTurnaroundTime, delta);
+  checkTimesAndBackgrounds($('input[id="input_responstime"]'), averageResponseTime, delta);
+}
+
+function checkTimesAndBackgrounds(elem, averageTime, precisionDelta) {
+  if(elem.val() < averageTime + precisionDelta && elem.val() > averageTime - precisionDelta){
+    elem.css({'background-color' : '#b3f7b3'});
   }
   else{
-    $('input[id="input_watingtime"]').css({'background-color' : '#faa'});
-  }
-  if($('input[id="input_turnaroundtime"]').val()==averageTurnaroundTime){
-    $('input[id="input_turnaroundtime"]').css({'background-color' : '#b3f7b3'});
-  }
-  else{
-    $('input[id="input_turnaroundtime"]').css({'background-color' : '#faa'});
-  }
-  if($('input[id="input_responstime"]').val()==averageResponseTime){
-    $('input[id="input_responstime"]').css({'background-color' : '#b3f7b3'});
-  }
-  else{
-    $('input[id="input_responstime"]').css({'background-color' : '#faa'});
+    elem.css({'background-color' : '#faa'});
   }
 }
 
