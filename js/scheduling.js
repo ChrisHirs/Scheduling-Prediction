@@ -432,14 +432,11 @@ function doPSJF (processArray, isCorrecting){
   }
 
 
-
+  calculateTimes(result, processArray, isCorrecting);
   if (!isCorrecting) {
-    calculateTimes(result, processArray, isCorrecting);
     printResult(result, processArray);
-
   }
   else {
-    calculateTimes(result, processArray, isCorrecting);
     //Function that print the result array into the HTML array.
     printCorrection(result, processArray);
   }
@@ -483,14 +480,13 @@ function doNPSJF(processArray, isCorrecting) {
 
 
 
+  calculateTimes(result, processArray, isCorrecting);
   if (!isCorrecting) {
     printResult(result, processArray);
-    calculateTimes(result, processArray, isCorrecting);
   }
   else {
     //Function that print the result array into the HTML array.
     printCorrection(result, processArray);
-    calculateTimes(result, processArray, isCorrecting);
   }
 }
 
@@ -518,14 +514,13 @@ function doFIFO (processArray, isCorrecting){
     }
   }
 
+  calculateTimes(result, processArray, isCorrecting);
   if (!isCorrecting) {
     printResult(result, processArray);
-    calculateTimes(result, processArray, isCorrecting);
   }
   else {
     //Function that print the result array into the HTML array.
     printCorrection(result, processArray);
-    calculateTimes(result, processArray, isCorrecting);
   }
 }
 
@@ -565,13 +560,12 @@ function doRR(round, processArray, isCorrecting) {
     }
   }
 
+  calculateTimes(result, processArray, isCorrecting);
   if (!isCorrecting) {
     printResult(result, processArray);
-    calculateTimes(result, processArray, isCorrecting);
   }
   else {
     //Function that print the result array into the HTML array.
     printCorrection(result, processArray);
-    calculateTimes(result, processArray, isCorrecting);
   }
 }
