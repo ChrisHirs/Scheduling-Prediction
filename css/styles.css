@@ -307,6 +307,11 @@ html, body {
   padding-bottom: 10px;
 }
 
+/* RADIO BUTTONS */
+.mdl-radio {
+  margin-right: 15px;
+}
+
 /* Table CSS */
 .table-remove:hover,
 .table-remove-row:hover,

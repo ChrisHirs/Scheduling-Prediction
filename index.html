@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Scheduling & Prédictions</title>
+    <title>Scheduling & Prediction</title>
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -59,14 +59,14 @@
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-          <h3>Scheduling &amp; Prédictions</h3>
+          <h3>Scheduling &amp; Prediction</h3>
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
           <a href="#home" class="mdl-layout__tab is-active">Accueil</a>
           <a href="#scheduling" class="mdl-layout__tab">Scheduling</a>
-          <a href="#predictions" class="mdl-layout__tab">Prédictions</a>
+          <a href="#predictions" class="mdl-layout__tab">Prediction</a>
           <a href="#course" class="mdl-layout__tab">Théorie</a>
           <a href="#help" class="mdl-layout__tab">Aide</a>
         </div>
@@ -108,7 +108,7 @@
               </div>
               <div style="display:none;" class="mdl-textfield mdl-js-textfield roundrobinnumber">
                 <input class="mdl-textfield__input" type="text" pattern="[0-9]*" id="rr_number">
-                <label class="mdl-textfield__label" for="rr_number">Quantum pour le Round Robin...</label>
+                <label class="mdl-textfield__label" for="rr_number">Quantum pour le RR...</label>
                 <span class="mdl-textfield__error">L'entrée doit être un nombre!</span>
               </div>
               <h5>Tableau de la distribution temporelle</h5>
@@ -140,7 +140,7 @@
           				</tr>
                   <tr id="add_row_scheduling">
                     <td class="table-row-header mdl-button--colored mdl-button--accent mdl-js-button" style="text-align: center;" colspan="100%">
-                      <i id="btn_table_add_row_sch" style="vertical-align: bottom;" class="table-add material-icons md-24">add</i>
+                      <i id="btn_table_add_row_sch" style="vertical-align: bottom;" class="table-add-row material-icons md-24">add</i>
                       <div class="mdl-tooltip" data-mdl-for="btn_table_add_row_sch">
                         Ajouter une nouvelle ligne
                       </div>
@@ -175,6 +175,7 @@
                 </table>
 
                 <div id="div_time" style="display:none;">
+                  <h5>Calculs des temps moyens</h5>
                   <div id="div_watingtime" class="left mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input_watingtime">
                     <label class="mdl-textfield__label" for="input_watingtime" id="lbl_watingtime">Average waiting time</label>
@@ -202,7 +203,7 @@
         <div class="mdl-layout__tab-panel" id="predictions">
           <section class="section--center mdl-grid mdl-grid--no-spacing">
             <div class="mdl-cell mdl-cell--12-col">
-              <h4>Prédictions</h4>
+              <h4>Prediction</h4>
               <hr>
               <h5>Tableaux de prédictions et erreurs</h5>
               <table id="table_predictions" class="mdl-cell mdl-cell--12-col mdl-data-table mdl-js-data-table mdl-shadow--2dp">
@@ -353,7 +354,7 @@
           <section class="section--center mdl-grid mdl-grid--no-spacing">
             <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
               <div class="mdl-tabs__tab-bar">
-                  <a href="#course_prediction" class="mdl-tabs__tab is-active">Prédictions</a>
+                  <a href="#course_prediction" class="mdl-tabs__tab is-active">Prediction</a>
                   <a href="#course_scheduling" class="mdl-tabs__tab">Scheduling</a>
               </div>
               <div class="mdl-tabs__panel is-active" id="course_prediction">
@@ -424,12 +425,12 @@
           <section class="section--center mdl-grid mdl-grid--no-spacing">
             <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
               <div class="mdl-tabs__tab-bar">
-                  <a href="#help_prediction" class="mdl-tabs__tab is-active">Prédictions</a>
+                  <a href="#help_prediction" class="mdl-tabs__tab is-active">Prediction</a>
                   <a href="#help_scheduling" class="mdl-tabs__tab">Scheduling</a>
               </div>
               <div class="mdl-tabs__panel is-active" id="help_prediction">
                 <h5>Fonctionnalités</h5>
-                <p>La page Prédiction permet de vous exercer au calcul des prédictions ainsi qu'à la comparaison des résultats obtenus. Elle permet également de mieux visualiser les résultats à l'aide de graphes et de trouver les valeurs optimales.</p>
+                <p>La page Prédiction permet de vous exercer au calcul des Prediction ainsi qu'à la comparaison des résultats obtenus. Elle permet également de mieux visualiser les résultats à l'aide de graphes et de trouver les valeurs optimales.</p>
                 <h5>Comment s'exercer ?</h5>
                 <p>Pour compléter un champ il suffit de cliquer dessus.</p>
                 <ol>
@@ -474,7 +475,7 @@
         </div>
         <!-- <footer class="mdl-mini-footer">
           <div class="mdl-mini-footer__left-section">
-            <div class="mdl-logo">Scheduling &amp; Prédictions</div>
+            <div class="mdl-logo">Scheduling &amp; Prediction</div>
             <ul class="mdl-mini-footer__link-list">
               <li><a>&copy; HE-Arc</a></li>
             </ul>
