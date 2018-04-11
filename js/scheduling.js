@@ -193,7 +193,10 @@ function beautifyResult(processArray) {
             var prevCell = $('#table_scheduling_responses tbody').find('tr').eq(indexCell-1).find('td').eq(indexProc+1).find('div');
             var valuePrevCell = parseInt(prevCell.text());
             if(!isNaN(valuePrevCell)) {
-              if(valuePrevCell >= 1) {
+              if(valuePrevCell > 1) {
+                currentCell.text(valuePrevCell);
+              }
+              else if (valuePrevCell == 1) {
                 if (prevCell.parent().hasClass("grey-cell")) {
                   currentCell.text(0);
                 }
