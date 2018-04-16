@@ -326,7 +326,7 @@ function calculateTimes(results, processArray, isCorrecting){
   averageWatingTime = totalWatingTime/processes.length;
   averageResponseTime = totalResponseTime/processes.length;
 
-  console.log("turn "+averageTurnaroundTime+" wating "+averageWatingTime+" response "+averageResponseTime);
+  //console.log("turn "+averageTurnaroundTime+" wating "+averageWatingTime+" response "+averageResponseTime);
 
   if(isCorrecting){
     printCorrections(averageTurnaroundTime, averageWatingTime, averageResponseTime);
@@ -418,7 +418,7 @@ function doPSJF (processArray, isCorrecting){
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
 
   // run throught every raw of the table
-  for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
+  for(var i=0; i<=getSchedulingSolTabRows(processArray)+processArray.length; i++){
 
     //if a new process arrive put it in the array
     if(isNewProcessArrived(i, processArray)){
@@ -465,7 +465,7 @@ function doNPSJF(processArray, isCorrecting) {
   var findnext = true; //if the active process arrives to 0 can find the next shortest job from the actifProcessesIndexes
 
   // run throught every raw of the table
-  for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
+  for(var i=0; i<=getSchedulingSolTabRows(processArray)+processArray.length; i++){
 
     //if a new process arrive put it in the array
     if(isNewProcessArrived(i, processArray)){
@@ -512,7 +512,7 @@ function doFIFO (processArray, isCorrecting){
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
 
   // run throught every raw of the table
-  for(var i=0; i<=getSchedulingSolTabRows(processArray); i++){
+  for(var i=0; i<=getSchedulingSolTabRows(processArray)+processArray.length; i++){
       //if a new process arrive put it in the queue
       if(isNewProcessArrived(i, processArray)){
             actifProcessIndex.push(currentNewArrivedProcessIndex); //put the new arrived process in the queue
@@ -546,7 +546,7 @@ function doRR(round, processArray, isCorrecting) {
   var result = [];
   var tmpProcessArray = $.extend(true,[],processArray); //Deep Copy of processArray
 
-  for (var i = 0; i <= getSchedulingSolTabRows(processArray); i++) {
+  for (var i = 0; i <= getSchedulingSolTabRows(processArray)+processArray.length; i++) {
     if (isNewProcessArrived(i, processArray)) {
       activeProcessIndex.push(currentNewArrivedProcessIndex); //put the new arrived process in the queue
     }
